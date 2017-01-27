@@ -1,0 +1,38 @@
+{
+  "name": "public-input-map",
+  "version": "1.0.0",
+  "production": "false",
+  "description": "User registration system for in motion",
+  "main": "index.js",
+  "scripts": {
+    "zip": "grunt build && grunt zip",
+    "build": "grunt build",
+    "develop": "grunt build && grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AltaPlanning/user-registration-system.git"
+  },
+  "author": "Alta Planning + Design",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-compress": "^1.3.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-css": "^0.5.4",
+    "grunt-string-replace": "^1.3.1"
+  },
+  "dependencies": {
+    "grunt-sync": "^0.6.2"
+  },
+  "bugs": {
+    "url": "https://github.com/AltaPlanning/user-registration-system/issues"
+  },
+  "homepage": "https://github.com/AltaPlanning/user-registration-system#readme"
+}

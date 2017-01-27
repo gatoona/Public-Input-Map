@@ -1,0 +1,6 @@
+<Files ~ "\.sqlite$">
+    Order allow,deny
+    Deny from all
+</Files>
+
+Options -Indexes
