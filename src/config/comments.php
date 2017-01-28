@@ -110,5 +110,67 @@ ArrestDB::Serve('POST', '/(#any)', function ($table)
 	return ArrestDB::Reply($result);
 });
 
+
+ArrestDB::Serve('PUT', '/(#any)/(#num)', function ($table, $id)
+{	
+
+	// Grab Current Likes
+	$query = array
+	(
+		sprintf('SELECT %s FROM "%s"', 'likes', $table),
+	);
+	if (isset($id) === true)
+	{
+		$query[] = sprintf('WHERE "%s" = ? LIMIT 1', 'id');
+	}
+	$query = sprintf('%s;', implode(' ', $query));
+	$result = (isset($id) === true) ? ArrestDB::Query($query, $id) : ArrestDB::Query($query);
+
+	if (empty($GLOBALS['_PUT']) === true)
+	{
+		$result = ArrestDB::$HTTP[204];
+	}
+	else if (is_array($GLOBALS['_PUT']) === true)
+	{
+
+		if (is_numeric($result[0]['likes'])){
+			$GLOBALS['_PUT']['likes'] = $result[0]['likes'] + 1;
+		}
+		else {
+			unset($GLOBALS['_PUT']['likes']);
+		}
+
+
+		foreach ($GLOBALS['_PUT'] as $key => $value)
+		{
+			$data[$key] = sprintf('"%s" = ?', $key);
+		}
+
+
+
+		$query = array
+		(
+			sprintf('UPDATE "%s" SET %s WHERE "%s" IN (%s)', $table, implode(', ', $data), 'id', $id),
+		);
+
+		$query = sprintf('%s;', implode(' ', $query));
+
+		$result = ArrestDB::Query($query, $GLOBALS['_PUT']);
+
+		if ($result === false)
+		{
+			$result = ArrestDB::$HTTP[409];
+		}
+
+		else
+		{
+			$result = ArrestDB::$HTTP[200];
+		}
+	}
+
+	return ArrestDB::Reply($result);
+});
+
+
 exit(ArrestDB::Reply(ArrestDB::$HTTP[400]));
 ?>

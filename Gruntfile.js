@@ -22,7 +22,7 @@ module.exports = function(grunt) {
       },
 
       css: {
-        src: ['src/css/font-awesome.css', 'src/css/boot-template.css', 'src/css/jquery-ui.css', 'src/css/jquery-ui.structure.css', 'src/css/jquery-ui.theme.css', 'src/css/leaflet.css', 'src/css/leaflet.draw.css', 'src/css/boot-forms.css', 'src/css/boot-checkbox.css', 'src/css/animate.css', 'src/css/main.css'],
+        src: ['src/css/lib/font-awesome.css', 'src/css/lib/boot-template.css', 'src/css/lib/jquery-ui.css', 'src/css/lib/jquery-ui.structure.css', 'src/css/lib/jquery-ui.theme.css', 'src/css/lib/leaflet.css', 'src/css/lib/leaflet.clusters.css', 'src/css/lib/leaflet.draw.css', 'src/css/lib/boot-forms.css', 'src/css/lib/boot-checkbox.css', 'src/css/lib/animate.css', 'src/css/main.css'],
         dest: 'dist/css/app.css'
       }
 
@@ -93,7 +93,8 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'src/config/', src: ['**/*.php'], dest: 'dist/config'},
           {expand: true, cwd: 'src/admin/templates/', src: ['**/*.html'], dest: 'dist/admin/templates'},
           {expand: false, src: ['src/admin/index.html'], dest: 'dist/admin/index.html'},
-          {expand: false, src: ['src/db/data.sqlite'], dest: 'dist/db/data.sqlite'}
+          {expand: false, src: ['src/db/data.sqlite'], dest: 'dist/db/data.sqlite'},
+          {expand: true, cwd: 'src/data/', src: ['**/*.geojson'], dest: 'dist/data'},
         ],
       },
     },
@@ -129,7 +130,7 @@ module.exports = function(grunt) {
         debounceDelay: 1000
       },
       css: {
-        files: ['src/css/*.css'],
+        files: ['src/css/*.css', 'src/css/lib/*.css'],
         tasks: ['concat:css', 'cssmin']
       },
       js: {

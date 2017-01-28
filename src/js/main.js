@@ -8,9 +8,15 @@ var properties = {
 //Map Initial Variables
 var map;
 var mapData = {
+    drawnItemsLayer: '',
+    inputMarker: '',
     suggestionsURL: '/config/comments.php/suggestions/',
     suggestions: {},
-    features: {}
+    features: {},
+    lineStringLayer: {},
+    pointsLayer: {},
+    ls: {},
+    geoJSON: {}
 };
 
 $(document).on({
@@ -58,20 +64,31 @@ $(function() {
     map = L.map("map", {
         zoomControl: true,
         attributionControl: false,
-        minZoom: 10
-    }).setView([ 47.676736, -117.342302 ], 12);
+        minZoom: 0
+    }).setView([ 42.358459, -83.062158 ], 12);
 
     map.zoomControl.setPosition('bottomright');
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
+    L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {}).addTo(map);
 
     //Set Main Layers
+    mapData.selectLayer = L.featureGroup().addTo(map);
+    mapData.geoJSON.cityBounds = new L.GeoJSON.AJAX(["data/detroit.geojson"],{
+        clickable: false,
+        style: {
+            color: '#ff0066',
+            weight: 2,
+            fillColor: "#1f2552",
+            opacity: 1,
+            fillOpacity: 0
+        }
+    }).addTo(map);
     mapData.lineStringLayer = L.featureGroup().addTo(map);
     mapData.pointsLayer = new L.MarkerClusterGroup({
         iconCreateFunction: function(cluster) {
             return L.divIcon({
                 name: cluster.getChildCount(),
                 cluster: true,
-                iconUrl: "img/marker-cluster.png",
+                iconUrl: "img/marker-cluster.png?v=2",
                 iconSize: new L.Point(50, 50),
                 iconAnchor: new L.Point(25, 25)
             });
@@ -85,10 +102,13 @@ $(function() {
     L.DivIcon = L.Icon.extend({
         options: {
             iconUrl: "img/marker.png",
-            iconSize: [ 24, 24 ],
+            shadowUrl: "img/marker-shadow.png",
+            iconSize: [ 40, 51 ],
+            shadowSize: [ 40, 6 ],
             cluster: false,
-            iconAnchor: [ 12, 12 ],
-            popupAnchor: [ 0, -15 ],
+            iconAnchor: [ 20, 51 ],
+            shadowAnchor: [ 20, 0 ],
+            popupAnchor: [ 0, -55 ],
             imageIcon: "",
             name: "",
             className: "leaflet-div"
@@ -108,7 +128,7 @@ $(function() {
         }
     });
 
-    var inputMarker = L.icon({
+    mapData.inputMarker = L.icon({
         iconUrl: "img/input-marker.png",
         shadowUrl: "img/input-marker-shadow.png",
         iconSize: [ 47, 93 ],

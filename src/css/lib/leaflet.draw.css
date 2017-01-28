@@ -221,8 +221,7 @@
 }
 
 .leaflet-draw-tooltip {
-	background: rgb(54, 54, 54);
-	background: rgba(0, 0, 0, 0.5);
+	background: #000;
 	border: 1px solid transparent;
 	-webkit-border-radius: 4px;
 	        border-radius: 4px;
@@ -239,7 +238,7 @@
 
 .leaflet-draw-tooltip:before {
 	border-right: 6px solid black;
-	border-right-color: rgba(0, 0, 0, 0.5);
+	border-right-color: #000;
 	border-top: 6px solid transparent;
 	border-bottom: 6px solid transparent;
 	content: "";

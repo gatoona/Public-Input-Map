@@ -435,6 +435,7 @@ Date: 2015-09-24 */
   margin: 13px 19px;
   line-height: 1.4;
   text-align: left;
+  font-size: 0.9em;
   }
 .leaflet-popup-content b{
   font-weight: 700;
@@ -468,7 +469,7 @@ Date: 2015-09-24 */
   }
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-  background: #1e5f4a;
+  background: #1e3058;
   box-shadow: 0 3px 14px rgba(0,0,0,0.4);
   }
 .leaflet-container a.leaflet-popup-close-button {
@@ -482,7 +483,7 @@ Date: 2015-09-24 */
   color: #ffe612;
   text-decoration: none;
   font-weight: bold;
-  background: #1e5f4a;
+  background: #1e3058;
   border-radius: 5px;
   line-height: 15px;
   text-align: center;
@@ -948,14 +949,15 @@ border: 2px solid #FFFFFF;
   width: 50px;
   height: 50px;
   text-align: center;
-  line-height: 2.6em;
-  font-size: 1.2em;
+  line-height: 2em;
+  font-size: 1.5em;
   color: #FFF;
   position: absolute;
   left: 0px;
   top: 0px;
   text-align: center;
-
+  font-weight: 700;
+  font-family: 'Quicksand', sans-serif;
 }
 
 .leaflet-marker-icon:hover .ttRoute-map{

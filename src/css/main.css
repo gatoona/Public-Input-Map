@@ -6,6 +6,7 @@ html,
     margin: 0px;
     padding: 0px;
     font-family: 'Hind', sans-serif;
+    font-size: 1em;
 }
 
 br {
@@ -98,7 +99,7 @@ p.orange-small {
 h1 {
     font-size: 1.8em;
     line-height: 1.3em;
-    margin: 50px 0 15px 0;
+    margin: 10px 0 15px 0;
     font-weight: 700;
     font-family: 'Quicksand', sans-serif;
 }
@@ -210,11 +211,14 @@ ul.nopad li {
   padding: 5px 20px;
   min-width: inherit;
   text-shadow: none;
+  border: 2px solid #ffe612;
   background-color: transparent;
-  border-color: #ffe612;
   color: #ffe612;
   font-size: 1em;
   margin: 5px 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .leaflet-popup-content button:hover{
@@ -427,9 +431,7 @@ h1.success {
     font-style: italic;
 }
 
-
 /*Loader*/
-
 .loader,
 .loader:after {
     border-radius: 50%;
@@ -509,7 +511,6 @@ span.qNum {
     color: #61aa45;
 }
 
-button,
 .btn-primary,
 input[type="submit"] {
     display: inline-block;
@@ -532,7 +533,6 @@ input[type="submit"] {
     text-decoration: none;
 }
 
-button:hover,
 .btn-primary:hover,
 input[type="submit"]:hover {
     background-color: #519637;

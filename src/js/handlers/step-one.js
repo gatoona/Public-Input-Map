@@ -26,7 +26,8 @@ step_one_handler = {
     	        circle: false,
     	        rectangle: false,
     	        marker: {
-    	            repeatMode: false
+    	            repeatMode: false,
+                    icon: mapData.inputMarker
     	        }
     	    }
     	});
