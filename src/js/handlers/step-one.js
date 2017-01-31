@@ -18,7 +18,7 @@ step_one_handler = {
     	            repeatMode: false,
     	            shapeOptions: {
     	                stroke: true,
-    	                color: "#000000",
+    	                color: "#8305be",
     	                weight: 4,
     	                opacity: 1,
     	                fill: false,
@@ -128,24 +128,34 @@ step_one_handler = {
 	    mapData.drawnItemsLayer.addLayer(layer);
 
 	    if (type === "marker") {
-	        mapData.drawnItemsLayer.getLayers()[0].dragging.enable();
+	        // var marker = L.marker([ 42.358459, -83.062158 ], {
+         //        icon: mapData.inputMarker
+         //    })
+
+         //    mapData.drawnItemsLayer.addLayer(marker);
+
+            mapData.drawnItemsLayer.getLayers()[0].dragging.enable();
 	    }
 
         var test = self.checkInBounds(mapData.drawnItemsLayer.getLayers()[0], mapData.geoJSON.cityBounds.getLayers()[0]);
         if (test == false){
+            alert("Please ensure your suggestion is within the bounds.");
+            self.showContent();
+            self.disableDraw();
             self.onOutOfBounds();
         }
         else if (test == true){
             self.onInBounds();
+	       window.location.href = "#/step-two/";
         }
 
 
-	    // window.location.href = "/#/step-two/";
     },
 
     hideContent: function(){
         $('.content-root').addClass('swipe');
         $('.content-arrow').removeClass('hidden').addClass('animated fadeInLeft');
+        $("html, body").animate({ scrollTop: 0 }, 500);
     },
 
     showContent: function(){

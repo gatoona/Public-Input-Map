@@ -4,8 +4,8 @@ error_reporting(0);
 
 //Set Database URL
 $dsn = 'sqlite://' . $_SERVER['DOCUMENT_ROOT'] . '/db/data.sqlite';
-// $dsn = 'mysql://root:980Gatoona@localhost:3306/inmotion_bhmb/';
-// $dsn = 'mysql://bhmb:inmotionbhmb@bhmb.altaprojects.net:3306/inmotion_bhmb/';
+// $dsn = 'sqlite://' . $_SERVER['DOCUMENT_ROOT'] . '/map-demo/db/data.sqlite';
+
 
 
 //Set Base URL

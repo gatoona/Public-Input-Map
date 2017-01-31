@@ -276,6 +276,9 @@ ul.nopad li {
 
 
 @media (max-width: 767px) {
+    .leaflet-control-container{
+        visibility: hidden;
+    }
   .bottom-clear{
     top: 0;
     padding: 0;

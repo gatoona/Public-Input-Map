@@ -11,7 +11,7 @@ var map;
 var mapData = {
     drawnItemsLayer: '',
     inputMarker: '',
-    suggestionsURL: '/config/comments.php/suggestions/',
+    suggestionsURL: 'config/comments.php/suggestions/',
     suggestions: {},
     features: {},
     lineStringLayer: {},
@@ -59,7 +59,7 @@ $(function() {
     //initial Load
     $(window).load(function() {
         if (properties.resetOnLoad === true){
-            window.location.href = "/#/home";
+            window.location.href = "#/home";
         }
         hashGrab();
     });
@@ -72,7 +72,7 @@ $(function() {
     }).setView([ 42.358459, -83.062158 ], 12);
 
     map.zoomControl.setPosition('topright');
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
+    L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/ciw83c2da000t2qqqp5tvx08g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {}).addTo(map);
 
     //Set Main Layers
     mapData.selectLayer = L.featureGroup().addTo(map);
@@ -106,8 +106,8 @@ $(function() {
 
     L.DivIcon = L.Icon.extend({
         options: {
-            iconUrl: "img/marker.png",
-            shadowUrl: "img/marker-shadow.png",
+            iconUrl: "img/marker.png?v=2",
+            shadowUrl: "img/marker-shadow.png?v=2",
             iconSize: [ 40, 51 ],
             shadowSize: [ 40, 6 ],
             cluster: false,
@@ -134,12 +134,12 @@ $(function() {
     });
 
     mapData.inputMarker = L.icon({
-        iconUrl: "img/input-marker.png",
-        shadowUrl: "img/input-marker-shadow.png",
-        iconSize: [ 47, 93 ],
-        iconAnchor: [ 5, 93 ],
-        shadowSize: [ 64, 40 ],
-        shadowAnchor: [ 0, 42 ]
+        iconUrl: "img/input-marker.png?v=2",
+        shadowUrl: "img/input-marker-shadow.png?v=2",
+        iconSize: [ 80, 97 ],
+        iconAnchor: [ 40, 97 ],
+        shadowSize: [ 88, 67 ],
+        shadowAnchor: [ 21, 67 ]
     });
 
 

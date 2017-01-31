@@ -99,7 +99,7 @@ step_two_handler = {
 
                 } else {
                     mapData.drawnItemsLayer.clearLayers();
-                    window.location.href = "/#/step-three/";
+                    window.location.href = "#/step-three/";
                 }
             },
             error: function(xhr, textStatus, errorThrown) {
