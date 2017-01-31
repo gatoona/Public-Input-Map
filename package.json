@@ -1,6 +1,6 @@
 {
   "name": "public-input-map",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "production": "false",
   "description": "User registration system for in motion",
   "main": "index.js",

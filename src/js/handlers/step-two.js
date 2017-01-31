@@ -1,7 +1,8 @@
 step_two_handler = {
 
     properties: {
-        title: 'Login Page'
+        title: 'Login Page',
+        checkInBounds: true
     },
 
     onLoad: function(){
@@ -49,8 +50,6 @@ step_two_handler = {
             var targetLatLng = map.unproject(targetPoint, 17);
             map.setView(targetLatLng, 17);
 
-        } else if (layer instanceof L.Path) {
-
         }
         
     },
@@ -68,12 +67,18 @@ step_two_handler = {
         }
     },
 
+    wordCount: function( val ){
+        var wom = val.match(/\S+/g);
+        return wom ? wom.length : 0;
+    },
+
     formSubmit: function(event) {
 
         var self = this;
 
         var layer = mapData.drawnItemsLayer.getLayers()[0];
         var shape = layer.toGeoJSON();
+
 
         var formData = {
             'name': $('input[name=name]').val(),
@@ -82,8 +87,6 @@ step_two_handler = {
             type: shape.geometry.type,
             geometry: JSON.stringify(shape.geometry.coordinates)
         };
-
-        console.log(formData);
 
         $.ajax({
             type: "POST",
@@ -95,7 +98,8 @@ step_two_handler = {
                     alert('server error');
 
                 } else {
-                    alert('added');
+                    mapData.drawnItemsLayer.clearLayers();
+                    window.location.href = "/#/step-three/";
                 }
             },
             error: function(xhr, textStatus, errorThrown) {
@@ -114,6 +118,20 @@ step_two_handler = {
 
         $("#suggestion-submit").submit(function(event) {
             self.formSubmit(event);
+        });
+
+
+        $('textarea[name=comment]').on('input click', function() {
+            var wordCount = self.wordCount($(this).val());
+            if (wordCount >= 100){
+                // $(this).removeClass('required');
+                // $('.story-min').addClass('hidden');
+            }
+            else {
+                // $(this).addClass('required');
+                // $('.story-min').removeClass('hidden');
+                $('.story-word').text(wordCount);
+            }
         });
     }
 }

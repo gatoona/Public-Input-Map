@@ -2,7 +2,8 @@ $body = $("body");
 
 var properties = {
     currentURL: '',
-    userLanguage: getCookie('lang') || 'en'
+    userLanguage: getCookie('lang') || 'en',
+    resetOnLoad: true
 }
 
 //Map Initial Variables
@@ -57,6 +58,9 @@ $(function() {
     })
     //initial Load
     $(window).load(function() {
+        if (properties.resetOnLoad === true){
+            window.location.href = "/#/home";
+        }
         hashGrab();
     });
 
@@ -67,8 +71,8 @@ $(function() {
         minZoom: 0
     }).setView([ 42.358459, -83.062158 ], 12);
 
-    map.zoomControl.setPosition('bottomright');
-    L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {}).addTo(map);
+    map.zoomControl.setPosition('topright');
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
 
     //Set Main Layers
     mapData.selectLayer = L.featureGroup().addTo(map);
@@ -79,7 +83,8 @@ $(function() {
             weight: 2,
             fillColor: "#1f2552",
             opacity: 1,
-            fillOpacity: 0
+            fillOpacity: 0,
+            className: "city-bounds"
         }
     }).addTo(map);
     mapData.lineStringLayer = L.featureGroup().addTo(map);
@@ -111,7 +116,7 @@ $(function() {
             popupAnchor: [ 0, -55 ],
             imageIcon: "",
             name: "",
-            className: "leaflet-div"
+            className: "points-icons"
         },
         createIcon: function() {
             var div = document.createElement("div");

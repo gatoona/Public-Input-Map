@@ -7,6 +7,8 @@ home_handler = {
     onLoad: function(){
         var self = this;
         $(document).off("click", ".like-btn");
+        map.off('popupclose');
+        map.off('popupopen');
         self.updateLS();
         self.loadData();
 
@@ -101,7 +103,7 @@ home_handler = {
 
         var circle = new L.CircleMarker(location, {
             radius: 25,
-            fillColor: "#519637",
+            fillColor: "#ffe612",
             color: "#000",
             weight: 1,
             opacity: 0,
@@ -116,7 +118,7 @@ home_handler = {
 
         var polyline = new L.Polyline(pointList, {
             stroke: true,
-            color: "#519637",
+            color: "#ffe612",
             weight: 20,
             opacity: 0.8,
             smoothFactor: 1
@@ -132,6 +134,9 @@ home_handler = {
 
         $.each(mapData.suggestions, function(index, value) {
 
+            var popUpContent = '<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="likes">' + self.fixedLikes(value.likes) + '</div>' + self.checkLiked(value.id);
+
+            //Point Items
             if (mapData.features[value.id] == undefined && value.type == 'Point') {
                 var geometry = JSON.parse(value.geometry);
 
@@ -141,9 +146,11 @@ home_handler = {
                     self.onMarkerClick(e.latlng);
                 });
 
-                mapData.features[value.id].bindPopup('<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="likes">' + self.fixedLikes(value.likes) + '</div>' + self.checkLiked(value.id));
+                mapData.features[value.id].bindPopup(popUpContent);
                 mapData.pointsLayer.addLayer(mapData.features[value.id]);
             }
+
+            //Polyline Items
             else if (mapData.features[value.id] == undefined && value.type == 'LineString') {
                 var geometry = JSON.parse(value.geometry);
                 var pointList = [];
@@ -159,14 +166,14 @@ home_handler = {
                     weight: 4,
                     opacity: 1,
                     dashArray: "5,10",
-                    smoothFactor: 1
+                    smoothFactor: 1,
+                    className: 'linePoints'
                 }).on('click', function(e) {
                     self.onPolylineClick(e.target);
                 });
 
-                mapData.features[value.id].bindPopup('a');
-
-                mapData.pointsLayer.addLayer(mapData.features[value.id]);
+                mapData.features[value.id].bindPopup(popUpContent);
+                mapData.lineStringLayer.addLayer(mapData.features[value.id]);
             }
         });
     },
@@ -209,8 +216,21 @@ home_handler = {
             self.addLike(id);
         });
 
-        map.on('popupclose', function() {
-            mapData.selectLayer.clearLayers();
+        map.on("popupclose", function() {
+            var selectLayer = mapData.selectLayer.getLayers();
+            $.each( selectLayer, function( key, value ) {
+                if (key == 0 || key < (selectLayer.length - 1)){
+                    mapData.selectLayer.removeLayer(value);
+                }
+            });
+        });
+        map.on("popupopen", function() {
+            var selectLayer = mapData.selectLayer.getLayers();
+            $.each( selectLayer, function( key, value ) {
+                if (key < (selectLayer.length - 1)){
+                    mapData.selectLayer.removeLayer(value);
+                }
+            });
         });
     }
 }

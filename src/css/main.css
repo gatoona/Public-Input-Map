@@ -1,3 +1,7 @@
+body{
+    background-color: rgb(30, 48, 88);
+}
+
 body,
 html,
 #map {
@@ -223,8 +227,8 @@ ul.nopad li {
 
 .leaflet-popup-content button:hover{
 
-  border-color: #000;
-  color: #000;
+  border-color: #FFF;
+  color: #FFF;
 
 }
 
@@ -241,7 +245,35 @@ ul.nopad li {
   left: 0px;
   box-shadow: 0px 10px 50px rgb(0, 0, 0);
   padding: 20px;
+  -webkit-transition: left 0s, top 0.5s ease; /* Safari 3.1 to 6.0 */
+  transition: left 0s, top 0.5s ease;
 }
+
+.content-root.swipe{
+    top: 100%;
+}
+
+
+.content-arrow{
+    position: absolute;
+    right: 50%;
+    top: 0;
+    background-color: #1e3058;
+    padding: 10px;
+    margin-top: -70px;
+    margin-right: -35px;
+    border-radius: 50px 50px 0 0;
+}
+
+.content-arrow img{
+    width: 100%;
+    max-width: 50px;
+    display: block;
+    -ms-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
 
 @media (max-width: 767px) {
   .bottom-clear{
@@ -270,6 +302,30 @@ ul.nopad li {
   height: auto;
   width: 100%;
 
+}
+
+#map.boundsError .city-bounds {
+  animation: blink 1s steps(5, start) infinite;
+  -webkit-animation: blink 1s steps(5, start) infinite;
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+#map .points-icons, #map .linePoints{
+    -webkit-transition: opacity 0.5s ease; /* Safari 3.1 to 6.0 */
+    transition: opacity 0.5s ease;
+}
+
+#map.drawStart .points-icons, #map.drawStart .linePoints{
+    opacity: 0.3 !important;
 }
 
 .box-opener-child{
@@ -302,7 +358,32 @@ ul.nopad li {
     position: absolute;
     left: 0px;
     display: table;
+    -webkit-transition: left 0.3s, top 0s ease; /* Safari 3.1 to 6.0 */
+    transition: left 0.3s, top 0s ease;
   }
+
+  .content-root.swipe{
+      left: -380px;
+      top: 0;
+
+  }
+
+
+  .content-arrow{
+      position: absolute;
+      right: 0px;
+      top: 50%;
+      margin-top: -35px;
+      margin-right: -60px;
+      border-radius: 0 50px 50px 0;
+  }
+
+  .content-arrow img{
+      -ms-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+
 
   .header{
     width: 100%;
@@ -384,7 +465,6 @@ span.name{
   height: 100%;
   vertical-align: middle;
 }
-
 
 
 /*Status Bar*/
@@ -488,14 +568,15 @@ h1.success {
     left: 0;
     height: 100%;
     width: 100%;
-    background: rgba(255, 255, 255, 0.9) url() 50% 50% no-repeat;
+    background-color: rgba(255, 255, 255, 0);
 }
 
 body.loading .modala {
     display: block;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
-body.loading .content-root {
+body.loading .content-root, body.loading #map {
     filter: blur(2px);
 }
 
@@ -517,7 +598,7 @@ input[type="submit"] {
     text-transform: uppercase;
     padding: 12px 40px;
     min-width: auto;
-    color: #fff;
+    color: #1e3058;
     border: none;
     cursor: pointer;
     border-radius: 50px;
@@ -527,7 +608,7 @@ input[type="submit"] {
     font-family: inherit;
     font-size: 1.1em;
     font-weight: 600;
-    background-color: #61aa45;
+    background-color: #ffe612;
     line-height: 1;
     margin: 0 10px 10px 0;
     text-decoration: none;
@@ -535,10 +616,10 @@ input[type="submit"] {
 
 .btn-primary:hover,
 input[type="submit"]:hover {
-    background-color: #519637;
+    background-color: #FFFFFF;
     text-decoration: none;
     padding: 12px 40px;
-    color: #FFFFFF;
+    color: #1e3058;
 }
 
 
