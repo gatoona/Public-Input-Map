@@ -155,7 +155,11 @@ step_one_handler = {
     hideContent: function(){
         $('.content-root').addClass('swipe');
         $('.content-arrow').removeClass('hidden').addClass('animated fadeInLeft');
-        $("html, body").animate({ scrollTop: 0 }, 500);
+        $('html, body').animate({ 
+           scrollTop: 0}, 
+           1000, 
+           "swing"
+        );
     },
 
     showContent: function(){

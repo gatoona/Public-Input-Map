@@ -209,9 +209,51 @@ ul.nopad li {
     padding: 5px 0;
 }
 
+/*Form*/
+
+.required-icon::before {
+    content: "*";
+    color: #ff0000;
+}
+
+span.qNum {
+    color: #61aa45;
+}
+
+.btn-primary,
+input[type="submit"] {
+    display: inline-block;
+    text-transform: uppercase;
+    padding: 12px 40px;
+    min-width: auto;
+    color: #1e3058;
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: 600;
+    background-color: #ffe612;
+    line-height: 1;
+    margin: 0 5px 10px 0;
+    text-decoration: none;
+}
+
+.btn-primary:hover,
+input[type="submit"]:hover {
+    background-color: #FFFFFF;
+    text-decoration: none;
+    padding: 12px 40px;
+    color: #1e3058;
+}
+
+
 /*Leaflet*/
 
-.leaflet-popup-content button{
+.leaflet-popup-content button, .leaflet-popup-content .btn-novel{
   padding: 5px 20px;
   min-width: inherit;
   text-shadow: none;
@@ -219,13 +261,15 @@ ul.nopad li {
   background-color: transparent;
   color: #ffe612;
   font-size: 1em;
+  font-weight: 300;
   margin: 5px 0;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  border-radius: 0;
 }
 
-.leaflet-popup-content button:hover{
+.leaflet-popup-content button:hover, .leaflet-popup-content .btn-novel:hover{
 
   border-color: #FFF;
   color: #FFF;
@@ -272,6 +316,23 @@ ul.nopad li {
     -ms-transform: rotate(-90deg);
     -webkit-transform: rotate(-90deg);
     transform: rotate(-90deg);
+}
+
+.content-close{
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #1e3058;
+    padding: 10px;
+    margin-top: -70px;
+    margin-left: 15px;
+    border-radius: 50px 50px 0 0;
+}
+
+.content-close img{
+    width: 100%;
+    max-width: 50px;
+    display: block;
 }
 
 
@@ -388,6 +449,17 @@ ul.nopad li {
   }
 
 
+  .content-close{
+      position: absolute;
+      left: auto;
+      right: 0px;
+      top: 0;
+      margin-top: 15px;
+      margin-right: -60px;
+      margin-left: auto;
+      border-radius: 0 50px 50px 0;
+  }
+
   .header{
     width: 100%;
     max-width: none;
@@ -469,6 +541,39 @@ span.name{
   vertical-align: middle;
 }
 
+/*Comment Box*/
+
+.suggestion-comment{
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.comments{
+    display: block;
+    border-top: 2px dotted #435c94;
+    border-bottom: 2px dotted #435c94;
+    margin-top: 15px;
+    max-height: 200px;
+    height: auto;
+    overflow-y: auto;
+}
+
+.comments.expanded{
+    max-height: 350px;
+}
+
+.comments p{
+    display: block;
+    font-size: 1em;
+    margin: 0;
+    padding: 10px;
+}
+
+.comments p:nth-child(even) {
+    background-color: #2c3e65;
+}
+
 
 /*Status Bar*/
 
@@ -477,6 +582,7 @@ input.user-error,
 textarea.user-error,
 select.user-error {
     border-color: #e11;
+    border-radius: 4px 4px 0 0;
 }
 
 .ws-success input,
@@ -484,10 +590,6 @@ input.user-success,
 textarea.user-success,
 select.user-success {
     border-color: #1e1;
-}
-
-.ws-errorbox p {
-    max-width: 300px;
 }
 
 #status {
@@ -506,12 +608,15 @@ h1.success {
 }
 
 .ws-errorbox p {
-    margin: 2px 0 3px;
-    padding: 0;
-    color: #ff0500;
+    margin: 0;
+    color: #FFF;
+    background-color: #ee1111;
     font-size: 0.9em;
     padding: 5px;
-    font-style: italic;
+    font-style: normal;
+    border-radius: 0 0 4px 4px;
+    width: 100%;
+    text-align: center;
 }
 
 /*Loader*/
@@ -581,48 +686,6 @@ body.loading .modala {
 
 body.loading .content-root, body.loading #map {
     filter: blur(2px);
-}
-
-
-/*Form*/
-
-.required-icon::before {
-    content: "*";
-    color: #ff0000;
-}
-
-span.qNum {
-    color: #61aa45;
-}
-
-.btn-primary,
-input[type="submit"] {
-    display: inline-block;
-    text-transform: uppercase;
-    padding: 12px 40px;
-    min-width: auto;
-    color: #1e3058;
-    border: none;
-    cursor: pointer;
-    border-radius: 50px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    font-family: inherit;
-    font-size: 1.1em;
-    font-weight: 600;
-    background-color: #ffe612;
-    line-height: 1;
-    margin: 0 10px 10px 0;
-    text-decoration: none;
-}
-
-.btn-primary:hover,
-input[type="submit"]:hover {
-    background-color: #FFFFFF;
-    text-decoration: none;
-    padding: 12px 40px;
-    color: #1e3058;
 }
 
 
@@ -959,8 +1022,9 @@ textarea.large {
     background-image: none !important;
 }
 
-.no-margin {
+.no-mp {
     margin: 0px;
+    padding: 0px;
 }
 
 .pos-r {

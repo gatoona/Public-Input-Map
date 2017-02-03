@@ -1,7 +1,7 @@
 home_handler = {
 
     properties: {
-        title: 'Login Page'
+        title: 'Welcome'
     },
 
     onLoad: function(){
@@ -14,6 +14,7 @@ home_handler = {
 
     },
 
+    //Update Local Storage
     updateLS: function(){
         try {
           mapData.pvlk =  JSON.parse( localStorage.getItem( 'pvlk' ) ) || {};
@@ -23,6 +24,7 @@ home_handler = {
         }
     },
 
+    //Add to Local Storage
     addLS: function(id){
         var self = this;
         var pg = {};
@@ -52,7 +54,7 @@ home_handler = {
         var value = mapData.suggestions[id];
 
         value.likes = parseInt(value.likes) + 1;
-        mapData.features[id]._popup.setContent('<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="animated fadeInDown likes">' + self.fixedLikes(value.likes) + '</div>');
+        mapData.features[id]._popup.setContent('<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="animated fadeInDown likes">' + self.fixedLikes(value.likes) + '</div>' + self.commentBtn(id));
 
         self.addLS(id);
         $.ajax({
@@ -90,13 +92,17 @@ home_handler = {
         }
     },
 
-    checkLiked: function(marker) {
+    likeBtn: function(marker) {
         if (marker in mapData.pvlk){
           return '';
         }
         else {
-          return '<button class="inline-block like-btn" marker="'+marker+'" >Like this</button>'
+          return '<button class="inline-block like-btn" marker="'+marker+'" >Like this</button> '
         }
+    },
+
+    commentBtn: function(marker) {
+        return '<a class="inline-block btn-novel" href="#/view/'+marker+'" >Comment</a>';
     },
 
     onMarkerClick: function(location){
@@ -134,7 +140,7 @@ home_handler = {
 
         $.each(mapData.suggestions, function(index, value) {
 
-            var popUpContent = '<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="likes">' + self.fixedLikes(value.likes) + '</div>' + self.checkLiked(value.id);
+            var popUpContent = '<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="likes">' + self.fixedLikes(value.likes) + '</div>' + self.likeBtn(value.id) + self.commentBtn(value.id);
 
             //Point Items
             if (mapData.features[value.id] == undefined && value.type == 'Point') {

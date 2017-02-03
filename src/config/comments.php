@@ -1,14 +1,26 @@
 <?php
 require 'config.php';
+$FieldsGET = 'id, name, comment, likes, type, geometry';
 
-// Get Rewards List
+
 ArrestDB::Serve('GET', '/(#any)/', function ($table)
 {
 
+	if ($table == 'comments'){
+		$GLOBALS['FieldsGET'] = 'id, name, comment, created';
+	}
+
 	$query = array
 	(
-		sprintf('SELECT * FROM "%s"', $table),
+		sprintf('SELECT %s FROM "%s"',$GLOBALS['FieldsGET'], $table),
 	);
+
+
+	if (isset($_GET['sid']) === true)
+	{
+		$query[] = sprintf('WHERE sid = ' . "'%s'" . '', $_GET['sid']);
+		$query[] = sprintf('ORDER BY "%s" %s', 'created', 'DESC');
+	}
 
 	$query = sprintf('%s;', implode(' ', $query));
 	$result = ArrestDB::Query($query);
@@ -51,13 +63,9 @@ ArrestDB::Serve('POST', '/(#any)', function ($table)
 				$data[sprintf('"%s"', $key)] = $value;
 			}
 
-			$time = time();
-
-			$uipp = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			$uip = $_SERVER['REMOTE_ADDR'];
-
-			$data['"uip"'] = $uip;
-			$data['"uipp"'] = $uipp;
+			$data['"created"'] = $GLOBALS['time'];
+			$data['"uip"'] = $_SERVER['REMOTE_ADDR'];
+			$data['"uipp"'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
 
 
 

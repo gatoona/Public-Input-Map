@@ -2,6 +2,8 @@ $body = $("body");
 
 var properties = {
     currentURL: '',
+    previousURL: '',
+    savedURL: '',
     userLanguage: getCookie('lang') || 'en',
     resetOnLoad: true
 }
@@ -12,6 +14,7 @@ var mapData = {
     drawnItemsLayer: '',
     inputMarker: '',
     suggestionsURL: 'config/comments.php/suggestions/',
+    commentsURL: 'config/comments.php/comments/',
     suggestions: {},
     features: {},
     lineStringLayer: {},
@@ -49,17 +52,20 @@ $(function() {
     function hashGrab() {
         var hash = window.location.hash.substring(1).split('/')[1];
         loadPage(hash);
+
     }
 
     // Bind an event to window.onhashchange that, when the hash changes, gets the
     // hash and adds the class "selected" to any matching nav link.
     $(window).on('hashchange', function() {
-        hashGrab();
+        if (properties.currentURL){
+            hashGrab();
+        }
     })
     //initial Load
     $(window).load(function() {
         if (properties.resetOnLoad === true){
-            window.location.href = "#/home";
+            window.location.href = "#/";
         }
         hashGrab();
     });
@@ -139,7 +145,8 @@ $(function() {
         iconSize: [ 80, 97 ],
         iconAnchor: [ 40, 97 ],
         shadowSize: [ 88, 67 ],
-        shadowAnchor: [ 21, 67 ]
+        shadowAnchor: [ 21, 67 ],
+        className: "input-marker"
     });
 
 
@@ -201,13 +208,15 @@ function getCookie(cname) {
 
 function loadPage(hash) {
 
+    properties.previousURL = properties.currentURL;
+
     if (hash == '' || hash == undefined) {
         hash = 'home';
     }
 
     $("#content-root").load("templates/" + properties.userLanguage + "/" + hash + ".html", function(responseText, textStatus, req) {
         if (textStatus == "error") {
-            properties.currentURL = '';
+            properties.currentURL = '404';
             $("#content-root").load("templates/" + properties.userLanguage + "/404.html", function() {});
         } else {
             properties.currentURL = hash;
