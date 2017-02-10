@@ -1,6 +1,6 @@
 <?php
 require 'config.php';
-$FieldsGET = 'id, name, comment, likes, type, geometry';
+$FieldsGET = 'id, name, comment, likes, type, geometry, category';
 
 
 ArrestDB::Serve('GET', '/(#any)/', function ($table)

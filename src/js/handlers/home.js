@@ -11,7 +11,31 @@ home_handler = {
         map.off('popupopen');
         self.updateLS();
         self.loadData();
+    },
 
+    getRequest: function(){
+        var self = this;
+        var id = properties.loadHashID;
+
+        if (mapData.features[id]){
+
+            var item = mapData.features[id];
+
+            if (item instanceof L.Marker) {
+
+                var itemLocation = mapData.features[id].getLatLng();
+                self.onMarkerClick(itemLocation);
+                add_point_handler.centerDraw(item);
+            }
+
+            else if (item instanceof L.Polyline){
+                self.onPolylineClick(mapData.features[id]);
+                add_route_handler.centerDraw(item);
+            }
+
+            window.location.href = "#/view/" + id;
+
+        }
     },
 
     //Update Local Storage
@@ -138,6 +162,11 @@ home_handler = {
 
         var self = this;
 
+        var polylineCategories = {
+            "walking-improvement": "#8305be",
+            "biking-improvement": "#ff0066"
+        };
+
         $.each(mapData.suggestions, function(index, value) {
 
             var popUpContent = '<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="likes">' + self.fixedLikes(value.likes) + '</div>' + self.likeBtn(value.id) + self.commentBtn(value.id);
@@ -147,7 +176,7 @@ home_handler = {
                 var geometry = JSON.parse(value.geometry);
 
                 mapData.features[value.id] = L.marker([ geometry[1], geometry[0] ], {
-                    icon: new L.DivIcon()
+                    icon: new L.DivIcon({iconUrl: "img/" + value.category + ".png"})
                 }).on('click', function(e) {
                     self.onMarkerClick(e.latlng);
                 });
@@ -168,7 +197,7 @@ home_handler = {
 
                 mapData.features[value.id] = new L.Polyline(pointList, {
                     stroke: true,
-                    color: "#8305be",
+                    color: polylineCategories[value.category],
                     weight: 4,
                     opacity: 1,
                     dashArray: "5,10",
@@ -182,6 +211,12 @@ home_handler = {
                 mapData.lineStringLayer.addLayer(mapData.features[value.id]);
             }
         });
+
+        if (properties.loadHash == 'view'){
+            properties.loadHash = '';
+            self.getRequest();
+        }
+
     },
 
     loadData: function(){

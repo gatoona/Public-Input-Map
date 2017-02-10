@@ -59,116 +59,117 @@ function loadPage(hash) {
     $("#content-root").hide();
 
     if (hash == '' || hash == undefined) {
-        $("#content-root").load("templates/home.html", function() {
-        });
+        hash = 'suggestions';
     }
-    else {
-        $("#content-root").load("templates/" + hash + ".html", function(responseText, textStatus, req) {
-            if (textStatus == "error") {
-                $("#content-root").load("templates/404.html", function() {});
-            } else {
-                var handler = hash.replace(/-/, '_') + '_handler';
-                if (window[handler]){
-                    var handler = window[handler];
-                    
-                    //Change Page Title
-                    document.title = handler.properties.title;
 
-                    //Start Table population
-                    table = $('#datatable').DataTable({
-                        ajax: handler.properties.ajaxURL,
-                        colReorder: true,
-                        lengthMenu: [
-                            [10, 25, 50, -1],
-                            [10, 25, 50, "All"]
-                        ],
-                        order: [],
-                        scrollX: true,
-                        autoFill: false,
-                        select: {
-                            style: 'selected',
-                            items: 'row',
-                            blurable: true
-                        },
-                        fixedHeader: true,
-                        columns: handler.columns,
-                        columnDefs: [
-                            // {
-                            //     targets: [ 2 ],
-                            //     visible: false,
-                            //     searchable: false
-                            // },
-                            // {
-                            //     targets: [ 3 ],
-                            //     visible: false
-                            // },
-                            {
-                                targets: 'no-sort',
-                                orderable: false,
-                            }
-                        ],
-                        // Sets Row ID
-                        rowId: 'id',
+    $("#content-root").load("templates/" + hash + ".html", function(responseText, textStatus, req) {
+        if (textStatus == "error") {
+            $("#content-root").load("templates/404.html", function() {});
+        } else {
+            var handler = hash.replace(/-/, '_') + '_handler';
+            if (window[handler]){
+                var handler = window[handler];
+                
+                //Change Page Title
+                document.title = handler.properties.title;
 
-                        // createdRow: function( row, data, dataIndex ) {
-                        //         $( row ).find('td:eq(1)').attr('class', 'name');
-                        //     },
-
-
-                        initComplete: function() {
-
-                            // Apply the search
-                            table.columns('.search').every(function() {
-                                var that = this;
-
-                                var search = $('<input type="text" placeholder="Search...">')
-                                    .appendTo( $(that.footer()).empty() )
-                                    .on('keyup change', function() {
-                                    if (that.search() !== this.value) {
-                                        that
-                                            .search(this.value)
-                                            .draw();
-                                    }
-
-                                    } );
-
-                            });
-
-                            // Apply the select
-                            table.columns('.select').every(function() {
-                                var that = this;
-
-                                var select = $('<select><option value=""></option></select>')
-                                    .appendTo( $(that.footer()).empty() )
-                                    .on( 'change', function () {
-                                        var val = $.fn.dataTable.util.escapeRegex(
-                                            $(this).val()
-                                        );
-                                
-                                        that
-                                            .search( val ? '^'+val+'$' : '', true, false )
-                                            .draw();
-                                    } );
-                                
-                                that.data().unique().sort().each( function ( d, j ) {
-                                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                                });
-
-                            });
-
-                            table.columns.adjust().draw();
-
-
+                //Start Table population
+                table = $('#datatable').DataTable({
+                    ajax: handler.properties.ajaxURL,
+                    colReorder: true,
+                    lengthMenu: [
+                        [25, 50, 100, -1],
+                        [25, 50, 100, "All"]
+                    ],
+                    order: [],
+                    scrollX: true,
+                    autoFill: false,
+                    select: {
+                        style: 'selected',
+                        items: 'row',
+                        blurable: true
+                    },
+                    fixedHeader: true,
+                    fixedColumns:   {
+                        leftColumns: 1
+                    },
+                    columns: handler.columns,
+                    columnDefs: [
+                        // {
+                        //     targets: [ 2 ],
+                        //     visible: false,
+                        //     searchable: false
+                        // },
+                        // {
+                        //     targets: [ 3 ],
+                        //     visible: false
+                        // },
+                        {
+                            targets: 'no-sort',
+                            orderable: false,
                         }
+                    ],
+                    // Sets Row ID
+                    rowId: 'id',
 
-                    });
+                    // createdRow: function( row, data, dataIndex ) {
+                    //         $( row ).find('td:eq(1)').attr('class', 'name');
+                    //     },
 
-                    //Grab events
-                    handler.events();
-                }
+
+                    initComplete: function() {
+
+                        // Apply the search
+                        table.columns('.search').every(function() {
+                            var that = this;
+
+                            var search = $('<input type="text" placeholder="Search...">')
+                                .appendTo( $(that.footer()).empty() )
+                                .on('keyup change', function() {
+                                if (that.search() !== this.value) {
+                                    that
+                                        .search(this.value)
+                                        .draw();
+                                }
+
+                                } );
+
+                        });
+
+                        // Apply the select
+                        table.columns('.select').every(function() {
+                            var that = this;
+
+                            var select = $('<select><option value=""></option></select>')
+                                .appendTo( $(that.footer()).empty() )
+                                .on( 'change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+                            
+                                    that
+                                        .search( val ? '^'+val+'$' : '', true, false )
+                                        .draw();
+                                } );
+                            
+                            that.data().unique().sort().each( function ( d, j ) {
+                                select.append( '<option value="'+d+'">'+d+'</option>' )
+                            });
+
+                        });
+
+                        table.columns.adjust().draw();
+
+
+                    }
+
+                });
+
+                //Grab events
+                handler.events();
             }
-        });
-    }
+        }
+    });
 
     $("#content-root").fadeIn('slow');
 

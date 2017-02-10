@@ -1,7 +1,7 @@
 step_three_handler = {
 
     properties: {
-        title: 'Login Page'
+        title: 'Thank You!'
     },
 
     onLoad: function(){
@@ -14,7 +14,6 @@ step_three_handler = {
     events: function() {
         var self = this;
         self.onLoad();
-
 
     }
 }

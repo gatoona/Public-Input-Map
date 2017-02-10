@@ -40,6 +40,6 @@ $mail->Username = "noreply@altaprojects.net";
 //Password to use for SMTP authentication
 $mail->Password = "@lta_Projects";
 //Set who the message is to be sent from
-$mail->setFrom('noreply@altaprojects.net', 'In Motion - BHMB');
+$mail->setFrom('noreply@altaprojects.net', 'No Reply');
 //Set an alternative reply-to address
-$mail->addReplyTo('noreply@altaprojects.net', 'In Motion - BHMB');
+$mail->addReplyTo('noreply@altaprojects.net', 'No Reply');

@@ -4,8 +4,11 @@ var properties = {
     currentURL: '',
     previousURL: '',
     savedURL: '',
-    userLanguage: getCookie('lang') || 'en',
-    resetOnLoad: true
+    userLanguage: 'en',
+    resetOnLoad: true,
+    popPages: ['contact', 'view', 'legend'],
+    loadHash: '',
+    loadHashID: '',
 }
 
 //Map Initial Variables
@@ -52,7 +55,6 @@ $(function() {
     function hashGrab() {
         var hash = window.location.hash.substring(1).split('/')[1];
         loadPage(hash);
-
     }
 
     // Bind an event to window.onhashchange that, when the hash changes, gets the
@@ -65,6 +67,8 @@ $(function() {
     //initial Load
     $(window).load(function() {
         if (properties.resetOnLoad === true){
+            properties.loadHash = window.location.hash.substring(1).split('/')[1];
+            properties.loadHashID = window.location.hash.substring(2).split('/')[1];
             window.location.href = "#/";
         }
         hashGrab();
@@ -75,24 +79,25 @@ $(function() {
         zoomControl: true,
         attributionControl: false,
         minZoom: 0
-    }).setView([ 42.358459, -83.062158 ], 12);
+    }).setView([ 32.372723, -86.316771 ], 15);
 
     map.zoomControl.setPosition('topright');
     L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/ciw83c2da000t2qqqp5tvx08g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {}).addTo(map);
 
     //Set Main Layers
     mapData.selectLayer = L.featureGroup().addTo(map);
-    mapData.geoJSON.cityBounds = new L.GeoJSON.AJAX(["data/detroit.geojson"],{
+    mapData.geoJSON.cityBounds = new L.GeoJSON.AJAX(["data/bounds.geojson"],{
         clickable: false,
         style: {
-            color: '#ff0066',
+            color: '#c2dc77',
             weight: 2,
             fillColor: "#1f2552",
-            opacity: 1,
+            opacity: 0,
             fillOpacity: 0,
             className: "city-bounds"
         }
-    }).addTo(map);
+    })
+
     mapData.lineStringLayer = L.featureGroup().addTo(map);
     mapData.pointsLayer = new L.MarkerClusterGroup({
         iconCreateFunction: function(cluster) {
@@ -107,6 +112,11 @@ $(function() {
         showCoverageOnHover: false
     }).addTo(map);
     mapData.drawnItemsLayer = L.featureGroup().addTo(map);
+
+    mapData.geoJSON.cityBounds.on('data:loaded', function() {
+      mapData.geoJSON.cityBounds.addTo(map);
+      map.fitBounds(mapData.geoJSON.cityBounds.getBounds());
+    }.bind(this));
 
     //Set Icons
 
@@ -166,6 +176,30 @@ $(function() {
 
 });
 
+
+//Main Controllers
+
+$( ".control-user-input" ).click(function() {
+  var hide = $(this).hasClass('removed');
+  if (hide){
+    $(this).text('Hide All Comments');
+    $.each(mapData.features, function(index, value) {
+        if (this instanceof L.Marker) {
+            mapData.pointsLayer.addLayer(this);
+        } else if (this instanceof L.Path) {
+            mapData.lineStringLayer.addLayer(this);
+        }
+    });
+
+  }
+  else{
+    $(this).text('Show All Comments');
+    mapData.pointsLayer.clearLayers();
+    mapData.lineStringLayer.clearLayers();
+  }
+  $(this).toggleClass('removed');
+});
+
 function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -208,7 +242,11 @@ function getCookie(cname) {
 
 function loadPage(hash) {
 
-    properties.previousURL = properties.currentURL;
+    $('#content-root').removeClass('noswipe');
+    
+    if ($.inArray(properties.currentURL, properties.popPages) == -1){
+        properties.previousURL = properties.currentURL;
+    }
 
     if (hash == '' || hash == undefined) {
         hash = 'home';
@@ -229,6 +267,27 @@ function loadPage(hash) {
                 //Grab events
                 handler.events();
             }
+
+            //Global onLoad Functions For Pages
+            $('.content-arrow').click(function(event) {
+                $('#content-root').toggleClass('swipe');
+                if ($('#content-root').hasClass('swipe') == true){
+                    $('html, body').animate({ 
+                       scrollTop: 0}, 
+                       800, 
+                       "swing"
+                    );
+                }
+                else {
+                    console.log($('.content-root').offset().top)
+                    $('html, body').animate({ 
+                       scrollTop: $('.content-root').offset().top}, 
+                       800, 
+                       "swing"
+                    );
+                }
+                return false;
+            });
         }
     });
 

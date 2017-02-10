@@ -28,18 +28,18 @@ $mail->SMTPDebug = 0;
 //Ask for HTML-friendly debug output
 $mail->Debugoutput = 'html';
 //Set the hostname of the mail server
-$mail->Host = "mail.altaprojects.net";
+$mail->Host = "127.0.0.1";
 //Set Mail CS
 $mail->CharSet = 'UTF-8';
 //Set the SMTP port number - likely to be 25, 465 or 587
-$mail->Port = 25;
+$mail->Port = 1025;
 //Whether to use SMTP authentication
-$mail->SMTPAuth = true;
+$mail->SMTPAuth = false;
 //Username to use for SMTP authentication
-$mail->Username = "noreply@altaprojects.net";
+$mail->Username = "";
 //Password to use for SMTP authentication
-$mail->Password = "@lta_Projects";
+$mail->Password = "";
 //Set who the message is to be sent from
-$mail->setFrom('noreply@altaprojects.net', 'In Motion - BHMB');
+$mail->setFrom('noreply@altaprojects.net', 'No Reply');
 //Set an alternative reply-to address
-$mail->addReplyTo('noreply@altaprojects.net', 'In Motion - BHMB');
+$mail->addReplyTo('noreply@altaprojects.net', 'No Reply');
