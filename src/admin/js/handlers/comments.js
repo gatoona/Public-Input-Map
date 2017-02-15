@@ -15,7 +15,7 @@ comments_handler = {
         "data": "id",
         "render": function(data, type, full, meta) {
             if (data) {
-                var view = '<a target="_blank" href="/#/view/' + data + '">' + data + '</a>';
+                var view = '<a target="_blank" href="/map-demo/#/view/' + data + '">' + data + '</a>';
                 return view;
             } else {
                 return '';

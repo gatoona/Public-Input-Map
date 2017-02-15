@@ -138,6 +138,7 @@ home_handler = {
             weight: 1,
             opacity: 0,
             fillOpacity: 0.8,
+            clickable: false
           });
 
           mapData.selectLayer.addLayer(circle);
@@ -151,7 +152,8 @@ home_handler = {
             color: "#ffe612",
             weight: 20,
             opacity: 0.8,
-            smoothFactor: 1
+            smoothFactor: 1,
+            clickable: false
         });
 
         mapData.selectLayer.addLayer(polyline);
