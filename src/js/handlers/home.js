@@ -6,9 +6,12 @@ home_handler = {
 
     onLoad: function(){
         var self = this;
+
         $(document).off("click", ".like-btn");
         map.off('popupclose');
         map.off('popupopen');
+        map.off("click");
+
         self.updateLS();
         self.loadData();
     },
@@ -267,6 +270,7 @@ home_handler = {
                 }
             });
         });
+
         map.on("popupopen", function() {
             var selectLayer = mapData.selectLayer.getLayers();
             $.each( selectLayer, function( key, value ) {
@@ -274,6 +278,21 @@ home_handler = {
                     mapData.selectLayer.removeLayer(value);
                 }
             });
+        });
+
+        map.on("click", function(e) {
+
+            var clickedArea = e.latlng;
+            var closestLayer = L.GeometryUtil.closestLayer(map, mapData.lineStringLayer.getLayers(), e.latlng);
+            
+            if (closestLayer.distance <= 20) {
+                var closest = L.GeometryUtil.closest(map, closestLayer.layer, e.latlng, false);
+                var latlng = L.latLng(closest.lat, closest.lng);
+                self.onPolylineClick(closestLayer.layer);
+                closestLayer.layer.openPopup(latlng);
+
+            }
+
         });
     }
 }

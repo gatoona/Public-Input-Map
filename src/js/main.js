@@ -81,7 +81,7 @@ $(function() {
         minZoom: 0
     }).setView([ 32.372723, -86.316771 ], 15);
 
-    map.zoomControl.setPosition('topright');
+    map.zoomControl.setPosition('bottomright');
     L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/ciw83c2da000t2qqqp5tvx08g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {}).addTo(map);
 
     //Set Main Layers

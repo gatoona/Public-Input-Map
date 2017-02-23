@@ -215,7 +215,7 @@ ul.nopad li {
 .controls{
   position: fixed;
   top: 0;
-  right: 45px;
+  right: 0;
   z-index: 99;
   font-size: 1em;
   z-index: 999;
@@ -224,7 +224,6 @@ ul.nopad li {
 .controls .control{
   color: #FFF;
   background-color: #941c29;
-  box-shadow: 0px 0px 10px rgb(0, 0, 0);
   padding: 10px 20px;
   font-family: 'Quicksand', sans-serif;
   font-weight: 600;
@@ -255,7 +254,6 @@ ul.nopad li {
   }
 
   .controls .control{
-    box-shadow: 0px 0px 5px rgb(0, 0, 0);
     padding: 5px;
     font-family: 'Quicksand', sans-serif;
     font-weight: 600;
@@ -361,7 +359,6 @@ input[type="submit"]:hover {
   z-index: 999;
   position: absolute;
   left: 0px;
-  box-shadow: 0px 10px 50px rgb(0, 0, 0);
   padding: 20px;
 }
 
@@ -754,12 +751,12 @@ h1.success {
 /*Content Error*/
 
 .content-error{
-  position: absolute;
-  top: 0px;
+  position: fixed;
+  top: 40px;
   display: table;
   left: 0px;
   padding: 10px;
-  margin-top: -100px;
+  margin-top: 0;
   background-color: #e43030;
   margin-left: 10px;
   margin-right: 10px;
@@ -774,11 +771,11 @@ h1.success {
     top: auto;
     left: auto;
     margin-top: 0;
-    bottom: 0px;
+    bottom: 75px;
     display: table;
     right: 0px;
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 0;
     background-color: #e43030;
     margin-left: 0;
     margin-right: 10px;
@@ -804,7 +801,7 @@ h1.success {
 }
 
 .content-error-text{
-  display: table;
+  display: table-cell;
   position: relative;
   vertical-align: middle;
   padding-left: 10px;

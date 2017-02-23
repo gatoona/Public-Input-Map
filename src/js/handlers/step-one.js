@@ -99,7 +99,10 @@ step_one_handler = {
     },
 
     showContent: function(){
-        $('#content-root').removeClass('swipe');
+        var self = this;
+        mapData.drawControl.polyline.deleteLastVertex();
+        // $('#content-root').removeClass('swipe');
+        // self.disableDraw();
     },
 
 
@@ -110,6 +113,7 @@ step_one_handler = {
         $('.add-marker').click(function(event) {
         	self.disableDraw();
         	mapData.drawControl.marker.enable();
+            $('.content-error').addClass('animated bounceIn shake').removeClass('hidden');
             self.hideContent();
         	return false;
         });
@@ -117,8 +121,14 @@ step_one_handler = {
         $('.add-route').click(function(event) {
             self.disableDraw();
             mapData.drawControl.polyline.enable();
+            $('.content-error').addClass('animated bounceIn shake').removeClass('hidden');
             self.hideContent();
             return false;
+        });
+
+        $('.content-error').click(function(event) {
+            // $(this).removeClass('animated bounceIn shake').addClass('hidden');
+            self.showContent();
         });
 
         map.on("draw:created", function(e) {
