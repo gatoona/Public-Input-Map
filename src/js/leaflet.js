@@ -7168,16 +7168,20 @@ L.extend(L.DomEvent, {
 
 	addPointerListener: function (obj, type, handler, id) {
 
-		switch (type) {
-		case 'touchstart':
-			return this.addPointerListenerStart(obj, type, handler, id);
-		case 'touchend':
-			return this.addPointerListenerEnd(obj, type, handler, id);
-		case 'touchmove':
-			return this.addPointerListenerMove(obj, type, handler, id);
-		default:
-			throw 'Unknown touch event type';
-		}
+	    switch (type) {
+	    case 'touchstart':
+	        return this.addPointerListenerStart(obj, type, handler, id);
+	    case 'touchend':
+	        return this.addPointerListenerEnd(obj, type, handler, id);
+	    case 'touchmove':
+	        return this.addPointerListenerMove(obj, type, handler, id);
+	    case 'touchcancel':
+	        return this.addPointerListenerEnd(obj, type, handler, id);
+	    case 'touchleave':
+	        return this.addPointerListenerEnd(obj, type, handler, id);
+	    default:
+	        throw 'Unknown touch event type';
+	    }
 	},
 
 	addPointerListenerStart: function (obj, type, handler, id) {

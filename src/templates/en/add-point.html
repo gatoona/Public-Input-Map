@@ -16,7 +16,7 @@
 
 		    <h1>Comment Here</h1>
 
-		    <p>After selecting an area on the map, we can collect more information from the user.</p>
+		    <p>Please complete the form below.</p>
 
 		    <form id="suggestion-submit" class="ws-validate">
 
@@ -29,16 +29,17 @@
 		      	<label for="category">Which best applies to this location? <span class="required-icon"></span></label>
 		      	<select name="category" class="form-control" required>
 		      		<option disabled="" selected="" value=""> -- select an option -- </option>
-		      		<option value="walking-obstacle">Obstacle for walking</option>
-		      		<option value="bicycling-obstacle">Obstacle for biking</option>
-		      		<option value="like-walk">Nice place to walk</option>
-		      		<option value="like-bike">Nice place to bike</option>
+		      		<option value="walking">Walking Comment</option>
+		      		<option value="biking">Biking Comment</option>
+		      		<option value="transit">Transit Comment</option>
+		      		<option value="driving">Driving Comment</option>
+		      		<option value="parking">Parking Comment</option>
 		      	</select>
 		      </div>
 
 		      <div class="form-group">
-		        <label for="comment">Comment<span class="story-min"> (<span class="story-word">0</span>/500 characters)</span>:</label>
-		        <textarea name="comment" class="form-control story" rows="5"></textarea>
+		        <label for="comment">Comment<span class="story-min"> (<span class="story-word">0</span>/500 characters)</span>: <span class="required-icon"></span></label>
+		        <textarea name="comment" class="form-control story" rows="5" required></textarea>
 		      </div>
 
 		      <div id="status"></div>

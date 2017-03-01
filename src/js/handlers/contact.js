@@ -1,7 +1,7 @@
 contact_handler = {
 
     properties: {
-        title: 'Contact',
+        title: 'Contact Us',
         contactURL: 'config/contact.php/contact'
     },
 

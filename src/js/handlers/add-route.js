@@ -22,7 +22,7 @@ add_route_handler = {
 
     checkInBounds: function(marker, poly) {
 
-        var polyPoints = poly.getLatLngs();
+        var polyPoints = poly.getLatLngs()[0];
 
         var inside = false;
         var points;

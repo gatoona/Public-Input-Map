@@ -1,7 +1,7 @@
 home_handler = {
 
     properties: {
-        title: 'Welcome'
+        title: 'WPB | Mobility - Public Input Map'
     },
 
     onLoad: function(){
@@ -168,8 +168,11 @@ home_handler = {
         var self = this;
 
         var polylineCategories = {
-            "walking-improvement": "#8305be",
-            "biking-improvement": "#ff0066"
+            "walking": "#9bc553",
+            "biking": "#71239d",
+            "transit": "#ffcc4e",
+            "driving": "#d43f3a",
+            "parking": "#333333"
         };
 
         $.each(mapData.suggestions, function(index, value) {
@@ -282,14 +285,19 @@ home_handler = {
 
         map.on("click", function(e) {
 
+
             var clickedArea = e.latlng;
             var closestLayer = L.GeometryUtil.closestLayer(map, mapData.lineStringLayer.getLayers(), e.latlng);
             
-            if (closestLayer.distance <= 20) {
-                var closest = L.GeometryUtil.closest(map, closestLayer.layer, e.latlng, false);
-                var latlng = L.latLng(closest.lat, closest.lng);
-                self.onPolylineClick(closestLayer.layer);
-                closestLayer.layer.openPopup(latlng);
+            if (closestLayer) {
+                if (closestLayer.distance <= 20){
+                    var closest = L.GeometryUtil.closest(map, closestLayer.layer, e.latlng, false);
+                    var latlng = L.latLng(closest.lat, closest.lng);
+                    self.onPolylineClick(closestLayer.layer);
+                    closestLayer.layer.openPopup(latlng);
+
+                }
+                
 
             }
 

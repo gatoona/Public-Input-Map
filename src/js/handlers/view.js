@@ -92,7 +92,7 @@ view_handler = {
         $('#submit').prop('disabled', true);
 
         var self = this;
-        var underLimit = self.wordCount($('textarea[name=comment]').val()) <= 500;
+        var underLimit = self.wordCount($('textarea[name=comment]').val()) <= self.properties.wordLimit;
 
 
         if (underLimit){

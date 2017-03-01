@@ -1,33 +1,17 @@
-suggestions_handler = {
+signups_handler = {
 
     properties: {
-        title: 'Suggestions',
-        singular: 'Suggestion',
-        ajaxURL: '../admin/config/suggestions.php/suggestions/'
+        title: 'Comments',
+        singular: 'comment',
+        ajaxURL: '../admin/config/suggestions.php/signups/'
     },
 
     columns: [
     {
-        "data": null,
-        "defaultContent": "<button class='btn btn-xs'>EDIT</button>"
-    },
-    {
         "data": "id",
-        "render": function(data, type, full, meta) {
-            if (data) {
-                var view = '<a target="_blank" href="/walkbikeriverregion/#/view/' + data + '">' + data + '</a>';
-                return view;
-            } else {
-                return '';
-            }
-        }
     },
     {"data": "name"},
-    {"data": "comment"},
-    {"data": "likes"},
-    {"data": "category"},
-    {"data": "type"},
-    {"data": "geometry"},
+    {"data": "email"},
     {
         "data": "created",
         "render": function(data, type, full, meta) {
@@ -113,66 +97,11 @@ suggestions_handler = {
 
     },
 
-    editEntry: function(data) {
-
-        var self = this;
-
-        $('.modal-body').empty();
-        $('.modal-submit').off('click');
-        $('.modal-title').text('Edit ' + self.properties.singular);
-
-        $(".form").clone().removeClass("hidden").appendTo(".modal-body");
-        //Set Data
-
-        $('.modal-body input[name=name]').val(data.name);
-        $('.modal-body textarea[name=comment]').val(data.comment);
-
-
-        $('#myModal').modal();
-
-        $('.modal-submit').click(function(event) {
-            $('.modal-submit').prop('disabled', true);
-            var formData = {
-                'name': $('input[name=name]').val(),
-                'comment': $('.modal-body textarea[name=comment]').val()
-
-            };
-
-            $.ajax({
-                type: "PUT",
-                url: self.properties.ajaxURL + data.id,
-                crossDomain: false,
-                data: formData,
-                success: function(json) {
-                    if (json.error) {
-                        alert("There was an error.");
-                    } else {
-                        $('#myModal').modal('hide');
-                        table.ajax.reload(null, false);
-                    }
-                    $('.modal-submit').prop('disabled', false);
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    alert("There was an error.");
-                    $('.modal-submit').prop('disabled', false);
-                }
-            });
-        });
-
-    },
-
     events: function() {
 
         var self = this;
         self.onLoad();
 
-        /*On Button Click*/
-
-        $('#datatable tbody').on('click', 'button', function() {
-            var data = table.row($(this).parents('tr')).data();
-            self.editEntry(data);
-
-        });
 
     }
 }

@@ -22,7 +22,7 @@ add_point_handler = {
 
     checkInBounds: function(marker, poly) {
 
-        var polyPoints = poly.getLatLngs();
+        var polyPoints = poly.getLatLngs()[0];
 
         var inside = false;
         var points;
@@ -83,7 +83,7 @@ add_point_handler = {
 
         mapData.geoJSON.cityBounds.setStyle({
             fillOpacity: 0,
-            opacity: 0,
+            opacity: 1,
             weight: 2
         });
     },
@@ -116,13 +116,13 @@ add_point_handler = {
         if (layer instanceof L.Marker) {
 
             if (windowWidth >= 768) {
-                var targetPoint = map.project(layer.getLatLng(), 17).subtract([ getHeaderWidth() / 2, 0 ]);
+                var targetPoint = map.project(layer.getLatLng(), 15).subtract([ getHeaderWidth() / 2, 0 ]);
             } else {
-                var targetPoint = map.project(layer.getLatLng(), 17).add([ 0, windowHeight * 0.15 ]);
+                var targetPoint = map.project(layer.getLatLng(), 15).add([ 0, windowHeight * 0.15 ]);
             }
 
-            var targetLatLng = map.unproject(targetPoint, 17);
-            map.setView(targetLatLng, 17);
+            var targetLatLng = map.unproject(targetPoint, 15);
+            map.setView(targetLatLng, 15);
 
         }
         

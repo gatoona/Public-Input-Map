@@ -2,6 +2,7 @@ updates_handler = {
 
     properties: {
         title: 'Contact',
+        updateURL: 'config/comments.php/signups/',
         contactURL: 'config/update.php/update'
     },
 
@@ -23,7 +24,7 @@ updates_handler = {
 
         $.ajax({
             type: "POST",
-            url: self.properties.contactURL,
+            url: self.properties.updateURL,
             crossDomain: false,
             data: formData,
             success: function(json) {

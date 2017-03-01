@@ -71,107 +71,109 @@ $(function() {
             properties.loadHashID = window.location.hash.substring(2).split('/')[1];
             window.location.href = "#/";
         }
+
+        //Load Map
+        map = L.map("map", {
+            zoomControl: true,
+            minZoom: 0
+        }).setView([ 26.729784, -80.102834 ], 15);
+
+        map.zoomControl.setPosition('bottomright');
+        map.attributionControl.addAttribution("Alta Planning + Design");
+        L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/ciw83c2da000t2qqqp5tvx08g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {}).addTo(map);
+
+        //Set Main Layers
+        mapData.selectLayer = L.featureGroup().addTo(map);
+        mapData.geoJSON.cityBounds = new L.GeoJSON.AJAX(["data/bounds.geojson?ver=wpb"],{
+            clickable: false,
+            style: {
+                color: '#c2dc77',
+                weight: 2,
+                fillColor: "#1f2552",
+                opacity: 1,
+                fillOpacity: 0,
+                className: "city-bounds"
+            }
+        })
+
+        mapData.lineStringLayer = L.featureGroup().addTo(map);
+        mapData.pointsLayer = new L.MarkerClusterGroup({
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                    name: cluster.getChildCount(),
+                    cluster: true,
+                    iconUrl: "img/marker-cluster.png?v=2",
+                    iconSize: new L.Point(50, 50),
+                    iconAnchor: new L.Point(25, 25)
+                });
+            },
+            showCoverageOnHover: false
+        }).addTo(map);
+        mapData.drawnItemsLayer = L.featureGroup().addTo(map);
+
+        mapData.geoJSON.cityBounds.on('data:loaded', function() {
+          mapData.geoJSON.cityBounds.addTo(map);
+          map.invalidateSize();
+          map.fitBounds(mapData.geoJSON.cityBounds.getBounds());
+        }.bind(this));
+
+        //Set Icons
+
+        L.DivIcon = L.Icon.extend({
+            options: {
+                iconUrl: "img/marker.png?v=2",
+                shadowUrl: "img/marker-shadow.png?v=2",
+                iconSize: [ 40, 51 ],
+                shadowSize: [ 40, 6 ],
+                cluster: false,
+                iconAnchor: [ 20, 51 ],
+                shadowAnchor: [ 20, 0 ],
+                popupAnchor: [ 0, -55 ],
+                imageIcon: "",
+                name: "",
+                className: "points-icons"
+            },
+            createIcon: function() {
+                var div = document.createElement("div");
+                var marker = this._createImg(this.options["iconUrl"]);
+                var numdiv = document.createElement("div");
+                numdiv.innerHTML = this.options["name"] || "";
+                if (this.options["cluster"]) {
+                    numdiv.setAttribute("class", "ttRoute-map-cluster");
+                }
+                div.appendChild(marker);
+                div.appendChild(numdiv);
+                this._setIconStyles(div, "icon");
+                return div;
+            }
+        });
+
+        mapData.inputMarker = L.icon({
+            iconUrl: "img/input-marker.png?v=2",
+            shadowUrl: "img/input-marker-shadow.png?v=2",
+            iconSize: [ 80, 97 ],
+            iconAnchor: [ 40, 97 ],
+            shadowSize: [ 88, 67 ],
+            shadowAnchor: [ 21, 67 ],
+            className: "input-marker"
+        });
+
+
+        //Form Validator
+        webshims.setOptions('forms', {
+            lazyCustomMessages: true,
+            iVal: {
+                handleBubble: 'hide', // defaults: true. true (bubble and focus first invalid element) | false (no focus and no bubble) | 'hide' (no bubble, but focus first invalid element)
+                fx: 'fade', //defaults 'slide' or 'fade'
+                sel: '.ws-validate', // simple selector for the form element, setting this to false, will remove this feature
+                fieldWrapper: ':not(span, label, em, strong, b, i, mark, p)'
+            }
+        });
+        webshims.polyfill('forms');
+        webshim.activeLang(properties.userLanguage); //set locale to en
+        
         hashGrab();
     });
-
-    //Load Map
-    map = L.map("map", {
-        zoomControl: true,
-        attributionControl: false,
-        minZoom: 0
-    }).setView([ 32.372723, -86.316771 ], 15);
-
-    map.zoomControl.setPosition('bottomright');
-    L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/ciw83c2da000t2qqqp5tvx08g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {}).addTo(map);
-
-    //Set Main Layers
-    mapData.selectLayer = L.featureGroup().addTo(map);
-    mapData.geoJSON.cityBounds = new L.GeoJSON.AJAX(["data/bounds.geojson"],{
-        clickable: false,
-        style: {
-            color: '#c2dc77',
-            weight: 2,
-            fillColor: "#1f2552",
-            opacity: 0,
-            fillOpacity: 0,
-            className: "city-bounds"
-        }
-    })
-
-    mapData.lineStringLayer = L.featureGroup().addTo(map);
-    mapData.pointsLayer = new L.MarkerClusterGroup({
-        iconCreateFunction: function(cluster) {
-            return L.divIcon({
-                name: cluster.getChildCount(),
-                cluster: true,
-                iconUrl: "img/marker-cluster.png?v=2",
-                iconSize: new L.Point(50, 50),
-                iconAnchor: new L.Point(25, 25)
-            });
-        },
-        showCoverageOnHover: false
-    }).addTo(map);
-    mapData.drawnItemsLayer = L.featureGroup().addTo(map);
-
-    mapData.geoJSON.cityBounds.on('data:loaded', function() {
-      mapData.geoJSON.cityBounds.addTo(map);
-      map.fitBounds(mapData.geoJSON.cityBounds.getBounds());
-    }.bind(this));
-
-    //Set Icons
-
-    L.DivIcon = L.Icon.extend({
-        options: {
-            iconUrl: "img/marker.png?v=2",
-            shadowUrl: "img/marker-shadow.png?v=2",
-            iconSize: [ 40, 51 ],
-            shadowSize: [ 40, 6 ],
-            cluster: false,
-            iconAnchor: [ 20, 51 ],
-            shadowAnchor: [ 20, 0 ],
-            popupAnchor: [ 0, -55 ],
-            imageIcon: "",
-            name: "",
-            className: "points-icons"
-        },
-        createIcon: function() {
-            var div = document.createElement("div");
-            var marker = this._createImg(this.options["iconUrl"]);
-            var numdiv = document.createElement("div");
-            numdiv.innerHTML = this.options["name"] || "";
-            if (this.options["cluster"]) {
-                numdiv.setAttribute("class", "ttRoute-map-cluster");
-            }
-            div.appendChild(marker);
-            div.appendChild(numdiv);
-            this._setIconStyles(div, "icon");
-            return div;
-        }
-    });
-
-    mapData.inputMarker = L.icon({
-        iconUrl: "img/input-marker.png?v=2",
-        shadowUrl: "img/input-marker-shadow.png?v=2",
-        iconSize: [ 80, 97 ],
-        iconAnchor: [ 40, 97 ],
-        shadowSize: [ 88, 67 ],
-        shadowAnchor: [ 21, 67 ],
-        className: "input-marker"
-    });
-
-
-    //Form Validator
-    webshims.setOptions('forms', {
-        lazyCustomMessages: true,
-        iVal: {
-            handleBubble: 'hide', // defaults: true. true (bubble and focus first invalid element) | false (no focus and no bubble) | 'hide' (no bubble, but focus first invalid element)
-            fx: 'fade', //defaults 'slide' or 'fade'
-            sel: '.ws-validate', // simple selector for the form element, setting this to false, will remove this feature
-            fieldWrapper: ':not(span, label, em, strong, b, i, mark, p)'
-        }
-    });
-    webshims.polyfill('forms');
-    webshim.activeLang(properties.userLanguage); //set locale to en
 
 
 });

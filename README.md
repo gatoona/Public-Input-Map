@@ -1,6 +1,2 @@
-# user-registration-system
-Simple user registration system
-
-
-# To-Do
-Add warning for users who have cookies disabled.
+# Public Input Map
+Simple public input map used for Alta projects.

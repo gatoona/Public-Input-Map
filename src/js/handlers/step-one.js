@@ -11,33 +11,39 @@ step_one_handler = {
         map.off("draw:drawstop");
 
     	//Setup Draw
-    	mapData.drawControl = new L.Control.Draw({
-    	    edit: false,
-    	    draw: {
-    	        polyline: {
-    	            repeatMode: false,
-    	            shapeOptions: {
-    	                stroke: true,
-    	                color: "#8305be",
-    	                weight: 4,
-    	                opacity: 1,
-    	                fill: false,
-    	                clickable: false
-    	            }
-    	        },
-    	        polygon: false,
-    	        circle: false,
-    	        rectangle: false,
-    	        marker: {
-    	            repeatMode: false,
-                    icon: mapData.inputMarker
-    	        }
-    	    }
-    	});
 
-        mapData.drawnItemsLayer.clearLayers();
-    	mapData.drawControl.marker = new L.Draw.Marker(map, mapData.drawControl.options.draw.marker);
-    	mapData.drawControl.polyline = new L.Draw.Polyline(map, mapData.drawControl.options.draw.polyline);
+        if (!mapData.drawControl){
+            mapData.drawControl = new L.Control.Draw({
+                edit: false,
+                draw: {
+                    polyline: {
+                        repeatMode: false,
+                        shapeOptions: {
+                            stroke: true,
+                            color: "#8305be",
+                            weight: 4,
+                            opacity: 1,
+                            fill: false,
+                            clickable: false
+                        }
+                    },
+                    polygon: false,
+                    circle: false,
+                    rectangle: false,
+                    marker: {
+                        repeatMode: false,
+                        icon: mapData.inputMarker
+                    }
+                }
+            });
+
+            mapData.drawnItemsLayer.clearLayers();
+
+            mapData.drawControl.marker = new L.Draw.Marker(map, mapData.drawControl.options.draw.marker);
+            mapData.drawControl.polyline = new L.Draw.Polyline(map, mapData.drawControl.options.draw.polyline);
+        }
+    	
+
     },
 
     disableDraw: function(){
@@ -100,9 +106,19 @@ step_one_handler = {
 
     showContent: function(){
         var self = this;
+        $('#content-root').removeClass('swipe');
+        self.disableDraw();
+        self.hideEdits();
+    },
+
+    deleteLastVertex: function(){
         mapData.drawControl.polyline.deleteLastVertex();
-        // $('#content-root').removeClass('swipe');
-        // self.disableDraw();
+    },
+
+    hideEdits: function(){
+        $('.route-input').addClass('hidden').removeClass('animated bounceIn shake');
+        $('.marker-input').addClass('hidden').removeClass('animated bounceIn shake');
+
     },
 
 
@@ -113,7 +129,8 @@ step_one_handler = {
         $('.add-marker').click(function(event) {
         	self.disableDraw();
         	mapData.drawControl.marker.enable();
-            $('.content-error').addClass('animated bounceIn shake').removeClass('hidden');
+            self.hideEdits();
+            $('.marker-input').addClass('animated bounceIn shake').removeClass('hidden');
             self.hideContent();
         	return false;
         });
@@ -121,15 +138,25 @@ step_one_handler = {
         $('.add-route').click(function(event) {
             self.disableDraw();
             mapData.drawControl.polyline.enable();
-            $('.content-error').addClass('animated bounceIn shake').removeClass('hidden');
+            self.hideEdits();
+            $('.route-input').addClass('animated bounceIn shake').removeClass('hidden');
             self.hideContent();
             return false;
         });
 
-        $('.content-error').click(function(event) {
-            // $(this).removeClass('animated bounceIn shake').addClass('hidden');
+        $('.edit-cancel').click(function(event) {
             self.showContent();
         });
+
+        $('.edit-backspace').click(function(event) {
+            self.deleteLastVertex();
+        });
+
+        $('.edit-finish').click(function(event) {
+            mapData.drawControl.polyline.completeShape();
+        });
+
+
 
         map.on("draw:created", function(e) {
         	self.onDrawCreated(e);

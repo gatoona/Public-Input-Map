@@ -4,8 +4,8 @@ error_reporting(0);
 
 //Set Database URL
 // $dsn = 'sqlite://../db/data.sqlite';
-// $dsn = 'sqlite://' . $_SERVER['DOCUMENT_ROOT'] . '/map-demo/db/data.sqlite';
-$dsn = 'sqlite://' . $_SERVER['DOCUMENT_ROOT'] . '/db/data.sqlite';
+$dsn = 'sqlite://' . $_SERVER['DOCUMENT_ROOT'] . '/map-demo/db/data.sqlite';
+// $dsn = 'sqlite://' . $_SERVER['DOCUMENT_ROOT'] . '/db/data.sqlite';
 
 
 
