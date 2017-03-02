@@ -10,7 +10,8 @@ home_handler = {
         $(document).off("click", ".like-btn");
         map.off('popupclose');
         map.off('popupopen');
-        map.off("click");
+        
+        self.disableRouteEasyClick();
 
         self.updateLS();
         self.loadData();
@@ -147,20 +148,67 @@ home_handler = {
           mapData.selectLayer.addLayer(circle);
     },
 
-    onPolylineClick: function(points){
-        var pointList = points.getLatLngs();
+    onPolylineClick: function(clickArea, points){
 
-        var polyline = new L.Polyline(pointList, {
-            stroke: true,
-            color: "#ffe612",
-            weight: 20,
-            opacity: 0.8,
-            smoothFactor: 1,
-            clickable: false
+        function highlightSelected(){
+            var pointList = points.getLatLngs();
+
+            var polyline = new L.Polyline(pointList, {
+                stroke: true,
+                color: "#ffe612",
+                weight: 15,
+                opacity: 0.5,
+                smoothFactor: 1,
+                clickable: false
+            });
+
+            mapData.selectLayer.addLayer(polyline);
+            mapData.selectLayer.bringToFront();
+        }
+
+
+        if (clickArea !== undefined){
+            var layersWithin = L.GeometryUtil.layersWithin(map, mapData.lineStringLayer.getLayers(), clickArea, 25);
+            console.log(layersWithin);
+
+            highlightSelected();
+
+            // if (layersWithin.length == 1){
+            //     highlightSelected();
+            // }
+        }
+
+    },
+
+    enableRouteEasyClick: function(){
+
+        var self = this;
+
+        map.on("click", function(e) {
+
+            //Check to see if draw is enabled.
+            var markerDrawActive = mapData.drawControl.marker['_enabled'] || undefined;
+            var polylineDrawActive = mapData.drawControl.polyline['_enabled'] || undefined;
+
+            var clickedArea = e.latlng;
+            var closestLayer = L.GeometryUtil.closestLayer(map, mapData.lineStringLayer.getLayers(), e.latlng);
+            
+            //If a close layer exists and draw is disabled, execute.
+            if (closestLayer && markerDrawActive != true && polylineDrawActive != true) {
+                if (closestLayer.distance <= 20){
+                    var closest = L.GeometryUtil.closest(map, closestLayer.layer, e.latlng, false);
+                    var latlng = L.latLng(closest.lat, closest.lng);
+                    self.onPolylineClick(latlng, closestLayer.layer);
+                    closestLayer.layer.openPopup(latlng);
+                }
+            }
         });
 
-        mapData.selectLayer.addLayer(polyline);
-        mapData.selectLayer.bringToBack();
+    },
+
+
+    disableRouteEasyClick: function(){
+        map.off("click");
     },
 
     setData: function(){
@@ -210,9 +258,10 @@ home_handler = {
                     opacity: 1,
                     dashArray: "5,10",
                     smoothFactor: 1,
-                    className: 'linePoints'
+                    className: 'linePoints',
+                    summary: value.comment.substring(0,50) + ' ...'
                 }).on('click', function(e) {
-                    self.onPolylineClick(e.target);
+                    self.onPolylineClick(e.latlng, e.target);
                 });
 
                 mapData.features[value.id].bindPopup(popUpContent);
@@ -283,24 +332,7 @@ home_handler = {
             });
         });
 
-        map.on("click", function(e) {
+        self.enableRouteEasyClick();
 
-
-            var clickedArea = e.latlng;
-            var closestLayer = L.GeometryUtil.closestLayer(map, mapData.lineStringLayer.getLayers(), e.latlng);
-            
-            if (closestLayer) {
-                if (closestLayer.distance <= 20){
-                    var closest = L.GeometryUtil.closest(map, closestLayer.layer, e.latlng, false);
-                    var latlng = L.latLng(closest.lat, closest.lng);
-                    self.onPolylineClick(closestLayer.layer);
-                    closestLayer.layer.openPopup(latlng);
-
-                }
-                
-
-            }
-
-        });
     }
 }

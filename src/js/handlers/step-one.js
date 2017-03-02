@@ -10,40 +10,7 @@ step_one_handler = {
         map.off("draw:drawstart");
         map.off("draw:drawstop");
 
-    	//Setup Draw
-
-        if (!mapData.drawControl){
-            mapData.drawControl = new L.Control.Draw({
-                edit: false,
-                draw: {
-                    polyline: {
-                        repeatMode: false,
-                        shapeOptions: {
-                            stroke: true,
-                            color: "#8305be",
-                            weight: 4,
-                            opacity: 1,
-                            fill: false,
-                            clickable: false
-                        }
-                    },
-                    polygon: false,
-                    circle: false,
-                    rectangle: false,
-                    marker: {
-                        repeatMode: false,
-                        icon: mapData.inputMarker
-                    }
-                }
-            });
-
-            mapData.drawnItemsLayer.clearLayers();
-
-            mapData.drawControl.marker = new L.Draw.Marker(map, mapData.drawControl.options.draw.marker);
-            mapData.drawControl.polyline = new L.Draw.Polyline(map, mapData.drawControl.options.draw.polyline);
-        }
-    	
-
+        mapData.drawnItemsLayer.clearLayers();
     },
 
     disableDraw: function(){
