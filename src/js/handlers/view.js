@@ -20,13 +20,36 @@ view_handler = {
         $('#content-root').addClass('noswipe');
         
         self.properties.featureID = window.location.hash.substring(2).split('/')[1];
+        var id = self.properties.featureID;
+
+        mapData.selectLayer.clearLayers();
+        map.closePopup();
+
         //check to see if this feature exists
         if (!mapData.suggestions[self.properties.featureID]){
             window.location.href = "#/";
         }
         else {
+
+
+            var item = mapData.features[id];
+
+            if (item instanceof L.Marker) {
+
+                var itemLocation = mapData.features[id].getLatLng();
+                home_handler.onMarkerClick(itemLocation);
+                add_point_handler.centerDraw(item);
+            }
+
+            else if (item instanceof L.Polyline){
+                home_handler.onPolylineClick(undefined, mapData.features[id]);
+                add_route_handler.centerDraw(item);
+            }
+
+            map.invalidateSize();
             self.getData();
         }
+
 
 
     },
@@ -37,6 +60,8 @@ view_handler = {
         data.comment = data.comment || self.categories[data.category];
         //Set Suggestion's initial comment
         $('.suggestion-comment').html('<p class="no-mp">"' + data.comment + '" - <b>'+data.name+'</b></p>');
+
+        self.getLikes();
         self.getComments();
 
     },
@@ -53,6 +78,12 @@ view_handler = {
         var wom = val.match(/\S+/g);
         return val.length || 0;
         // return wom ? wom.length : 0;
+    },
+
+    getLikes: function(){
+        var self = this;
+        var likesNum = mapData.suggestions[self.properties.featureID].likes;
+        $('.view-like').html(home_handler.fixedLikes(likesNum))
     },
 
     getComments: function(){

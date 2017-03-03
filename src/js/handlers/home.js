@@ -23,20 +23,6 @@ home_handler = {
 
         if (mapData.features[id]){
 
-            var item = mapData.features[id];
-
-            if (item instanceof L.Marker) {
-
-                var itemLocation = mapData.features[id].getLatLng();
-                self.onMarkerClick(itemLocation);
-                add_point_handler.centerDraw(item);
-            }
-
-            else if (item instanceof L.Polyline){
-                self.onPolylineClick(mapData.features[id]);
-                add_route_handler.centerDraw(item);
-            }
-
             window.location.href = "#/view/" + id;
 
         }
@@ -168,14 +154,34 @@ home_handler = {
 
 
         if (clickArea !== undefined){
-            var layersWithin = L.GeometryUtil.layersWithin(map, mapData.lineStringLayer.getLayers(), clickArea, 25);
-            console.log(layersWithin);
+            var layersWithin = L.GeometryUtil.layersWithin(map, mapData.lineStringLayer.getLayers(), clickArea, 20);
 
             highlightSelected();
 
-            // if (layersWithin.length == 1){
-            //     highlightSelected();
-            // }
+            if (layersWithin.length > 1){
+                mapData.nearbyRoutes = layersWithin;
+                window.location.href = "#/nearby";
+
+                if (properties.currentURL == 'nearby'){
+                    nearby_handler.updateNearbyRoutes();
+                }
+
+
+            }
+
+            else if (layersWithin.length == 1){
+
+
+                if (properties.currentURL == 'nearby'){
+                    $('#content-root').removeClass('noswipe');
+                    window.location.href = "#/" + properties.previousURL;
+                }
+
+
+            }
+        }
+        else {
+           highlightSelected(); 
         }
 
     },
@@ -259,7 +265,7 @@ home_handler = {
                     dashArray: "5,10",
                     smoothFactor: 1,
                     className: 'linePoints',
-                    summary: value.comment.substring(0,50) + ' ...'
+                    id: value.id
                 }).on('click', function(e) {
                     self.onPolylineClick(e.latlng, e.target);
                 });

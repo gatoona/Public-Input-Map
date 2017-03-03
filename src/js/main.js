@@ -6,7 +6,7 @@ var properties = {
     savedURL: '',
     userLanguage: 'en',
     resetOnLoad: true,
-    popPages: ['contact', 'view', 'legend'],
+    popPages: ['contact', 'view', 'legend', 'nearby'],
     loadHash: '',
     loadHashID: '',
 }
@@ -19,6 +19,7 @@ var mapData = {
     suggestionsURL: 'config/comments.php/suggestions/',
     commentsURL: 'config/comments.php/comments/',
     suggestions: {},
+    nearbyRoutes: {},
     features: {},
     lineStringLayer: {},
     pointsLayer: {},
@@ -114,7 +115,9 @@ $(function() {
         mapData.geoJSON.cityBounds.on('data:loaded', function() {
           mapData.geoJSON.cityBounds.addTo(map);
           map.invalidateSize();
-          map.fitBounds(mapData.geoJSON.cityBounds.getBounds());
+          if (!properties.loadHashID){
+            map.fitBounds(mapData.geoJSON.cityBounds.getBounds());
+          }
         }.bind(this));
 
         //Set Icons

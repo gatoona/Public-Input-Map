@@ -667,6 +667,15 @@ span.name{
   color: #9ad9e9;
 }
 
+.view-like{
+  border-radius: 10px;
+  border: 1px solid #b75560;
+  padding: 10px 20px;
+  width: 100%;
+  text-align: center;
+  margin: 15px 0;
+}
+
 .comment{
   max-height: 150px;
   overflow-y: auto;
