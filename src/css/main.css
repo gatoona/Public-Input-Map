@@ -669,7 +669,7 @@ span.name{
 
 .view-like{
   border-radius: 10px;
-  border: 1px solid #b75560;
+  border: 3px solid rgba(255, 255, 255, 0.2);
   padding: 10px 20px;
   width: 100%;
   text-align: center;
@@ -693,6 +693,15 @@ span.name{
 }
 
 
+/*Nearby*/
+
+#nearby-routes p {
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+
 /*bar*/
 .bar{
   text-align: left;
@@ -713,8 +722,8 @@ span.name{
 
 .comments{
     display: block;
-    border-top: 2px dotted #9ad9e9;
-    border-bottom: 2px dotted #9ad9e9;
+    border-top: 3px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
     margin-top: 15px;
     max-height: 200px;
     height: auto;
@@ -733,7 +742,7 @@ span.name{
 }
 
 .comments p:nth-child(even) {
-    background-color: #730f1a;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 
@@ -922,7 +931,7 @@ h1.success {
 /*Legend Section*/
 
 #legend-section .category{
-  border: 1px solid #b9ced6;
+  border: 3px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   padding: 20px;
   margin-top: 5px;

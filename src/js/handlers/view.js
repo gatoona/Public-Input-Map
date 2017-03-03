@@ -6,15 +6,6 @@ view_handler = {
         wordLimit: 300
     },
 
-    categories: {
-        "walking-obstacle" : "Obstacle for walking.",
-        "bicycling-obstacle": "Obstacle for biking.",
-        "like-walk": "Nice place to walk.",
-        "like-bike": "Nice place to bike.",
-        "walking-improvement": "Route Needs Improvement (Walking).",
-        "biking-improvement": "Route Needs Improvement (Biking)."
-    },
-
     onLoad: function(){
         var self = this;
         $('#content-root').addClass('noswipe');
@@ -57,9 +48,11 @@ view_handler = {
     getData: function(){
         var self = this;
         var data = mapData.suggestions[self.properties.featureID];
-        data.comment = data.comment || self.categories[data.category];
+        data.comment = data.comment || properties.selectCategories[data.category].title;
         //Set Suggestion's initial comment
-        $('.suggestion-comment').html('<p class="no-mp">"' + data.comment + '" - <b>'+data.name+'</b></p>');
+        if (data.comment){
+            $('.suggestion-comment').html('<p class="no-mp">"' + data.comment + '" - <b>'+data.name+'</b></p>').removeClass('hidden');
+        }
 
         self.getLikes();
         self.getComments();
@@ -82,8 +75,25 @@ view_handler = {
 
     getLikes: function(){
         var self = this;
-        var likesNum = mapData.suggestions[self.properties.featureID].likes;
-        $('.view-like').html(home_handler.fixedLikes(likesNum))
+        var id = self.properties.featureID;
+
+        if (id){
+            var likesNum = mapData.suggestions[id].likes;
+            $('.view-like').html(home_handler.fixedLikes(likesNum) + self.likeBtn(id)).removeClass('hidden');
+            $('.add-like').click(function(event) {
+                home_handler.addLike(id);
+                event.preventDefault();
+            });
+        }
+    },
+
+    likeBtn: function(marker) {
+        if (marker in mapData.pvlk){
+          return '';
+        }
+        else {
+          return ' / <a class="add-like" href="#">Like This</a>'
+        }
     },
 
     getComments: function(){

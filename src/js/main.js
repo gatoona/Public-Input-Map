@@ -9,6 +9,28 @@ var properties = {
     popPages: ['contact', 'view', 'legend', 'nearby'],
     loadHash: '',
     loadHashID: '',
+    selectCategories: {
+        "walking": {
+            color: "#9bc553",
+            title: 'Walking Comment'
+        },
+        "biking": {
+            color: "#71239d",
+            title: 'Biking Comment'
+        },
+        "transit": {
+            color: "#ffcc4e",
+            title: 'Transit Comment'
+        },
+        "driving": {
+            color: "#d43f3a",
+            title: 'Driving Comment'
+        },
+        "parking": {
+            color: "#333333",
+            title: 'Parking Comment'
+        }
+    }
 }
 
 //Map Initial Variables

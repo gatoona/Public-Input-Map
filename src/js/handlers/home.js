@@ -1,7 +1,7 @@
 home_handler = {
 
     properties: {
-        title: 'WPB | Mobility - Public Input Map'
+        title: 'Public Input Map Demo'
     },
 
     onLoad: function(){
@@ -31,7 +31,7 @@ home_handler = {
     //Update Local Storage
     updateLS: function(){
         try {
-          mapData.pvlk =  JSON.parse( localStorage.getItem( 'pvlk' ) ) || {};
+          mapData.pvlk =  JSON.parse( localStorage.getItem( 'pvlk-map-demo' ) ) || {};
         }
         catch(e) {
           console.log(e);
@@ -54,7 +54,7 @@ home_handler = {
         }
 
         try {
-          localStorage.setItem( 'pvlk', JSON.stringify(mapData.pvlk) );
+          localStorage.setItem( 'pvlk-map-demo', JSON.stringify(mapData.pvlk) );
         }
         catch(e) {
           return false;
@@ -68,9 +68,7 @@ home_handler = {
         var value = mapData.suggestions[id];
 
         value.likes = parseInt(value.likes) + 1;
-        mapData.features[id]._popup.setContent('<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="animated fadeInDown likes">' + self.fixedLikes(value.likes) + '</div>' + self.commentBtn(id));
 
-        self.addLS(id);
         $.ajax({
           type: "PUT",
           url: mapData.suggestionsURL + id,
@@ -79,6 +77,11 @@ home_handler = {
           },
           success: function(json) {
             self.addLS(id);
+
+            //Update popup content
+            mapData.features[id]._popup.setContent('<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="animated fadeInDown likes">' + self.fixedLikes(value.likes) + '</div>' + self.commentBtn(id));
+            //update view content
+            view_handler.getLikes();
           },
           error: function(xhr, textStatus, errorThrown) {
             console.log(textStatus);
@@ -90,7 +93,7 @@ home_handler = {
     fixedComment: function(comment) {
         comment = comment.replace(/(<([^>]+)>)/gi, "");
         if ($.trim(comment).length > 0) {
-            return '<br><div class="comment"><p>' + comment + '</p></div>';
+            return '<br><div class="comment"><p>"' + comment + '"</p></div>';
         }
         return "";
     },
@@ -153,7 +156,7 @@ home_handler = {
         }
 
 
-        if (clickArea !== undefined){
+        if (clickArea !== undefined && (map.getZoom() > 13)){
             var layersWithin = L.GeometryUtil.layersWithin(map, mapData.lineStringLayer.getLayers(), clickArea, 20);
 
             highlightSelected();
@@ -217,21 +220,16 @@ home_handler = {
         map.off("click");
     },
 
+    generatePopUp: function(value){
+        var self = this;
+        return '<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="likes">' + self.fixedLikes(value.likes) + '</div>' + self.likeBtn(value.id) + self.commentBtn(value.id);
+    },
+
     setData: function(){
 
         var self = this;
 
-        var polylineCategories = {
-            "walking": "#9bc553",
-            "biking": "#71239d",
-            "transit": "#ffcc4e",
-            "driving": "#d43f3a",
-            "parking": "#333333"
-        };
-
         $.each(mapData.suggestions, function(index, value) {
-
-            var popUpContent = '<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="likes">' + self.fixedLikes(value.likes) + '</div>' + self.likeBtn(value.id) + self.commentBtn(value.id);
 
             //Point Items
             if (mapData.features[value.id] == undefined && value.type == 'Point') {
@@ -243,7 +241,7 @@ home_handler = {
                     self.onMarkerClick(e.latlng);
                 });
 
-                mapData.features[value.id].bindPopup(popUpContent);
+                mapData.features[value.id].bindPopup(self.generatePopUp(value));
                 mapData.pointsLayer.addLayer(mapData.features[value.id]);
             }
 
@@ -259,7 +257,7 @@ home_handler = {
 
                 mapData.features[value.id] = new L.Polyline(pointList, {
                     stroke: true,
-                    color: polylineCategories[value.category],
+                    color: properties.selectCategories[value.category].color,
                     weight: 4,
                     opacity: 1,
                     dashArray: "5,10",
@@ -270,7 +268,7 @@ home_handler = {
                     self.onPolylineClick(e.latlng, e.target);
                 });
 
-                mapData.features[value.id].bindPopup(popUpContent);
+                mapData.features[value.id].bindPopup(self.generatePopUp(value));
                 mapData.lineStringLayer.addLayer(mapData.features[value.id]);
             }
         });

@@ -17,9 +17,18 @@ nearby_handler = {
         $.each(mapData.nearbyRoutes, function(index, value) {
 
             var id = value.layer.options.id;
-            var summary = mapData.suggestions[id].comment.substring(0,50) + ' ...';
+            var category = mapData.suggestions[id].category;
 
-            $('#nearby-routes').append('<p><a href="/#/view/' + id + '">' + summary + '</a></p>');
+            var comment = mapData.suggestions[id].comment;
+            var summary = properties.selectCategories[category].title;
+            var name = mapData.suggestions[id].name;
+
+            if (comment){
+                summary = (comment.length >= 50) ? comment.substring(0,50) + '...' : comment;
+                summary = '"' + summary + '"';
+            }
+
+            $('#nearby-routes').append('<p><a href="/#/view/' + id + '">Route ID '+ id +':</a> ' + summary + ' - '+ name +'</p>');
 
         });
 
