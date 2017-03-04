@@ -718,7 +718,6 @@ span.name{
     max-height: 250px;
     overflow-y: auto;
     margin-bottom: 15px;
-    min-height: 30px;
 }
 
 .comments{
@@ -1375,7 +1374,7 @@ textarea.large {
 
 .no-mp {
     margin: 0px;
-    padding: 0px;
+    padding: 5px 0;
 }
 
 .pos-r {

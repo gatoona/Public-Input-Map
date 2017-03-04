@@ -28,7 +28,7 @@ nearby_handler = {
                 summary = '"' + summary + '"';
             }
 
-            $('#nearby-routes').append('<p><a href="/#/view/' + id + '">Route ID '+ id +':</a> ' + summary + ' - '+ name +'</p>');
+            $('#nearby-routes').append('<p><a href="#/view/' + id + '">Route ID '+ id +':</a> ' + summary + ' - '+ name +'</p>');
 
         });
 
