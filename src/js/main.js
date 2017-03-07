@@ -78,6 +78,7 @@ $(function() {
     function hashGrab() {
         var hash = window.location.hash.substring(1).split('/')[1];
         loadPage(hash);
+        // _gaq.push(['_trackPageview', hash]);
     }
 
     // Bind an event to window.onhashchange that, when the hash changes, gets the

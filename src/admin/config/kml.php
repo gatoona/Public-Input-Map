@@ -9,6 +9,15 @@ require '../../config/config.php';
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 echo '<kml xmlns="http://www.opengis.net/kml/2.2">';
 echo '<Document>';
+echo '<Style id="yellowLineGreenPoly">';
+echo '<LineStyle>';
+echo '<color>7f00ffff</color>';
+echo '<width>1</width>';
+echo '</LineStyle>';
+echo '<PolyStyle>';
+echo '<color>7f00ff00</color>';
+echo '</PolyStyle>';
+echo '</Style>';
 
 
 ArrestDB::Serve('GET', '/(#any)/', function ($table)
@@ -25,12 +34,44 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 
 	foreach ($data as $id => $value)
 	{
+		$coordinates = json_decode($value['geometry']);
+
 		echo '<Placemark>';
 		echo '<name>' . $value['name'] . '</name>';
+
+		echo '<ExtendedData>';
+		echo '<Data name="category">';
+		echo '<value>'.$value['category'].'</value>';
+		echo '</Data>';
+		echo '<Data name="added-date">';
+		echo '<value>'.$value['created'].'</value>';
+		echo '</Data>';
+		echo '<Data name="name">';
+		echo '<value>'.$value['name'].'</value>';
+		echo '</Data>';
+		echo '</ExtendedData>';
+
 		echo '<description>' . $value['comment'] . '</description>';
-		echo '<Point>';
-		echo '<coordinates>-122.0822035425683,37.42228990140251,0</coordinates>';
-		echo '</Point>';
+
+		if ($value['type'] == 'Point')
+		{
+			echo '<Point>';
+			echo '<coordinates>'.$coordinates[0].','.$coordinates[1].'</coordinates>';
+			echo '</Point>';
+		}
+		else if ($value['type'] == 'LineString')
+		{
+			echo '<LineString>';
+			echo '<coordinates>';
+			
+			foreach ($coordinates as $id => $coordinate)
+			{
+				echo $coordinate[0] . ',' . $coordinate[1] . ' ';
+			}
+			echo '</coordinates>';
+			echo '</LineString>';
+		}
+
 		echo '</Placemark>';
 
 	}

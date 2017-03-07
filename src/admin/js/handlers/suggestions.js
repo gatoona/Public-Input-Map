@@ -15,7 +15,7 @@ suggestions_handler = {
         "data": "id",
         "render": function(data, type, full, meta) {
             if (data) {
-                var view = '<a target="_blank" href="/walkbikeriverregion/#/view/' + data + '">' + data + '</a>';
+                var view = '<a target="_blank" href="../#/view/' + data + '">' + data + '</a>';
                 return view;
             } else {
                 return '';
@@ -59,9 +59,15 @@ suggestions_handler = {
                 }, {
                     extend: 'collection',
                     text: 'Export',
-                    buttons: ['copy', 'excel', 'pdf']
+                    buttons: ['copy', 'excel', 'pdf', {
+                    text: 'KML',
+                    action: function() {
+                        window.open("config/kml.php/suggestions");
+                    }
+                }]
                 },
-                'selectNone'
+                'selectNone',
+
             ]
         });
 

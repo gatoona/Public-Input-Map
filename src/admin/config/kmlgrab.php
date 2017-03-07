@@ -17,12 +17,47 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 
 	foreach ($data as $id => $value)
 	{
+		$coordinates = json_decode($value['geometry']);
+
 		echo '<Placemark>';
 		echo '<name>' . $value['name'] . '</name>';
+
+		echo '<ExtendedData>';
+		echo '<Data name="category">';
+		echo '<value>'.$value['category'].'</value>';
+		echo '</Data>';
+		echo '<Data name="added-date">';
+		echo '<value>'.$value['created'].'</value>';
+		echo '</Data>';
+		echo '<Data name="likes">';
+		echo '<value>'.$value['likes'].'</value>';
+		echo '</Data>';
+		echo '<Data name="name">';
+		echo '<value>'.$value['name'].'</value>';
+		echo '</Data>';
+		echo '</ExtendedData>';
+
 		echo '<description>' . $value['comment'] . '</description>';
-		echo '<Point>';
-		echo '<coordinates>-122.0822035425683,37.42228990140251,0</coordinates>';
-		echo '</Point>';
+
+		if ($value['type'] == 'Point')
+		{
+			echo '<Point>';
+			echo '<coordinates>'.$coordinates[0].','.$coordinates[1].'</coordinates>';
+			echo '</Point>';
+		}
+		else if ($value['type'] == 'LineString')
+		{
+			echo '<LineString>';
+			echo '<coordinates>';
+			
+			foreach ($coordinates as $id => $coordinate)
+			{
+				echo $coordinate[0] . ',' . $coordinate[1] . ' ';
+			}
+			echo '</coordinates>';
+			echo '</LineString>';
+		}
+
 		echo '</Placemark>';
 
 	}
