@@ -7,28 +7,12 @@ $dsn = 'sqlite://' . $_SERVER['DOCUMENT_ROOT'] . '/map-demo/db/data.sqlite';
 // $dsn = 'sqlite://' . $_SERVER['DOCUMENT_ROOT'] . '/db/data.sqlite';
 
 
-
 //Set Base URL
 $baseURL = 'http://' . $_SERVER['SERVER_NAME'];
 
 //Set Client Access
 $clients = [];
 
-//Blowfish for User Password Encryption
-$passwordKEY = '$2a$07$' . 'mLI03CtRGy8AypKhIEbm6T';
-//Blowfish for session token signature
-$sessionKEY = '$2a$07$' . 'ixZSr4SUspl0FYZh7uLe62';
-//Blowfish for reset token signature
-$resetKEY = '$2a$07$' . 'VAkYjY7GdHUJNPqssnH6fa';
-//Master Token Password
-$masterPass = 's2LG7bM@Juj8ZCb2d9y0mmufeG#0s4G8jcUTC+Socg508QIJtElpzR1nY5)VGBjMIipsYe/IkRibEG9YUK?imCwkg7GXtElolxT&C0A4b0h';
-
-//Table Names
-$users_table = 'users';
-$session_table = 'session_tokens';
-$reset_table = 'reset_tokens';
-$trips_table = 'logged_trips';
-$signup_table = 'signup';
 
 //Global Variables
 $time = time();
