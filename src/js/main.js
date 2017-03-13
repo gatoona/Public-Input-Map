@@ -137,11 +137,14 @@ $(function() {
 
         mapData.geoJSON.cityBounds.on('data:loaded', function() {
           mapData.geoJSON.cityBounds.addTo(map);
-          map.invalidateSize();
           if (!properties.loadHashID){
-            map.fitBounds(mapData.geoJSON.cityBounds.getBounds());
+            setTimeout(function(){
+                map.fitBounds(mapData.geoJSON.cityBounds.getBounds());
+            }, 1000);
           }
         }.bind(this));
+
+        map.invalidateSize();
 
         //Set Icons
 
