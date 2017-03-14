@@ -6,7 +6,7 @@ var properties = {
     savedURL: '',
     userLanguage: 'en',
     resetOnLoad: true,
-    popPages: ['contact', 'view', 'legend', 'nearby'],
+    popPages: ['contact', 'view', 'legend', 'nearby', 'privacy-policy'],
     loadHash: '',
     loadHashID: '',
     selectCategories: {
@@ -36,6 +36,8 @@ var properties = {
 //Map Initial Variables
 var map;
 var mapData = {
+    baseLayerI: '',
+    baseLayerS: '',
     drawnItemsLayer: '',
     inputMarker: '',
     suggestionsURL: 'config/comments.php/suggestions/',
@@ -103,8 +105,14 @@ $(function() {
         }).setView([ 26.729784, -80.102834 ], 15);
 
         map.zoomControl.setPosition('bottomright');
-        map.attributionControl.addAttribution("Alta Planning + Design");
-        L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/ciw83c2da000t2qqqp5tvx08g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {}).addTo(map);
+        map.attributionControl.addAttribution("Alta Planning + Design | <a href='#/privacy-policy'>Privacy Policy</a>");
+        
+        mapData.baseLayerI = L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/ciw83c2da000t2qqqp5tvx08g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {});
+        mapData.baseLayerS = L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/cixqcs04q002y2rmr9oet7jdi/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {});
+
+
+
+        map.addLayer(mapData.baseLayerI);
 
         //Set Main Layers
         mapData.selectLayer = L.featureGroup().addTo(map);
@@ -140,7 +148,7 @@ $(function() {
           if (!properties.loadHashID){
             setTimeout(function(){
                 map.fitBounds(mapData.geoJSON.cityBounds.getBounds());
-            }, 1000);
+            }, 500);
           }
         }.bind(this));
 
@@ -261,6 +269,22 @@ $( ".control-user-input" ).click(function() {
     mapData.lineStringLayer.clearLayers();
   }
   $(this).toggleClass('removed');
+});
+
+
+$( ".base-toggle" ).click(function() {
+  var sat = $(this).hasClass('satellite');
+  if (sat){
+    map.removeLayer(mapData.baseLayerS);
+    map.addLayer(mapData.baseLayerI);
+  }
+  else{
+
+    map.removeLayer(mapData.baseLayerI);
+    map.addLayer(mapData.baseLayerS);
+
+  }
+  $(this).toggleClass('satellite');
 });
 
 function getUrlParameter(sParam) {
