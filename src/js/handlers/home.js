@@ -7,6 +7,10 @@ home_handler = {
     onLoad: function(){
         var self = this;
 
+        $('#content-root').removeClass('swipe');
+        mapData.drawnItemsLayer.clearLayers();
+        step_one_handler.showContent();
+
         $(document).off("click", ".like-btn");
         map.off('popupclose');
         map.off('popupopen');
@@ -79,7 +83,7 @@ home_handler = {
             self.addLS(id);
 
             //Update popup content
-            mapData.features[id]._popup.setContent('<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="animated fadeInDown likes">' + self.fixedLikes(value.likes) + '</div>' + self.commentBtn(id));
+            mapData.features[id]._popup.setContent('<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment, value.category) + '<div class="animated fadeInDown likes">' + self.fixedLikes(value.likes) + '</div>' + self.commentBtn(id));
             //update view content
             view_handler.getLikes();
           },
@@ -90,12 +94,13 @@ home_handler = {
     },
 
 
-    fixedComment: function(comment) {
+    fixedComment: function(comment, category) {
         comment = comment.replace(/(<([^>]+)>)/gi, "");
-        if ($.trim(comment).length > 0) {
-            return '<br><div class="comment"><p>"' + comment + '"</p></div>';
+
+        if ($.trim(comment).length == 0) {
+            comment = properties.selectCategories[category].title;
         }
-        return "";
+        return '<br><div class="comment"><p>"' + comment + '"</p></div>';
     },
 
     fixedLikes: function(likes) {
@@ -222,7 +227,7 @@ home_handler = {
 
     generatePopUp: function(value){
         var self = this;
-        return '<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment) + '<div class="likes">' + self.fixedLikes(value.likes) + '</div>' + self.likeBtn(value.id) + self.commentBtn(value.id);
+        return '<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment, value.category) + '<div class="likes">' + self.fixedLikes(value.likes) + '</div>' + self.likeBtn(value.id) + self.commentBtn(value.id);
     },
 
     setData: function(){
@@ -236,7 +241,7 @@ home_handler = {
                 var geometry = JSON.parse(value.geometry);
 
                 mapData.features[value.id] = L.marker([ geometry[1], geometry[0] ], {
-                    icon: new L.DivIcon({iconUrl: "img/" + value.category + ".png"})
+                    icon: new L.DivIcon({iconUrl: "img/legend/" + value.category + ".png"})
                 }).on('click', function(e) {
                     self.onMarkerClick(e.latlng);
                 });

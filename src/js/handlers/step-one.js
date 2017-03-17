@@ -11,6 +11,16 @@ step_one_handler = {
         map.off("draw:drawstop");
 
         mapData.drawnItemsLayer.clearLayers();
+
+        var markerDrawActive = mapData.drawControl.marker['_enabled'] || undefined;
+        var polylineDrawActive = mapData.drawControl.polyline['_enabled'] || undefined;
+
+        if (markerDrawActive){
+            $('.marker-input').addClass('animated bounceIn shake').removeClass('hidden');
+        }
+        else if (polylineDrawActive){
+            $('.route-input').addClass('animated bounceIn shake').removeClass('hidden');
+        }
     },
 
     disableDraw: function(){

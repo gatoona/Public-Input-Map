@@ -221,19 +221,20 @@ Date: 2015-09-24 */
 
 .leaflet-bar {
   box-shadow: 0 0px 5px rgba(0,0,0,0.65);
-  border-radius: 0px;
+  border-radius: 5px;
+  background-color: #FFF;
+  border: 2px solid #FFF;
   }
 .leaflet-bar a,
 .leaflet-bar a:hover {
-  background-color: #fff;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px dotted #ccc;
   width: 26px;
   height: 26px;
   line-height: 26px;
   display: block;
   text-align: center;
   text-decoration: none;
-  color: black;
+  color: #333;
   }
 .leaflet-bar a,
 .leaflet-control-layers-toggle {
