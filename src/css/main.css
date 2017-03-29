@@ -245,40 +245,76 @@ ul.nopad li {
   padding: 25px 20px 10px 20px;
 }
 
+.controls .menu-toggle{
+  display: none;
+}
+
 
 @media (max-width: 767px) {
   .controls{
     position: fixed;
     top: 0;
     right: 0px;
-    z-index: 99;
     color: #FFF;
-    font-size: 0.8em;
+    font-size: 1em;
     white-space: nowrap;
     width: 100%;
-    text-align: right;
-    overflow-x: hidden;
+    text-align: left;
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.65);
+  }
+
+  .controls .menu-toggle{
+    color: #FFF;
+    background-color: #941c29;
+    text-align: left;
+    padding: 10px 20px;
+    font-weight: 600;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    -o-transition: all 0.1s linear;
+    transition: all 0.1s linear;
   }
 
   .controls .control{
-    padding: 5px;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 600;
-    border-radius: 0 0 5px 5px;
-    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 0px;
     vertical-align: top;
     margin-right: 0px;
     cursor: pointer;
     border: none;
     box-shadow: none;
+    border-top: 1px dotted rgba(255, 255, 255, 0.2);
+    z-index: 0;
+    display: none;
   }
 
   .controls a:last-child .control{
-    border-radius: 0 0 0px 5px;
+    border-bottom: 2px solid #FFF;
+    padding-bottom: 12px;
   }
 
   .controls .control:hover{
-    padding: 10px 5px 5px 5px;
+    padding: 10px 20px;
+    color: #ffc501;
+    padding-left: 25px;
+  }
+
+  .controls.toggle-open .control{
+    display: block;
+  }
+
+  .controls.toggle-open .menu-toggle{
+    background-color: #6d1720;
+  }
+
+  .controls.toggle-open .menu-toggle{
+    display: block;
+    border-radius: 0px;
   }
 }
 
@@ -322,7 +358,7 @@ ul.nopad li {
     width: 50px;
     right: 10px;
     bottom: auto;
-    top: 40px;
+    top: 57px;
     border-radius: 10px;
   }
 }
@@ -1019,12 +1055,15 @@ h1.success {
   border-radius: 10px;
   padding: 20px;
   margin-top: 5px;
+  color: #333;
+  background-color: #FFF;
 }
 
 #legend-section .category h2{
   margin: 0 0 10px 0;
   font-size: 1.2em;
   line-height: 1em;
+  color: #941c29;
 }
 
 .legend{
@@ -1050,6 +1089,7 @@ h1.success {
   line-height: 1em;
   padding-left: 10px;
   width: 100%;
+  font-weight: 600;
 
 }
 
@@ -1119,7 +1159,7 @@ body.loading .modala {
 }
 
 body.loading .content-root, body.loading #map {
-    filter: blur(2px);
+    opacity: 0.9;
 }
 
 
@@ -1165,6 +1205,14 @@ body.loading .content-root, body.loading #map {
 .submit {
     border: none;
     border-radius: 0px;
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0.8; }
 }
 
 

@@ -4002,6 +4002,10 @@ L.Popup = L.Class.extend({
 		if (this.options.closeButton) {
 			closeButton = this._closeButton =
 			        L.DomUtil.create('a', prefix + '-close-button', container);
+
+			closeButtonCover = this._closeButton =
+			        L.DomUtil.create('div', prefix + '-close-button-cover', container);
+
 			closeButton.href = '#close';
 			closeButton.innerHTML = '&#215;';
 			L.DomEvent.disableClickPropagation(closeButton);

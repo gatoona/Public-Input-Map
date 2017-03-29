@@ -21,6 +21,22 @@ home_handler = {
         self.loadData();
     },
 
+    scrollTop: function(){
+        $('html, body').animate({ 
+           scrollTop: 0}, 
+           800, 
+           "swing"
+        );
+    },
+
+    scrollContent: function(){
+        $('html, body').animate({ 
+           scrollTop: $('.content-root').offset().top}, 
+           800, 
+           "swing"
+        );
+    },
+
     getRequest: function(){
         var self = this;
         var id = properties.loadHashID;
@@ -127,9 +143,10 @@ home_handler = {
         return '<a class="inline-block btn-novel" href="#/view/'+marker+'" >Comment</a>';
     },
 
-    onMarkerClick: function(location){
-
-        var circle = new L.CircleMarker(location, {
+    onMarkerClick: function(marker){
+        var location = marker.getLatLng();
+       
+       var circle = new L.CircleMarker(location, {
             radius: 25,
             fillColor: "#ffe612",
             color: "#000",
@@ -137,27 +154,29 @@ home_handler = {
             opacity: 0,
             fillOpacity: 0.8,
             clickable: false
-          });
+        });
 
-          mapData.selectLayer.addLayer(circle);
+        mapData.selectLayer.addLayer(circle);
     },
 
-    onPolylineClick: function(clickArea, points){
+    onPolylineClick: function(clickArea, polyline){
+
+        var points = polyline.getLatLngs();
 
         function highlightSelected(){
-            var pointList = points.getLatLngs();
 
-            var polyline = new L.Polyline(pointList, {
+            var polylineSelect = new L.Polyline(points, {
                 stroke: true,
                 color: "#ffe612",
                 weight: 15,
-                opacity: 0.5,
+                opacity: 0.8,
                 smoothFactor: 1,
                 clickable: false
             });
 
-            mapData.selectLayer.addLayer(polyline);
+            mapData.selectLayer.addLayer(polylineSelect);
             mapData.selectLayer.bringToFront();
+            polyline.bringToFront();
         }
 
 
@@ -243,7 +262,7 @@ home_handler = {
                 mapData.features[value.id] = L.marker([ geometry[1], geometry[0] ], {
                     icon: new L.DivIcon({iconUrl: "img/legend/" + value.category + ".png"})
                 }).on('click', function(e) {
-                    self.onMarkerClick(e.latlng);
+                    self.onMarkerClick(e.target);
                 });
 
                 mapData.features[value.id].bindPopup(self.generatePopUp(value));

@@ -24,16 +24,13 @@ view_handler = {
 
 
             var item = mapData.features[id];
-
             if (item instanceof L.Marker) {
-
-                var itemLocation = mapData.features[id].getLatLng();
-                home_handler.onMarkerClick(itemLocation);
+                home_handler.onMarkerClick(item);
                 add_point_handler.centerDraw(item);
             }
 
             else if (item instanceof L.Polyline){
-                home_handler.onPolylineClick(undefined, mapData.features[id]);
+                home_handler.onPolylineClick(undefined, item);
                 add_route_handler.centerDraw(item);
             }
 

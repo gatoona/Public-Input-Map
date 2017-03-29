@@ -13,11 +13,8 @@ add_point_handler = {
         if (self.grabDraw() !== false){
             self.centerDraw(mapData.drawnItemsLayer.getLayers()[0]);
         }
-        $('html, body').animate({ 
-           scrollTop: $(document).height()-$(window).height()}, 
-           1000, 
-           "swing"
-        );
+
+        $('.input-marker').addClass('blink_me');
     },
 
     checkInBounds: function(marker, poly) {

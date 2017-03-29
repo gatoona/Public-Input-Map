@@ -287,6 +287,10 @@ $( ".base-toggle" ).click(function() {
   $(this).toggleClass('satellite');
 });
 
+$( ".menu-toggle" ).click(function() {
+  $('.controls').toggleClass('toggle-open');
+});
+
 function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -339,6 +343,9 @@ function loadPage(hash) {
         hash = 'home';
     }
 
+    $('.controls').removeClass('toggle-open');
+    home_handler.scrollTop();
+
     $("#content-root").load("templates/" + properties.userLanguage + "/" + hash + ".html", function(responseText, textStatus, req) {
         if (textStatus == "error") {
             properties.currentURL = '404';
@@ -359,19 +366,11 @@ function loadPage(hash) {
             $('.content-arrow').click(function(event) {
                 $('#content-root').toggleClass('swipe');
                 if ($('#content-root').hasClass('swipe') == true){
-                    $('html, body').animate({ 
-                       scrollTop: 0}, 
-                       800, 
-                       "swing"
-                    );
+                    home_handler.scrollTop();
                 }
                 else {
                     console.log($('.content-root').offset().top)
-                    $('html, body').animate({ 
-                       scrollTop: $('.content-root').offset().top}, 
-                       800, 
-                       "swing"
-                    );
+                    home_handler.scrollContent();
                 }
                 return false;
             });
