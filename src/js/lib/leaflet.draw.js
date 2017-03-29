@@ -399,6 +399,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 	},
 
 	_onMouseMove: function (e) {
+
 		var newPos = e.layerPoint,
 			latlng = e.latlng;
 
@@ -1055,7 +1056,10 @@ L.Draw.Marker = L.Draw.Feature.extend({
 			this._map.removeLayer(this._mouseMarker);
 			delete this._mouseMarker;
 
-			this._map.off('mousemove', this._onMouseMove, this);
+			this._map
+				.off('click', this._onClick, this)
+				.off('click', this._onTouch, this)
+				.off('mousemove', this._onMouseMove, this);
 		}
 	},
 
