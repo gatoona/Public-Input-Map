@@ -169,8 +169,15 @@ add_point_handler = {
 
         if (inBounds && underLimit){
 
+            var fd = new FormData();  
+            var photo =  $('input[name=photo]').prop('files')[0];
+
             var layer = mapData.drawnItemsLayer.getLayers()[0];
             var shape = layer.toGeoJSON();
+
+            if (photo){
+                fd.append( 'file',  photo );
+            };
 
 
             var formData = {
@@ -182,15 +189,27 @@ add_point_handler = {
                 geometry: JSON.stringify(shape.geometry.coordinates)
             };
 
+            $.each(formData, function(key, value)
+            {
+                fd.append(key, value);
+            });
+
             $.ajax({
                 type: "POST",
                 url: mapData.suggestionsURL,
+                processData: false,
+                contentType: false,
                 crossDomain: false,
-                data: formData,
+                data: fd,
                 success: function(json) {
                     $('#submit').prop('disabled', false);
                     if (json.error) {
-                        alert('server error');
+                        if (json.error.code == 'imageFail'){
+                            alert('Photo must be under 5 MB and be a gif, jpg, or png.')
+                        }
+                        else {
+                            alert('Unable to complete your request at this time.');
+                        }
 
                     } else {
                         mapData.drawnItemsLayer.clearLayers();
@@ -223,6 +242,18 @@ add_point_handler = {
 
         $('.content-error').click(function(event) {
             $(this).removeClass('animated bounceIn shake').addClass('hidden');
+        });
+
+        //On File Upload Set
+        $('input[name=photo]').change(function(e){
+            $in=$(this);
+
+            if ($in.prop('files').length > 0){
+                $in.next().html($in.prop('files')[0].name);
+            }
+            else {
+                $in.next().html('Choose File...');
+            }
         });
 
         $('textarea[name=comment]').on('input click', function() {

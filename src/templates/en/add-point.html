@@ -18,7 +18,7 @@
 
 		    <p>Please complete the form below.</p>
 
-		    <form id="suggestion-submit" class="ws-validate">
+		    <form id="suggestion-submit" class="ws-validate" enctype="multipart/form-data">
 
 		      <div class="form-group">
 		        <label for="name">Name:</label>
@@ -40,6 +40,14 @@
 		      <div class="form-group">
 		        <label for="comment">Comment<span class="story-min"> (<span class="story-word">0</span>/500 characters)</span>:</label>
 		        <textarea name="comment" class="form-control story" rows="5"></textarea>
+		      </div>
+
+		      <div class="form-group">
+		      	<label for="photo">Upload Photo:<br><span class="details">Photo must be under 5 MB and be a gif, jpg, or png.</span></label>
+		      	<label class="file-upload" for="photo">
+		      	  <input name="photo" data-max-size="1" type="file" id="photo" accept="image/gif, image/jpeg, image/jpg, image/png" class="file-upload-input">
+		      	  <span class="file-upload-control">Choose File...</span>
+		      	</label>
 		      </div>
 
 		      <div id="status"></div>

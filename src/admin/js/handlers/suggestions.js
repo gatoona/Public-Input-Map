@@ -24,6 +24,16 @@ suggestions_handler = {
     },
     {"data": "name"},
     {"data": "comment"},
+    {
+        "data": "photo",
+        "render": function(data, type, full, meta) {
+            if (data) {
+                return '<a target="_blank" href="../img/uploads/' + data + '">View</a>';
+            } else {
+                return '';
+            }
+        }
+    }, 
     {"data": "likes"},
     {"data": "category"},
     {"data": "type"},

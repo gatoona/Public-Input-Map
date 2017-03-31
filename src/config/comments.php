@@ -40,6 +40,12 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 
 ArrestDB::Serve('POST', '/(#any)', function ($table)
 {
+
+	//Upload Settings
+	$uploadOk = 1;
+	$target_dir = "../img/uploads/";
+
+
 	if (empty($_POST) === true)
 	{
 		$result = ArrestDB::$HTTP[204];
@@ -67,6 +73,63 @@ ArrestDB::Serve('POST', '/(#any)', function ($table)
 			$data['"uip"'] = $_SERVER['REMOTE_ADDR'];
 			$data['"uipp"'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
 
+			//Start Photo Upload
+			foreach($_FILES as $file)
+			{	
+
+			    $target_file = $target_dir . basename($file['name']);
+			    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+			    $imageFileType = strtolower($imageFileType);
+			    $fileName = md5(basename($file['name']) . $GLOBALS['time'] . rand()) . '.' . $imageFileType;
+
+			    // Check if image file is a actual image or fake image
+			    $check = getimagesize($file["tmp_name"]);
+			    if($check == false) {
+			        // echo "File is not an image.";
+			        $uploadOk = 0;
+			    }
+
+			    // Check if file already exists
+			    if (file_exists($target_file)) {
+			        // echo "Sorry, file already exists.";
+			        $uploadOk = 0;
+			    }
+
+			    // Check file size
+			    if ($file["size"] > (1000000*1)) {
+			        // echo "Sorry, your file is too large.";
+			        $uploadOk = 0;
+			    }
+
+			    // Allow certain file formats
+			    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+			    && $imageFileType != "gif" ) {
+			        // echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+			        $uploadOk = 0;
+			    }
+
+
+			    // Check if $uploadOk is set to 0 by an error FIX THIS AREA
+			    if ($uploadOk == 0) {
+
+			        $result = ArrestDB::$HTTP[imageFail];
+			        return ArrestDB::Reply($result);
+
+			    // if everything is ok, try to upload file
+			    } else {
+			        if(move_uploaded_file($file['tmp_name'], $target_dir . $fileName))
+			        {
+			        	$data['"photo"'] = $fileName;
+			            // echo "The file " . $fileName . " has been uploaded.";
+			        }
+			        else
+			        {
+			            $result = ArrestDB::$HTTP[imageFail];
+    			        return ArrestDB::Reply($result);
+			        }
+			    }
+			    
+			}
 
 
 			$query = array

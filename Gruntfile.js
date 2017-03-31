@@ -103,6 +103,7 @@ module.exports = function(grunt) {
       main: {
         files: [
           {cwd: 'src/img', src: ['*.png', '*.jpg', '*.gif', '*.svg'], dest: 'dist/img/'},
+          {cwd: 'src/data', src: ['*.geojson'], dest: 'dist/data/'},
           {cwd: 'src/templates', src: ['**/*.html'], dest: 'dist/templates'},
           {cwd: 'src/config', src: ['**/*.php'], dest: 'dist/config'},
           {cwd: 'src/admin/templates', src: ['**/*.html'], dest: 'dist/admin/templates'},
@@ -146,7 +147,7 @@ module.exports = function(grunt) {
         tasks: ['string-replace']
       },
       templates: {
-        files: ['src/img/*.png', 'src/img/*.jpg', 'src/img/*.gif', 'src/img/*.svg', 'src/templates/**/*.html', 'src/config/**/*.php', 'src/admin/templates/**/*.html', 'src/admin/config/**/*.php', 'src/admin/index.html'],
+        files: ['src/data/*.geojson', 'src/img/legend/*.png', 'src/img/*.png', 'src/img/*.jpg', 'src/img/*.gif', 'src/img/*.svg', 'src/templates/**/*.html', 'src/config/**/*.php', 'src/admin/templates/**/*.html', 'src/admin/config/**/*.php', 'src/admin/index.html'],
         tasks: ['sync']
       }
     },
