@@ -1,5 +1,6 @@
 <?php
 
+$dsn = 'sqlite://../../db/data.sqlite';
 require '../../config/config.php';
 
 

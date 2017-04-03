@@ -2,10 +2,9 @@
 error_reporting(0);
 
 //Set Database URL
-// $dsn = 'sqlite://../db/data.sqlite';
-// $dsn = 'sqlite://' . $_SERVER['DOCUMENT_ROOT'] . '/map-demo/db/data.sqlite';
-$dsn = 'sqlite://' . $_SERVER['DOCUMENT_ROOT'] . '/db/data.sqlite';
-
+if (!$dsn){
+	$dsn = 'sqlite://../db/data.sqlite';
+}
 
 //Set Base URL
 $baseURL = 'http://' . $_SERVER['SERVER_NAME'];

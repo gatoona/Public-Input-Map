@@ -2,6 +2,7 @@
 header('Content-Type: application/vnd.google-earth.kml+xml kml');
 header('Content-Disposition: attachment; filename="test.kml"');
 
+$dsn = 'sqlite://../../db/data.sqlite';
 require '../../config/config.php';
 
 
