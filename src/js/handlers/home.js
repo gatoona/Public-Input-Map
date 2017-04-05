@@ -84,24 +84,26 @@ home_handler = {
     },
 
     addLike: function(id){
-        var self = this;
-        var value = mapData.suggestions[id];
 
-        value.likes = parseInt(value.likes) + 1;
+        var self = this;
+        var value = mapData.featuresData[id];
 
         $.ajax({
-          type: "PUT",
-          url: mapData.suggestionsURL + id,
+          type: "POST",
+          url: mapData.likesURL,
           data: {
-            'likes' : value.likes
+            'object': id,
+            'type': 'feature'
           },
           success: function(json) {
+            value.likes = parseInt(value.likes) + 1;
             self.addLS(id);
 
             //Update popup content
             mapData.features[id]._popup.setContent('<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment, value.category) + '<div class="animated fadeInDown likes">' + self.fixedLikes(value.likes) + '</div>' + self.commentBtn(id));
             //update view content
             view_handler.getLikes();
+
           },
           error: function(xhr, textStatus, errorThrown) {
             console.log(textStatus);
@@ -253,7 +255,7 @@ home_handler = {
 
         var self = this;
 
-        $.each(mapData.suggestions, function(index, value) {
+        $.each(mapData.featuresData, function(index, value) {
 
             //Point Items
             if (mapData.features[value.id] == undefined && value.type == 'Point') {
@@ -310,18 +312,18 @@ home_handler = {
 
         $.ajax({
             type: "GET",
-            url: mapData.suggestionsURL,
+            url: mapData.featuresURL,
             cache: false,
             dataType: "json",
             success: function(json) {
 
                 $.each(json, function(index, value) {
-                    if (index != "error" && mapData.suggestions[value.id] == undefined) {
-                        mapData.suggestions[value.id] = value;
+                    if (index != "error" && mapData.featuresData[value.id] == undefined) {
+                        mapData.featuresData[value.id] = value;
                     }
                 });
-                if ($.isEmptyObject(mapData.suggestions)) {
-                    console.log("No Suggestions");
+                if ($.isEmptyObject(mapData.featuresData)) {
+                    console.log("No featuresData");
                 } else {
                     self.setData();
                 }

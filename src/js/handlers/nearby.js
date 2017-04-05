@@ -17,11 +17,11 @@ nearby_handler = {
         $.each(mapData.nearbyRoutes, function(index, value) {
 
             var id = value.layer.options.id;
-            var category = mapData.suggestions[id].category;
+            var category = mapData.featuresData[id].category;
 
-            var comment = mapData.suggestions[id].comment;
+            var comment = mapData.featuresData[id].comment;
             var summary = properties.selectCategories[category].title;
-            var name = mapData.suggestions[id].name;
+            var name = mapData.featuresData[id].name;
 
             if (comment){
                 summary = (comment.length >= 50) ? comment.substring(0,50) + '...' : comment;

@@ -17,7 +17,7 @@ view_handler = {
         map.closePopup();
 
         //check to see if this feature exists
-        if (!mapData.suggestions[self.properties.featureID]){
+        if (!mapData.featuresData[self.properties.featureID]){
             window.location.href = "#/";
         }
         else {
@@ -44,7 +44,7 @@ view_handler = {
 
     getData: function(){
         var self = this;
-        var data = mapData.suggestions[self.properties.featureID];
+        var data = mapData.featuresData[self.properties.featureID];
         data.comment = data.comment || properties.selectCategories[data.category].title;
         //Set Suggestion's initial comment
         if (data.comment){
@@ -75,7 +75,7 @@ view_handler = {
         var id = self.properties.featureID;
 
         if (id){
-            var likesNum = mapData.suggestions[id].likes;
+            var likesNum = mapData.featuresData[id].likes;
             $('.view-like').html(home_handler.fixedLikes(likesNum) + self.likeBtn(id)).removeClass('hidden');
             $('.add-like').click(function(event) {
                 home_handler.addLike(id);

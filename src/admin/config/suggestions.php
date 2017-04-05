@@ -12,6 +12,17 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 	(
 		sprintf('SELECT * FROM "%s" ORDER BY "id" DESC', $table),
 	);
+
+	if ($table == 'suggestions')
+	{
+		//Grab users
+		$query = array
+		(
+			sprintf('SELECT *, (SELECT COUNT(*) FROM "likes" WHERE "object" = suggestions.id) AS "likes" FROM "suggestions"'),
+		);
+	}
+
+
 	
 	$query = sprintf('%s;', implode(' ', $query));
 	$data = ArrestDB::Query($query);

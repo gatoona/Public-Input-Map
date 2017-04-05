@@ -1,6 +1,6 @@
 <?php
 require 'config.php';
-$FieldsGET = 'id, name, comment, likes, type, geometry, category';
+$FieldsGET = 'id, name, comment, type, geometry, category';
 
 
 ArrestDB::Serve('GET', '/(#any)/', function ($table)
@@ -14,6 +14,15 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 	(
 		sprintf('SELECT %s FROM "%s"',$GLOBALS['FieldsGET'], $table),
 	);
+
+	if ($table == 'suggestions')
+	{
+		//Grab users
+		$query = array
+		(
+			sprintf('SELECT %s, (SELECT COUNT(*) FROM "likes" WHERE "object" = suggestions.id) AS "likes" FROM "suggestions"', $GLOBALS['FieldsGET']),
+		);
+	}
 
 
 	if (isset($_GET['sid']) === true)

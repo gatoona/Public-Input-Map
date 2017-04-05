@@ -245,7 +245,7 @@ add_route_handler = {
 
             $.ajax({
                 type: "POST",
-                url: mapData.suggestionsURL,
+                url: mapData.featuresURL,
                 processData: false,
                 contentType: false,
                 crossDomain: false,
