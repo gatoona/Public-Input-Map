@@ -606,7 +606,8 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 		// calculate the distance from the last fixed point to the mouse position
 		distance = this._measurementRunningTotal + currentLatLng.distanceTo(previousLatLng);
 
-		return L.GeometryUtil.readableDistance(distance, this.options.metric);
+		var useMetric = this.options.metric ? 'metric' : 'imperial';
+		return L.GeometryUtil.readableDistance(distance, useMetric);
 	},
 
 	_showErrorTooltip: function () {
@@ -974,7 +975,7 @@ L.Draw.Circle = L.Draw.SimpleShape.extend({
 	_onMouseMove: function (e) {
 		var latlng = e.latlng,
 			showRadius = this.options.showRadius,
-			useMetric = this.options.metric,
+			useMetric = this.options.metric ? 'metric' : 'imperial';
 			radius;
 
 		this._tooltip.updatePosition(latlng);
