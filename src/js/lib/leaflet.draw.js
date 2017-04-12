@@ -321,7 +321,8 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 	},
 
 	deleteLastVertex: function () {
-		if (this._markers.length <= 1) {
+
+		if (this._markers.length <= 0) {
 			return;
 		}
 
@@ -331,11 +332,52 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 
 		this._markerGroup.removeLayer(lastMarker);
 
-		if (poly.getLatLngs().length < 2) {
+		if (poly.getLatLngs().length < 1) {
 			this._map.removeLayer(poly);
 		}
 
 		this._vertexChanged(latlng, false);
+	},
+
+	//functionality to snap roads not quite there yet.
+	snapToRoad: function(targetPoint){
+
+	    var self = this;
+	    var poly = this._poly.getLatLngs();
+
+	    if (poly.length === 0){
+	    	return [targetPoint];
+	    }
+	    else {
+
+	    	var getpoints = [];
+	    	var points = [targetPoint, poly[poly.length - 1]];
+	    	$.each( points, function( key, value ) {
+	    	    points[key] = value.lat + ',' + value.lng;
+	    	});
+	    	points = points.join('|');
+
+	    	$.ajax({
+	    	    type: "GET",
+	    	    url: 'https://roads.googleapis.com/v1/snapToRoads?path='+points+'&interpolate=true&key=AIzaSyBQOymhaTcHYuGt7Rh8F3M23oNcwKfQm-U',
+	    	    cache: false,
+	    	    dataType: "json",
+	    	    success: function(json) {
+	    	        if (!json.error) {
+
+	    	            $.each(json.snappedPoints, function(index, value) {
+	    	                var point = new L.LatLng(value.location.latitude, value.location.longitude);
+	    	                getpoints.push(point);
+	    	            });
+
+	    	            console.log(getpoints);
+	    	            return [targetPoint];
+	    	        }
+	    	    },
+	    	    error: function(xhr, textStatus, errorThrown) {
+	    	    }
+	    	});  
+	    }
 	},
 
 	addVertex: function (latlng) {
@@ -351,7 +393,16 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 
 		this._markers.push(this._createMarker(latlng));
 
-		this._poly.addLatLng(latlng);
+		var points = this.snapToRoad(latlng);
+		var poly = this._poly;
+
+		console.log(points);
+
+		$.each( points, function( key, value ) {
+		    poly.addLatLng(value);
+		});
+
+
 
 		if (this._poly.getLatLngs().length === 2) {
 			this._map.addLayer(this._poly);
@@ -590,7 +641,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 
 		if (this._markers.length === 1) {
 			this._measurementRunningTotal = 0;
-		} else {
+		} else if (this._markers.length > 0) {
 			previousMarkerIndex = markersLength - (added ? 2 : 1);
 			distance = latlng.distanceTo(this._markers[previousMarkerIndex].getLatLng());
 
