@@ -322,17 +322,30 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 
 	deleteLastVertex: function () {
 
+		var self = this;
+
 		if (this._markers.length <= 0) {
 			return;
 		}
 
-		var lastMarker = this._markers.pop(),
-			poly = this._poly,
-			latlng = this._poly.spliceLatLngs(poly.getLatLngs().length - 1, 1)[0];
 
+
+		var lastMarker = this._markers.pop(),
+			addedLength = lastMarker.options.addedLength,
+			poly = this._poly,
+			latlng = lastMarker.getLatLng();
+
+			console.log(addedLength)
+
+		//Start Remove
 		this._markerGroup.removeLayer(lastMarker);
 
-		if (poly.getLatLngs().length < 1) {
+		for (i = 0; i < addedLength; i++) { 
+		    self._poly.spliceLatLngs(poly.getLatLngs().length - 1, 1)
+		}
+
+
+		if (this._markers.length < 1) {
 			this._map.removeLayer(poly);
 		}
 
@@ -396,13 +409,13 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 		var self = this;
 		points = points.reverse();
 
-	    self._markers.push(self._createMarker(points[points.length - 1]));
+	    self._markers.push(self._createMarker(points[points.length - 1], points.length));
 		
 		$.each(points, function(index, value) {
 		    self._poly.addLatLng(value);
 		});
 
-		self._vertexChanged(latlng, true);
+		this._vertexChanged(latlng, true);
 
 	},
 
@@ -530,10 +543,11 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 		}
 	},
 
-	_createMarker: function (latlng) {
+	_createMarker: function (latlng, addedLength) {
 		var marker = new L.Marker(latlng, {
 			icon: this.options.icon,
-			zIndexOffset: this.options.zIndexOffset * 2
+			zIndexOffset: this.options.zIndexOffset * 2,
+			addedLength: addedLength
 		});
 
 		this._markerGroup.addLayer(marker);
