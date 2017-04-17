@@ -342,42 +342,68 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 	//functionality to snap roads not quite there yet.
 	snapToRoad: function(targetPoint){
 
-	    var self = this;
-	    var poly = this._poly.getLatLngs();
+		var self = this;
+		var poly = this._poly;
+	    var polyPoints = poly.getLatLngs();
+	    var points = [targetPoint];
 
-	    if (poly.length === 0){
-	    	return [targetPoint];
+	    if (polyPoints.length === 0) {
+	    	self._map.addLayer(self._poly);
+    		self.updateVertex(targetPoint, points);
 	    }
+
 	    else {
 
-	    	var getpoints = [];
-	    	var points = [targetPoint, poly[poly.length - 1]];
-	    	$.each( points, function( key, value ) {
-	    	    points[key] = value.lat + ',' + value.lng;
+	    	var pointsRequest = [targetPoint, polyPoints[polyPoints.length - 1]];
+	    	
+	    	$.each( pointsRequest, function( key, value ) {
+	    	    pointsRequest[key] = value.lat + ',' + value.lng;
 	    	});
-	    	points = points.join('|');
+
+	    	pointsRequest = pointsRequest.join('|');
 
 	    	$.ajax({
 	    	    type: "GET",
-	    	    url: 'https://roads.googleapis.com/v1/snapToRoads?path='+points+'&interpolate=true&key=AIzaSyBQOymhaTcHYuGt7Rh8F3M23oNcwKfQm-U',
+	    	    url: 'https://roads.googleapis.com/v1/snapToRoads?path='+pointsRequest+'&interpolate=true&key=AIzaSyBQOymhaTcHYuGt7Rh8F3M23oNcwKfQm-U',
 	    	    cache: false,
 	    	    dataType: "json",
 	    	    success: function(json) {
 	    	        if (!json.error) {
+	    	        	var getPoints = [];
 
 	    	            $.each(json.snappedPoints, function(index, value) {
 	    	                var point = new L.LatLng(value.location.latitude, value.location.longitude);
-	    	                getpoints.push(point);
+	    	                getPoints.push(point);
 	    	            });
 
-	    	            console.log(getpoints);
-	    	            return [targetPoint];
+    	                self.updateVertex(targetPoint, getPoints);
+
+	    	            
+
 	    	        }
 	    	    },
 	    	    error: function(xhr, textStatus, errorThrown) {
 	    	    }
 	    	});  
 	    }
+
+
+
+
+	},
+
+	updateVertex: function(latlng, points){
+		var self = this;
+		points = points.reverse();
+
+	    self._markers.push(self._createMarker(points[points.length - 1]));
+		
+		$.each(points, function(index, value) {
+		    self._poly.addLatLng(value);
+		});
+
+		self._vertexChanged(latlng, true);
+
 	},
 
 	addVertex: function (latlng) {
@@ -391,24 +417,9 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 			this._hideErrorTooltip();
 		}
 
-		this._markers.push(this._createMarker(latlng));
 
-		var points = this.snapToRoad(latlng);
-		var poly = this._poly;
-
-		console.log(points);
-
-		$.each( points, function( key, value ) {
-		    poly.addLatLng(value);
-		});
-
-
-
-		if (this._poly.getLatLngs().length === 2) {
-			this._map.addLayer(this._poly);
-		}
-
-		this._vertexChanged(latlng, true);
+		this.snapToRoad(latlng);
+		this._poly.redraw();
 	},
 
 	completeShape: function () {
