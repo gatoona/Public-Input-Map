@@ -38,7 +38,7 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 		$coordinates = json_decode($value['geometry']);
 
 		echo '<Placemark>';
-		echo '<name>' . $value['name'] . '</name>';
+		echo '<name>' . $value['id'] . '</name>';
 
 		echo '<ExtendedData>';
 		echo '<Data name="category">';
@@ -48,11 +48,11 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 		echo '<value>'.$value['created'].'</value>';
 		echo '</Data>';
 		echo '<Data name="name">';
-		echo '<value>'.$value['name'].'</value>';
+		echo '<value>'.htmlentities($value['name']).'</value>';
 		echo '</Data>';
 		echo '</ExtendedData>';
 
-		echo '<description>' . $value['comment'] . '</description>';
+		echo '<description>' . htmlentities($value['comment']) . '</description>';
 
 		if ($value['type'] == 'Point')
 		{
