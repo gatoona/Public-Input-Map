@@ -468,7 +468,7 @@ Date: 2015-09-24 */
   }
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-  background: rgba(30, 48, 88, 0.8);
+  background: rgba(30, 48, 88, 1);
   box-shadow: 0 3px 14px rgba(0,0,0,0.4);
   }
 .leaflet-container a.leaflet-popup-close-button {
@@ -482,7 +482,7 @@ Date: 2015-09-24 */
   color: #9ad9e9;
   text-decoration: none;
   font-weight: bold;
-  background: rgba(30, 48, 88, 0.8);
+  background: rgba(30, 48, 88, 1);
   border-radius: 50px 50px 0 0;
   line-height: 15px;
   text-align: center;

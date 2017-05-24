@@ -353,7 +353,7 @@ function loadPage(hash) {
             $("#content-root").load("templates/" + properties.userLanguage + "/404.html", function() {});
         } else {
             properties.currentURL = hash;
-            var handler = hash.replace(/-/, '_') + '_handler';
+            var handler = hash.replace(/-/g, '_') + '_handler';
             if (window[handler]){
                 var handler = window[handler];
                 

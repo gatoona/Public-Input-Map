@@ -26,12 +26,12 @@ view_handler = {
             var item = mapData.features[id];
             if (item instanceof L.Marker) {
                 home_handler.onMarkerClick(item);
-                add_point_handler.centerDraw(item);
+                home_handler.centerDraw(item);
             }
 
             else if (item instanceof L.Polyline){
                 home_handler.onPolylineClick(undefined, item);
-                add_route_handler.centerDraw(item);
+                home_handler.centerDraw(item);
             }
 
             map.invalidateSize();

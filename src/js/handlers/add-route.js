@@ -10,124 +10,8 @@ add_route_handler = {
     onLoad: function(){
         var self = this;
         //Zoom to selected area
-        if (self.grabDraw() !== false){
-            self.centerDraw(mapData.drawnItemsLayer.getLayers()[0]);
-        }
-    },
-
-    checkInBounds: function(marker, poly) {
-
-        var polyPoints = poly.getLatLngs()[0];
-
-        var inside = false;
-        var points;
-
-        if (marker instanceof L.Marker) {
-            points = [marker.getLatLng()];
-        } else if (marker instanceof L.Path) {
-            points = marker.getLatLngs();
-        }
-
-        $.each(points, function(index, value) {
-            var x = value.lat;
-            var y = value.lng;
-            inside = false;
-            for (var i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
-                var xi = polyPoints[i].lat, yi = polyPoints[i].lng;
-                var xj = polyPoints[j].lat, yj = polyPoints[j].lng;
-                var intersect = yi > y != yj > y && x < (xj - xi) * (y - yi) / (yj - yi) + xi;
-                if (intersect){
-                    inside = !inside;
-                };
-
-            }
-
-            if (inside == false){
-                return false;
-            }
-
-        });
-
-        
-        return inside;
-    },
-
-    onOutOfBounds: function(){
-        $('#map').addClass('boundsError');
-
-        var checked = $('.content-error').hasClass('bounceIn');
-
-        if (checked){
-            $('.content-error').removeClass('bounceIn').addClass('bounce');
-        }
-        else {
-            $('.content-error').removeClass('hidden bounce').addClass('animated bounceIn');
-        }
-
-
-        mapData.geoJSON.cityBounds.setStyle({
-            fillOpacity: 0,
-            opacity: 1,
-            weight: 5
-        });
-    },
-
-    onInBounds: function(){
-        $('#map').removeClass('boundsError');
-        $('.content-error').addClass('hidden').removeClass('animated bounceIn');
-
-        mapData.geoJSON.cityBounds.setStyle({
-            fillOpacity: 0,
-            opacity: 0,
-            weight: 2
-        });
-    },
-
-    centerDraw: function(layer){
-        var self = this;
-        var windowWidth = $(window).width();
-        var windowHeight = $(window).height();
-
-        var getHeaderWidth = function() {
-            var totalWidth = 0;
-            $(".content-root").each(function() {
-                if ($(this).hasClass("hidden")) {} else {
-                    totalWidth = $(this).outerWidth(true);
-                }
-            });
-            return totalWidth;
-        };
-
-        var getHeaderHeight = function() {
-            var totalHeight = 0;
-            $(".content-root").each(function() {
-                if ($(this).hasClass("hidden")) {} else {
-                    totalHeight = $(this).outerHeight(true);
-                }
-            });
-            return totalHeight;
-        };
-
-        if (layer instanceof L.Polyline) {
-
-            map.fitBounds(layer.getBounds());
-            // self.snapToRoad(layer);
-
-        }
-
-        
-    },
-
-    grabDraw: function(){
-        var layer = mapData.drawnItemsLayer.getLayers()[0];
-
-        if (layer){
-            var shape = layer.toGeoJSON();
-            var shape_for_db = JSON.stringify(shape);
-            return shape_for_db;
-        }
-        else {
-            return false;
+        if (home_handler.grabDraw() !== false){
+            home_handler.centerDraw(mapData.drawnItemsLayer.getLayers()[0]);
         }
     },
 
@@ -206,15 +90,15 @@ add_route_handler = {
 
         var self = this;
 
-        var inBounds = self.checkInBounds(mapData.drawnItemsLayer.getLayers()[0], mapData.geoJSON.cityBounds.getLayers()[0]);
+        var inBounds = home_handler.checkInBounds(mapData.drawnItemsLayer.getLayers()[0], mapData.geoJSON.cityBounds.getLayers()[0]);
         if (inBounds == false){
-            self.onOutOfBounds();
+            home_handler.onOutOfBounds();
         }
         else if (inBounds == true){
-            self.onInBounds();
+            home_handler.onInBounds();
         }
 
-        var underLimit = self.wordCount($('textarea[name=comment]').val()) <= 500;
+        var underLimit = self.wordCount($('textarea[name=comment]').val()) <= self.properties.wordLimit;
 
         if (inBounds && underLimit){
 

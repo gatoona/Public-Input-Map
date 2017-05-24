@@ -385,13 +385,12 @@ span.qNum {
 .btn-primary,
 input[type="submit"] {
     display: inline-block;
-    text-transform: uppercase;
     padding: 12px 40px;
     min-width: auto;
     color: #941c29;
     border: none;
     cursor: pointer;
-    border-radius: 50px;
+    border-radius: 5px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -402,17 +401,16 @@ input[type="submit"] {
     line-height: 1;
     margin: 0 5px 10px 0;
     text-decoration: none;
-    -webkit-transition: padding 0.1s ease-in-out;
-    -moz-transition: padding 0.1s ease-in-out;
-    -o-transition: padding 0.1s ease-in-out;
-    transition: padding 0.1s ease-in-out;
+    -webkit-transition: background-color 0.1s ease-in-out;
+    -moz-transition: background-color 0.1s ease-in-out;
+    -o-transition: background-color 0.1s ease-in-out;
+    transition: background-color 0.1s ease-in-out;
 }
 
 .btn-primary:hover,
 input[type="submit"]:hover {
     background-color: #FFFFFF;
     text-decoration: none;
-    padding: 12px 45px;
     color: #941c29;
 }
 
