@@ -321,7 +321,10 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 	},
 
 	deleteLastVertex: function () {
-		if (this._markers.length <= 1) {
+
+		var self = this;
+
+		if (this._markers.length <= 0) {
 			return;
 		}
 
@@ -329,13 +332,81 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 			poly = this._poly,
 			latlng = this._poly.spliceLatLngs(poly.getLatLngs().length - 1, 1)[0];
 
+		//Start Remove
 		this._markerGroup.removeLayer(lastMarker);
 
-		if (poly.getLatLngs().length < 2) {
+		if (this._markers.length < 1) {
 			this._map.removeLayer(poly);
 		}
 
 		this._vertexChanged(latlng, false);
+	},
+
+	//functionality to snap roads not quite there yet.
+	snapToRoad: function(targetPoint){
+
+		var self = this;
+		var poly = this._poly;
+	    var polyPoints = poly.getLatLngs();
+	    var points = [targetPoint];
+
+	    if (polyPoints.length === 0) {
+	    	self._map.addLayer(self._poly);
+    		self.updateVertex(targetPoint, points);
+	    }
+
+	    else {
+
+	    	var pointsRequest = [targetPoint, polyPoints[polyPoints.length - 1]];
+	    	
+	    	$.each( pointsRequest, function( key, value ) {
+	    	    pointsRequest[key] = value.lat + ',' + value.lng;
+	    	});
+
+	    	pointsRequest = pointsRequest.join('|');
+
+	    	$.ajax({
+	    	    type: "GET",
+	    	    url: 'https://roads.googleapis.com/v1/snapToRoads?path='+pointsRequest+'&interpolate=true&key=AIzaSyBQOymhaTcHYuGt7Rh8F3M23oNcwKfQm-U',
+	    	    cache: false,
+	    	    dataType: "json",
+	    	    success: function(json) {
+	    	        if (!json.error) {
+	    	        	var getPoints = [];
+
+	    	            $.each(json.snappedPoints, function(index, value) {
+	    	                var point = new L.LatLng(value.location.latitude, value.location.longitude);
+	    	                getPoints.push(point);
+	    	            });
+
+    	                self.updateVertex(targetPoint, getPoints);
+
+	    	            
+
+	    	        }
+	    	    },
+	    	    error: function(xhr, textStatus, errorThrown) {
+	    	    }
+	    	});  
+	    }
+
+
+
+
+	},
+
+	updateVertex: function(latlng, points){
+		var self = this;
+		points = points.reverse();
+
+	    self._markers.push(self._createMarker(points[points.length - 1], points.length));
+		
+		$.each(points, function(index, value) {
+		    self._poly.addLatLng(value);
+		});
+
+		this._vertexChanged(latlng, true);
+
 	},
 
 	addVertex: function (latlng) {
@@ -349,15 +420,18 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 			this._hideErrorTooltip();
 		}
 
+
+		//Default Draw (No Snap)
 		this._markers.push(this._createMarker(latlng));
-
 		this._poly.addLatLng(latlng);
-
 		if (this._poly.getLatLngs().length === 2) {
-			this._map.addLayer(this._poly);
+		    this._map.addLayer(this._poly);
 		}
-
 		this._vertexChanged(latlng, true);
+
+
+		// this.snapToRoad(latlng);
+		// this._poly.redraw();
 	},
 
 	completeShape: function () {
@@ -468,10 +542,11 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 		}
 	},
 
-	_createMarker: function (latlng) {
+	_createMarker: function (latlng, addedLength) {
 		var marker = new L.Marker(latlng, {
 			icon: this.options.icon,
-			zIndexOffset: this.options.zIndexOffset * 2
+			zIndexOffset: this.options.zIndexOffset * 2,
+			addedLength: addedLength
 		});
 
 		this._markerGroup.addLayer(marker);
@@ -590,7 +665,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 
 		if (this._markers.length === 1) {
 			this._measurementRunningTotal = 0;
-		} else {
+		} else if (this._markers.length > 0) {
 			previousMarkerIndex = markersLength - (added ? 2 : 1);
 			distance = latlng.distanceTo(this._markers[previousMarkerIndex].getLatLng());
 
