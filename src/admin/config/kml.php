@@ -47,7 +47,7 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 		echo '<Data name="added-date">';
 		echo '<value>'.$value['created'].'</value>';
 		echo '</Data>';
-		echo '<Data name="name">';
+		echo '<Data name="username">';
 		echo '<value>'.htmlentities($value['name']).'</value>';
 		echo '</Data>';
 		echo '</ExtendedData>';
