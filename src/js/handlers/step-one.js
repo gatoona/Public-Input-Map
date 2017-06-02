@@ -47,15 +47,12 @@ step_one_handler = {
 
     onDrawStop: function(e){
         $('#map').removeClass('drawStart');
-        home_handler.disableRouteEasyClick();
     },
 
     onDrawCreated: function(e){
         var self = this;
 	    var layer = e.layer;
 	    var type = e.layerType;
-
-        console.log(type);
 
 	    layer.editing.enable();
 	    mapData.drawnItemsLayer.addLayer(layer);

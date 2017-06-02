@@ -450,6 +450,7 @@ input[type="submit"]:hover {
   -webkit-transition: left 0s, top 0.5s ease; /* Safari 3.1 to 6.0 */
   transition: left 0s, top 0.5s ease;
   z-index: 998;
+  min-height: 30%;
 }
 
 .content-root{
@@ -464,6 +465,7 @@ input[type="submit"]:hover {
   position: absolute;
   left: 0px;
   padding: 20px 10px 20px 20px;
+  min-height: 100%;
 }
 
 #content-root.swipe{
@@ -567,6 +569,7 @@ input[type="submit"]:hover {
     height: 100%;
     -webkit-transition: left 0.3s, top 0s ease; /* Safari 3.1 to 6.0 */
     transition: left 0.3s, top 0s ease;
+    min-height: 0;
   }
 
   .content-root{
@@ -577,6 +580,7 @@ input[type="submit"]:hover {
     position: absolute;
     left: 0px;
     display: block;
+    min-height: 0;
   }
 
   #content-root.swipe{
