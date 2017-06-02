@@ -22,7 +22,7 @@ module.exports = function(grunt) {
       },
 
       css: {
-        src: ['src/css/lib/font-awesome.css', 'src/css/lib/boot-template.css', 'src/css/lib/jquery-ui.css', 'src/css/lib/jquery-ui.structure.css', 'src/css/lib/jquery-ui.theme.css', 'src/css/lib/leaflet.css', 'src/css/lib/leaflet.clusters.css', 'src/css/lib/leaflet.draw.css', 'src/css/lib/boot-forms.css', 'src/css/lib/boot-checkbox.css', 'src/css/lib/animate.css', 'src/css/main.css'],
+        src: ['src/css/lib/boot-template.css', 'src/css/lib/jquery-ui.css', 'src/css/lib/jquery-ui.structure.css', 'src/css/lib/jquery-ui.theme.css', 'src/css/lib/leaflet.css', 'src/css/lib/leaflet.clusters.css', 'src/css/lib/leaflet.draw.css', 'src/css/lib/boot-forms.css', 'src/css/lib/boot-checkbox.css', 'src/css/lib/animate.css', 'src/css/main.css'],
         dest: 'dist/css/app.css'
       }
 
@@ -85,7 +85,6 @@ module.exports = function(grunt) {
           // includes files within path
           {expand: false, src: ['src/.htaccess'], dest: 'dist/.htaccess', dot: true},
           {expand: true, cwd: 'src/templates/', src: ['**/*.html'], dest: 'dist/templates'},
-          {expand: true, cwd: 'src/fonts/', src: ['**'], dest: 'dist/fonts'},
           {expand: true, cwd: 'src/img/', src: ['**/*'], dest: 'dist/img'},
           {expand: false, cwd: 'src/img/uploads/', src: ['**'], dest: 'dist/img/uploads'},
           {expand: true, cwd: 'src/js/lib/polyfiller/', src: ['**/*'], dest: 'dist/js/lib/polyfiller'},
@@ -102,7 +101,7 @@ module.exports = function(grunt) {
     sync: {
       main: {
         files: [
-          {cwd: 'src/img', src: ['*.png', '*.jpg', '*.gif', '*.svg'], dest: 'dist/img/'},
+          {cwd: 'src/img', src: ['**/*'], dest: 'dist/img/'},
           {cwd: 'src/data', src: ['*.geojson'], dest: 'dist/data/'},
           {cwd: 'src/templates', src: ['**/*.html'], dest: 'dist/templates'},
           {cwd: 'src/config', src: ['**/*.php'], dest: 'dist/config'},
