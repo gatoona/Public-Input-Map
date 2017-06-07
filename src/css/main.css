@@ -247,6 +247,7 @@ ul.nopad li {
   border: 2px solid #FFF;
   border-top: 0px;
   box-shadow: 0 0px 5px rgba(0, 0, 0, 0.65);
+  font-size: 0.9em;
 }
 
 .controls .control:hover{
@@ -299,6 +300,7 @@ ul.nopad li {
     border-top: 1px dotted rgba(255, 255, 255, 0.2);
     z-index: 0;
     display: none;
+    font-size: 1em;
   }
 
   .controls a:last-child .control{
@@ -466,6 +468,7 @@ input[type="submit"]:hover {
   left: 0px;
   padding: 20px 10px 20px 20px;
   min-height: 100%;
+  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.35);
 }
 
 #content-root.swipe{
