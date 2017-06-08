@@ -106,8 +106,6 @@ view_handler = {
             dataType: "json",
             success: function(json) {
 
-                console.log(json);
-
                 if (!json.error) {
 
                     $.each(json, function(index, value) {

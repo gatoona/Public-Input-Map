@@ -9,7 +9,6 @@ nearby_handler = {
         $('#content-root').addClass('noswipe');
 
         self.updateNearbyRoutes();
-
     },
 
     updateNearbyRoutes: function(){
@@ -28,9 +27,21 @@ nearby_handler = {
                 summary = '"' + summary + '"';
             }
 
-            $('#nearby-routes').append('<p><a href="#/view/' + id + '">Route ID '+ id +':</a> ' + summary + ' - '+ name +'</p>');
+            $('#nearby-routes').append('<div class="nearby-route" ><a feature="'+id+'" href="#/view/' + id + '">Route ID '+ id +':</a><br> ' + summary + ' - '+ name +'</div>');
 
         });
+
+        var onIn = function(e){
+           var id = $(e.target).attr('feature');
+           if (mapData.features[id]){
+                home_handler.highlightPolyline(mapData.features[id]);
+           }
+        };
+
+        var onOut = function(e){
+            mapData.selectLayer.clearLayers();
+        };
+        $( ".nearby-route a" ).hover(onIn, onOut);
 
     },
 

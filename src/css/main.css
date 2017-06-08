@@ -819,11 +819,12 @@ span.name{
 
 /*Nearby*/
 
-#nearby-routes p {
+#nearby-routes .nearby-route {
   border: 3px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   padding: 10px 20px;
   line-height: 1em;
+  margin-bottom: 15px;
 }
 
 

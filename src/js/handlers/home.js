@@ -288,6 +288,25 @@ home_handler = {
         mapData.selectLayer.addLayer(circle);
     },
 
+    highlightPolyline: function(polyline){
+        mapData.selectLayer.clearLayers();
+        map.closePopup();
+
+        var points = polyline.getLatLngs();
+        var polylineSelect = new L.Polyline(points, {
+            stroke: true,
+            color: "#ffe612",
+            weight: 15,
+            opacity: 0.8,
+            smoothFactor: 1,
+            clickable: false
+        });
+
+        mapData.selectLayer.addLayer(polylineSelect);
+        mapData.selectLayer.bringToFront();
+        polyline.bringToFront();
+    },
+
     onPolylineClick: function(clickArea, polyline){
 
         var points = polyline.getLatLngs();
