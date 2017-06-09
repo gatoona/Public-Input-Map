@@ -128,6 +128,11 @@ class ArrestDB
 				'code' => 503,
 			],
 		],
+		imageFail => [
+			'error' => [
+				'code' => imageFail,
+			],
+		],
 	];
 
 	public static function Query($query = null)

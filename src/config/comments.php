@@ -105,7 +105,7 @@ ArrestDB::Serve('POST', '/(#any)', function ($table)
 			    }
 
 			    // Check file size
-			    if ($file["size"] > (1000000*1)) {
+			    if ($file["size"] > (1000000*5)) {
 			        // echo "Sorry, your file is too large.";
 			        $uploadOk = 0;
 			    }
