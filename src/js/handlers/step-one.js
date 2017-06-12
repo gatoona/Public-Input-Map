@@ -60,13 +60,11 @@ step_one_handler = {
         $('#content-root').removeClass('swipe');
 
 	    if (type === "marker") {
-
             mapData.drawnItemsLayer.getLayers()[0].dragging.enable();
-            window.location.href = "#/add-point/";
 	    }
 
-        else if (type === "polyline") {
-            window.location.href = "#/add-route/";
+        if (type === "polyline" || type === "marker") {
+            window.location.href = "#/add-feature/";
         }
 
     },

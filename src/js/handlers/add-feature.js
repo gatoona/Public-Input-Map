@@ -1,4 +1,4 @@
-add_route_handler = {
+add_feature_handler = {
 
     properties: {
         title: 'Tell Us Why',
@@ -13,62 +13,8 @@ add_route_handler = {
         if (home_handler.grabDraw() !== false){
             home_handler.centerDraw(mapData.drawnItemsLayer.getLayers()[0]);
         }
-    },
 
-    //functionality to snap roads not quite there yet.
-    snapToRoad: function(layer){
-        var self = this;
-        if (layer){
-            var shape = layer.toGeoJSON();
-            var polyline = shape.geometry.coordinates;
-
-            if (polyline.length > 0 && polyline.length <= 100){
-                $.each( polyline, function( key, value ) {
-                    polyline[key] = value.reverse().join(',');
-                });
-            }
-            polyline = polyline.join('|');
-
-
-
-            $.ajax({
-                type: "GET",
-                url: 'https://roads.googleapis.com/v1/snapToRoads?path='+polyline+'&interpolate=true&key='+self.properties.key,
-                cache: false,
-                dataType: "json",
-                success: function(json) {
-                    if (!json.error) {
-
-
-                        var pointList = [];
-
-                        $.each(json.snappedPoints, function(index, value) {
-                            var point = new L.LatLng(value.location.latitude, value.location.longitude);
-                            pointList.push(point);
-                        });
-
-                        var snappedPolyline = new L.Polyline(pointList, {
-                            stroke: true,
-                            color: "#8305be",
-                            weight: 4,
-                            opacity: 1,
-                            dashArray: "5,10",
-                            smoothFactor: 1,
-                            className: 'linePoints'
-                        });
-
-                        mapData.drawnItemsLayer.addLayer(snappedPolyline);
-
-                    }
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                }
-            });   
-        }
-        else {
-            
-        }
-
+        $('.input-marker').addClass('blink_me');
     },
 
     wordCount: function( val ){
@@ -171,6 +117,7 @@ add_route_handler = {
         $("#suggestion-submit").submit(function(event) {
             self.formSubmit(event);
         });
+
 
         $('.content-error').click(function(event) {
             $(this).removeClass('animated bounceIn shake').addClass('hidden');
