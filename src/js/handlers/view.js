@@ -45,7 +45,9 @@ view_handler = {
     getData: function(){
         var self = this;
         var data = mapData.featuresData[self.properties.featureID];
-        data.comment = data.comment || properties.selectCategories[data.category].title;
+        var category = properties.selectCategories[data.category] ? properties.selectCategories[data.category].title : '';
+
+        data.comment = data.comment || category;
         //Set Suggestion's initial comment
         if (data.comment){
             $('.suggestion-comment').html('<p class="no-mp">"' + data.comment + '" - <b>'+data.name+'</b></p>').removeClass('hidden');

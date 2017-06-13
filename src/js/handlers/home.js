@@ -115,9 +115,14 @@ home_handler = {
     fixedComment: function(comment, category) {
         comment = comment.replace(/(<([^>]+)>)/gi, "");
 
-        if ($.trim(comment).length == 0) {
+        if ($.trim(comment).length == 0 && properties.selectCategories[category]) {
             comment = properties.selectCategories[category].title;
         }
+
+        if ($.trim(comment).length == 0){
+            return '<br>';
+        }
+
         return '<br><div class="comment"><p>"' + comment + '"</p></div>';
     },
 
@@ -427,9 +432,11 @@ home_handler = {
                     pointList.push(point);
                 });
 
+                var color = properties.selectCategories[value.category]?properties.selectCategories[value.category].color:'#000';
+
                 mapData.features[value.id] = new L.Polyline(pointList, {
                     stroke: true,
-                    color: properties.selectCategories[value.category].color,
+                    color: color,
                     weight: 4,
                     opacity: 1,
                     dashArray: "5,10",
