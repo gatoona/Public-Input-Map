@@ -16,10 +16,10 @@ var properties = {
             color: "#9bc553",
             title: 'Walking Comment'
         },
-        // "biking": {
-        //     color: "#71239d",
-        //     title: 'Biking Comment'
-        // },
+        "biking": {
+            color: "#71239d",
+            title: 'Biking Comment'
+        },
         "transit": {
             color: "#ffcc4e",
             title: 'Transit Comment'

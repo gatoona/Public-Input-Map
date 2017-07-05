@@ -19,7 +19,7 @@ nearby_handler = {
             var category = mapData.featuresData[id].category;
 
             var comment = mapData.featuresData[id].comment;
-            var summary = properties.selectCategories[category].title;
+            var summary = properties.selectCategories[category]?properties.selectCategories[category].title:"";
             var name = mapData.featuresData[id].name;
 
             if (comment){
@@ -48,7 +48,6 @@ nearby_handler = {
     events: function() {
         var self = this;
         self.onLoad();
-
 
         $('.content-close-btn').click(function(event) {
             window.location.href = "#/" + properties.previousURL;
