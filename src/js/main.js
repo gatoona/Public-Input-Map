@@ -9,6 +9,8 @@ var properties = {
     popPages: ['contact', 'view', 'legend', 'nearby', 'privacy-policy'],
     loadHash: '',
     loadHashID: '',
+    routeTutorial: false,
+    markerTutorial: false,
     selectCategories: {
         "walking": {
             color: "#9bc553",

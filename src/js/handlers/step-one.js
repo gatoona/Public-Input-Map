@@ -102,6 +102,14 @@ step_one_handler = {
 
         $('.add-marker').click(function(event) {
         	self.disableDraw();
+
+            if (!properties.routeTutorial){
+                properties.markerTutorial = true;
+                $("#exm1").modal({
+                    clickClose: false
+                });
+            }
+
         	mapData.drawControl.marker.enable();
             self.hideEdits();
             $('.marker-input').addClass('animated bounceIn shake').removeClass('hidden');
@@ -111,6 +119,14 @@ step_one_handler = {
 
         $('.add-route').click(function(event) {
             self.disableDraw();
+
+            if (!properties.routeTutorial){
+                properties.routeTutorial = true;
+                $("#ex1").modal({
+                    clickClose: false
+                });
+            }
+
             mapData.drawControl.polyline.enable();
             self.hideEdits();
             $('.route-input').addClass('animated bounceIn shake').removeClass('hidden');
