@@ -407,7 +407,17 @@ input[type="submit"] {
     -moz-transition: background-color 0.1s ease-in-out;
     -o-transition: background-color 0.1s ease-in-out;
     transition: background-color 0.1s ease-in-out;
+    text-align: left;
 }
+
+.btn-primary.full, input[type="submit"].full{
+  width: 100%;
+}
+
+.btn-primary.step, input[type="submit"].step{
+  background-color: #ffc36d;
+}
+
 
 .btn-primary:hover,
 input[type="submit"]:hover {
