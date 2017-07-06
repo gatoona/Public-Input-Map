@@ -103,7 +103,7 @@ step_one_handler = {
         $('.add-marker').click(function(event) {
         	self.disableDraw();
 
-            if (!properties.routeTutorial){
+            if (!properties.markerTutorial){
                 properties.markerTutorial = true;
                 $("#exm1").modal({
                     clickClose: false
