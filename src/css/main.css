@@ -1239,6 +1239,7 @@ body.loading .content-root, body.loading #map {
   -ms-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   text-align: left;
+  margin-top: 30px;
 }
 
 .modal img.border{

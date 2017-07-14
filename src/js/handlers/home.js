@@ -12,8 +12,7 @@ home_handler = {
         step_one_handler.showContent();
 
         $(document).off("click", ".like-btn");
-        map.off('popupclose');
-        map.off('popupopen');
+        map.off('popupclose, popupopen');
         
         self.disableRouteEasyClick();
 
@@ -280,17 +279,21 @@ home_handler = {
     onMarkerClick: function(marker){
         var location = marker.getLatLng();
        
-       var circle = new L.CircleMarker(location, {
-            radius: 25,
-            fillColor: "#ffe612",
-            color: "#000",
-            weight: 1,
-            opacity: 0,
-            fillOpacity: 0.8,
-            clickable: false
-        });
+       function highlightSelected(){
+           var circle = new L.CircleMarker(location, {
+                radius: 25,
+                fillColor: "#ffe612",
+                color: "#000",
+                weight: 1,
+                opacity: 0,
+                fillOpacity: 0.8,
+                clickable: false
+            });
 
-        mapData.selectLayer.addLayer(circle);
+            mapData.selectLayer.addLayer(circle);
+       }
+
+       setTimeout(highlightSelected, 50);
     },
 
     highlightPolyline: function(polyline){
@@ -336,7 +339,7 @@ home_handler = {
         if (clickArea !== undefined && (map.getZoom() > 13)){
             var layersWithin = L.GeometryUtil.layersWithin(map, mapData.lineStringLayer.getLayers(), clickArea, 20);
 
-            highlightSelected();
+            setTimeout(highlightSelected, 50);
 
             if (layersWithin.length > 1){
                 mapData.nearbyRoutes = layersWithin;
@@ -361,8 +364,19 @@ home_handler = {
             }
         }
         else {
-           highlightSelected(); 
+           setTimeout(highlightSelected, 50);
         }
+
+    },
+
+    clearHighlights: function(){
+
+        var selectLayer = mapData.selectLayer.getLayers();
+        $.each( selectLayer, function( key, value ) {
+            if (key == 0 || key < (selectLayer.length - 1)){
+                mapData.selectLayer.removeLayer(value);
+            }
+        });
 
     },
 
@@ -497,22 +511,8 @@ home_handler = {
             self.addLike(id);
         });
 
-        map.on("popupclose", function() {
-            var selectLayer = mapData.selectLayer.getLayers();
-            $.each( selectLayer, function( key, value ) {
-                if (key == 0 || key < (selectLayer.length - 1)){
-                    mapData.selectLayer.removeLayer(value);
-                }
-            });
-        });
-
-        map.on("popupopen", function() {
-            var selectLayer = mapData.selectLayer.getLayers();
-            $.each( selectLayer, function( key, value ) {
-                if (key < (selectLayer.length - 1)){
-                    mapData.selectLayer.removeLayer(value);
-                }
-            });
+        map.on("popupclose, popupopen", function() {
+            self.clearHighlights();
         });
 
         self.enableRouteEasyClick();
