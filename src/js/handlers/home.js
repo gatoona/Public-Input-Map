@@ -12,7 +12,8 @@ home_handler = {
         step_one_handler.showContent();
 
         $(document).off("click", ".like-btn");
-        map.off('popupclose, popupopen');
+        map.off('popupclose');
+        map.off('popupopen');
         
         self.disableRouteEasyClick();
 
@@ -511,7 +512,11 @@ home_handler = {
             self.addLike(id);
         });
 
-        map.on("popupclose, popupopen", function() {
+        map.on("popupopen", function() {
+            self.clearHighlights();
+        });
+
+        map.on("popupclose", function() {
             self.clearHighlights();
         });
 
