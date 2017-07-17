@@ -24,10 +24,9 @@ echo '</Style>';
 ArrestDB::Serve('GET', '/(#any)/', function ($table)
 {
 
-	//Grab users
 	$query = array
 	(
-		sprintf('SELECT * FROM "%s" ORDER BY "id" DESC', $table),
+		sprintf('SELECT *, (SELECT COUNT(*) FROM "likes" WHERE "object" = suggestions.id) AS "likes" FROM "suggestions"'),
 	);
 	
 	$query = sprintf('%s;', implode(' ', $query));
@@ -49,6 +48,9 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 		echo '</Data>';
 		echo '<Data name="username">';
 		echo '<value>'.htmlentities($value['name']).'</value>';
+		echo '</Data>';
+		echo '<Data name="likes">';
+		echo '<value>'.$value['likes'].'</value>';
 		echo '</Data>';
 		echo '</ExtendedData>';
 
