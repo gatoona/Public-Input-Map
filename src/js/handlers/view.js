@@ -8,7 +8,7 @@ view_handler = {
 
     onLoad: function(){
         var self = this;
-        $('#content-root').addClass('noswipe');
+        $('#content-root, #map').addClass('noswipe');
         
         self.properties.featureID = window.location.hash.substring(2).split('/')[1];
         var id = self.properties.featureID;

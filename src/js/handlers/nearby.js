@@ -6,7 +6,7 @@ nearby_handler = {
 
     onLoad: function(){
         var self = this;
-        $('#content-root').addClass('noswipe');
+        $('#content-root, #map').addClass('noswipe');
 
         self.updateNearbyRoutes();
     },

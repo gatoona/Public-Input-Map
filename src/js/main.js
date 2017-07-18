@@ -155,7 +155,7 @@ $(function() {
           }
         }.bind(this));
 
-        map.invalidateSize();
+        resizeMap();
 
         //Set Icons
 
@@ -252,6 +252,22 @@ $(function() {
 
 
 //Main Controllers
+var resizeTimer;
+var invalidateMap = function(){
+    map.invalidateSize();
+};
+var resizeMap = function(){
+    var width = ($('#map').hasClass('swipe') === false) ? ($(window).width() - 350) : '100%';
+    $('#map').width(width);
+    invalidateMap();
+};
+
+$(window).on('resize', function(e) {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function() { 
+    resizeMap();         
+  }, 350);
+});
 
 $( ".control-user-input" ).click(function() {
   var hide = $(this).hasClass('removed');
@@ -336,7 +352,7 @@ function getCookie(cname) {
 
 function loadPage(hash) {
 
-    $('#content-root').removeClass('noswipe');
+    $('#content-root, #map').removeClass('noswipe');
     
     if ($.inArray(properties.currentURL, properties.popPages) == -1){
         properties.previousURL = properties.currentURL;
@@ -364,17 +380,16 @@ function loadPage(hash) {
                 //Grab events
                 handler.events();
             }
-
             //Global onLoad Functions For Pages
             $('.content-arrow').click(function(event) {
-                $('#content-root').toggleClass('swipe');
+                $('#content-root, #map').toggleClass('swipe');
                 if ($('#content-root').hasClass('swipe') == true){
                     home_handler.scrollTop();
                 }
                 else {
-                    console.log($('.content-root').offset().top)
                     home_handler.scrollContent();
                 }
+                setTimeout(resizeMap, 350);
                 return false;
             });
         }

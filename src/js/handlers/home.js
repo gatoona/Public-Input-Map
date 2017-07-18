@@ -7,7 +7,7 @@ home_handler = {
     onLoad: function(){
         var self = this;
 
-        $('#content-root').removeClass('swipe');
+        $('#content-root, #map').removeClass('swipe');
         mapData.drawnItemsLayer.clearLayers();
         step_one_handler.showContent();
 
@@ -31,7 +31,7 @@ home_handler = {
 
     scrollContent: function(){
         $('html, body').animate({ 
-           scrollTop: $('.content-root').offset().top}, 
+           scrollTop: $(window).height()/3}, 
            800, 
            "swing"
         );
@@ -232,38 +232,11 @@ home_handler = {
 
     centerDraw: function(layer){
         var self = this;
-        var windowWidth = $(window).width();
-        var windowHeight = $(window).height();
-
-        var getHeaderWidth = function() {
-            var totalWidth = 0;
-            $(".content-root").each(function() {
-                if ($(this).hasClass("hidden")) {} else {
-                    totalWidth = $(this).outerWidth(true);
-                }
-            });
-            return totalWidth;
-        };
-
-        var getHeaderHeight = function() {
-            var totalHeight = 0;
-            $(".content-root").each(function() {
-                if ($(this).hasClass("hidden")) {} else {
-                    totalHeight = $(this).outerHeight(true);
-                }
-            });
-            return totalHeight;
-        };
 
         if (layer instanceof L.Marker) {
             
             var zoomLevel = (map.getZoom() >= 15) ? map.getZoom() : 15;
-            if (windowWidth >= 768) {
-                var targetPoint = map.project(layer.getLatLng(), zoomLevel).subtract([ getHeaderWidth() / 2, 0 ]);
-            } else {
-                var targetPoint = map.project(layer.getLatLng(), zoomLevel).add([ 0, windowHeight * 0.15 ]);
-            }
-
+            var targetPoint = map.project(layer.getLatLng(), zoomLevel);
             var targetLatLng = map.unproject(targetPoint, zoomLevel);
             map.setView(targetLatLng, zoomLevel);
         }
