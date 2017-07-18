@@ -330,7 +330,7 @@ home_handler = {
 
 
                 if (properties.currentURL == 'nearby'){
-                    $('#content-root').removeClass('noswipe');
+                    $('#content-root, #map').removeClass('noswipe');
                     window.location.href = "#/" + properties.previousURL;
                 }
 

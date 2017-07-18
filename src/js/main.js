@@ -155,8 +155,6 @@ $(function() {
           }
         }.bind(this));
 
-        resizeMap();
-
         //Set Icons
 
         L.DivIcon = L.Icon.extend({
@@ -257,7 +255,8 @@ var invalidateMap = function(){
     map.invalidateSize();
 };
 var resizeMap = function(){
-    var width = ($('#map').hasClass('swipe') === false) ? ($(window).width() - 350) : '100%';
+    console.log('resize');
+    var width = ($('#map').hasClass('swipe') === false || $('#map').hasClass('noswipe') === true) ? ($(window).width() - 350) : '100%';
     $('#map').width(width);
     invalidateMap();
 };
@@ -393,6 +392,7 @@ function loadPage(hash) {
                 return false;
             });
         }
+        resizeMap();
     });
 
 }

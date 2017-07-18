@@ -16,26 +16,14 @@ html,
 #map{
   position: fixed;
   left: 380px;
-  -webkit-transition: height 0.3s ease-in-out, left 0.3s ease-in-out;
-  -moz-transition: height 0.3s ease-in-out, left 0.3s ease-in-out;
-  -o-transition: height 0.3s ease-in-out, left 0.3s ease-in-out;
-  transition: height 0.3s ease-in-out, left 0.3s ease-in-out;
 }
 
 #map.swipe{
-  -webkit-transition: height 0.1s ease-in-out, left 0.1s ease-in-out;
-  -moz-transition: height 0.1s ease-in-out, left 0.1s ease-in-out;
-  -o-transition: height 0.1s ease-in-out, left 0.1s ease-in-out;
-  transition: height 0.1s ease-in-out, left 0.1s ease-in-out;
   left: 0;
 }
 
 #map.noswipe{
   left: 380px;
-  -webkit-transition: height 0.3s ease-in-out, left 0.3s ease-in-out;
-  -moz-transition: height 0.3s ease-in-out, left 0.3s ease-in-out;
-  -o-transition: height 0.3s ease-in-out, left 0.3s ease-in-out;
-  transition: height 0.3s ease-in-out, left 0.3s ease-in-out;
 }
 
 @media (max-width: 767px) {

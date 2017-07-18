@@ -57,7 +57,7 @@ step_one_handler = {
 	    layer.editing.enable();
 	    mapData.drawnItemsLayer.addLayer(layer);
 
-        $('#content-root').removeClass('swipe');
+        $('#content-root, #map').removeClass('swipe');
 
 	    if (type === "marker") {
             mapData.drawnItemsLayer.getLayers()[0].dragging.enable();
@@ -70,7 +70,7 @@ step_one_handler = {
     },
 
     hideContent: function(){
-        $('#content-root').addClass('swipe');
+        $('#content-root, #map').addClass('swipe');
         $('html, body').animate({ 
            scrollTop: 0}, 
            1000, 
@@ -80,7 +80,7 @@ step_one_handler = {
 
     showContent: function(){
         var self = this;
-        $('#content-root').removeClass('swipe');
+        $('#content-root, #map').removeClass('swipe');
         self.disableDraw();
         self.hideEdits();
     },
