@@ -255,7 +255,6 @@ var invalidateMap = function(){
     map.invalidateSize();
 };
 var resizeMap = function(){
-    console.log('resize');
     var width = ($('#map').hasClass('swipe') === false || $('#map').hasClass('noswipe') === true) ? ($(window).width() - 350) : '100%';
     $('#map').width(width);
     invalidateMap();
