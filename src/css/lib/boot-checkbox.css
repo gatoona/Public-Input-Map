@@ -21,9 +21,9 @@
     border: 1px solid #cccccc;
     border-radius: 3px;
     background-color: #fff;
-    -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-    -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-    transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+    -webkit-transition: border-color 0.15s ease-in-out;
+    -o-transition: border-color 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out;
 }
 
 .checkbox label::after {
@@ -142,6 +142,7 @@
     background-size: cover;
     background-origin: content-box;
     background-position: bottom center;
+    border: 4px solid #5cb85c;
 }
 
 .checkbox-success input[type="checkbox"]:checked+label::after,
