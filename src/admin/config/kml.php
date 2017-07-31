@@ -43,7 +43,7 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 		echo '<Data name="category">';
 		echo '<value>'.$value['category'].'</value>';
 		echo '</Data>';
-		echo '<Data name="added-date">';
+		echo '<Data name="added_date">';
 		echo '<value>'.$value['created'].'</value>';
 		echo '</Data>';
 		echo '<Data name="username">';
