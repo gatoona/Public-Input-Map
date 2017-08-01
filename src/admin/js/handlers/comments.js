@@ -3,7 +3,7 @@ comments_handler = {
     properties: {
         title: 'Comments',
         singular: 'comment',
-        ajaxURL: '../admin/config/suggestions.php/comments/'
+        ajaxURL: '../admin/config/data.php/comments/'
     },
 
     columns: [

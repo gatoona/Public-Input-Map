@@ -37,6 +37,7 @@ step_one_handler = {
         map.closePopup();
 
         $('#map').addClass('drawStart');
+        setTimeout(resizeMap, 150);
 
 	    if (mapData.drawnItemsLayer.getLayers().length > 0) {
 	        mapData.drawnItemsLayer.clearLayers();
@@ -47,6 +48,7 @@ step_one_handler = {
 
     onDrawStop: function(e){
         $('#map').removeClass('drawStart');
+        setTimeout(resizeMap, 150);
     },
 
     onDrawCreated: function(e){

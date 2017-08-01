@@ -1,4 +1,5 @@
 <?php
+
 header('Content-Type: application/vnd.google-earth.kml+xml kml');
 header('Content-Disposition: attachment; filename="test.kml"');
 
@@ -31,7 +32,7 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 	
 	$query = sprintf('%s;', implode(' ', $query));
 	$data = ArrestDB::Query($query);
-
+	$timezone = new DateTimeZone('America/Los_Angeles');
 	foreach ($data as $id => $value)
 	{
 		$coordinates = json_decode($value['geometry']);
@@ -44,7 +45,10 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 		echo '<value>'.$value['category'].'</value>';
 		echo '</Data>';
 		echo '<Data name="added_date">';
-		echo '<value>'.$value['created'].'</value>';
+		$epoch = $value['created'];
+		$dt = new DateTime("@$epoch");
+		$dt->setTimezone($timezone);
+		echo '<value>'.$dt->format('Y-m-d H:i:s').'</value>';
 		echo '</Data>';
 		echo '<Data name="username">';
 		echo '<value>'.htmlentities($value['name']).'</value>';

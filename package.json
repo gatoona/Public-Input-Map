@@ -1,7 +1,7 @@
 {
   "name": "public-input-map",
-  "version": "1.11.0",
-  "production": "false",
+  "version": "1.12.0",
+  "production": "true",
   "description": "Alta - Public Input Map",
   "main": "index.js",
   "scripts": {

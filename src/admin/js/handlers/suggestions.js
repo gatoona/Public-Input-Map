@@ -3,7 +3,7 @@ suggestions_handler = {
     properties: {
         title: 'Suggestions',
         singular: 'Suggestion',
-        ajaxURL: '../admin/config/suggestions.php/suggestions/'
+        ajaxURL: '../admin/config/data.php/suggestions/'
     },
 
     columns: [

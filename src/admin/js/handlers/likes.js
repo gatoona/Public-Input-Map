@@ -3,7 +3,7 @@ likes_handler = {
     properties: {
         title: 'Individual Votes',
         singular: 'vote',
-        ajaxURL: '../admin/config/suggestions.php/likes/'
+        ajaxURL: '../admin/config/data.php/likes/'
     },
 
     columns: [

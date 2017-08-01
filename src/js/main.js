@@ -264,7 +264,7 @@ $(window).on('resize', function(e) {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(function() { 
     resizeMap();         
-  }, 350);
+  }, 150);
 });
 
 $( ".control-user-input" ).click(function() {
@@ -387,7 +387,7 @@ function loadPage(hash) {
                 else {
                     home_handler.scrollContent();
                 }
-                setTimeout(resizeMap, 350);
+                setTimeout(resizeMap, 150);
                 return false;
             });
         }

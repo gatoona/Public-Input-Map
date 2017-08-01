@@ -3,7 +3,7 @@ signups_handler = {
     properties: {
         title: 'Comments',
         singular: 'comment',
-        ajaxURL: '../admin/config/suggestions.php/signups/'
+        ajaxURL: '../admin/config/data.php/signups/'
     },
 
     columns: [

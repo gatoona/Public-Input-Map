@@ -8,7 +8,6 @@ if (!$dsn){
 
 //Set Base URL
 $baseURL = 'http://' . $_SERVER['SERVER_NAME'];
-
 //Set Client Access
 $clients = [];
 
