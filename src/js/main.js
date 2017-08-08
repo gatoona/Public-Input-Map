@@ -5,6 +5,7 @@ var properties = {
     previousURL: '',
     savedURL: '',
     userLanguage: 'en',
+    username: '',
     resetOnLoad: true,
     popPages: ['contact', 'view', 'legend', 'nearby', 'privacy-policy'],
     loadHash: '',
@@ -112,7 +113,6 @@ $(function() {
         
         mapData.baseLayerI = L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/ciw83c2da000t2qqqp5tvx08g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {});
         mapData.baseLayerS = L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/cixqcs04q002y2rmr9oet7jdi/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {});
-
 
 
         map.addLayer(mapData.baseLayerI);
@@ -364,20 +364,7 @@ function loadPage(hash) {
     home_handler.scrollTop();
 
     $("#content-root").load("templates/" + properties.userLanguage + "/" + hash + ".html", function(responseText, textStatus, req) {
-        if (textStatus == "error") {
-            properties.currentURL = '404';
-            $("#content-root").load("templates/" + properties.userLanguage + "/404.html", function() {});
-        } else {
-            properties.currentURL = hash;
-            var handler = hash.replace(/-/g, '_') + '_handler';
-            if (window[handler]){
-                var handler = window[handler];
-                
-                //Change Page Title
-                document.title = handler.properties.title;
-                //Grab events
-                handler.events();
-            }
+        var loaded = function(){
             //Global onLoad Functions For Pages
             $('.content-arrow').click(function(event) {
                 $('#content-root, #map').toggleClass('swipe');
@@ -390,8 +377,27 @@ function loadPage(hash) {
                 setTimeout(resizeMap, 150);
                 return false;
             });
+            resizeMap();
+        };
+
+        if (textStatus == "error") {
+            properties.currentURL = '404';
+            $("#content-root").load("templates/" + properties.userLanguage + "/404.html", function() {
+                loaded();
+            });
+        } else {
+            properties.currentURL = hash;
+            var handler = hash.replace(/-/g, '_') + '_handler';
+            if (window[handler]){
+                var handler = window[handler];
+                
+                //Change Page Title
+                document.title = handler.properties.title;
+                //Grab events
+                handler.events();
+            }
+            loaded();
         }
-        resizeMap();
     });
 
 }

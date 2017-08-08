@@ -15,6 +15,11 @@ add_feature_handler = {
         }
 
         $('.input-marker').addClass('blink_me');
+
+        //Add Username if entered previously
+        if (properties.username.length > 0){
+            $('input[name=name]').val(properties.username);
+        }
     },
 
     wordCount: function( val ){
@@ -67,6 +72,8 @@ add_feature_handler = {
                 type: shape.geometry.type,
                 geometry: JSON.stringify(shape.geometry.coordinates)
             };
+
+            properties.username = self.formatText($('input[name=name]').val());
 
             $.each(formData, function(key, value)
             {
