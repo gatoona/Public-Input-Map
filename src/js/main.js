@@ -178,6 +178,7 @@ $(function() {
                 numdiv.innerHTML = this.options["name"] || "";
                 if (this.options["cluster"]) {
                     numdiv.setAttribute("class", "ttRoute-map-cluster");
+                    numdiv.setAttribute("title", "Click to expand");
                 }
                 div.appendChild(marker);
                 div.appendChild(numdiv);

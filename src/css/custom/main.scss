@@ -1,0 +1,16 @@
+$primary-color: #941c29;
+$darker-primary: #6d1720;
+$button-color: #ffc500;
+
+$screen-sm-min: 768px;
+$screen-sm-max: ($screen-sm-min - 1);
+
+@import 'map';
+@import 'standard';
+@import 'inputs';
+@import 'leaflet';
+@import 'legend';
+@import 'view';
+@import 'loader';
+@import 'modal';
+@import 'extra';

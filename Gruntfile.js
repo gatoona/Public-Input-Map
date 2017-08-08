@@ -22,7 +22,7 @@ module.exports = function(grunt) {
       },
 
       css: {
-        src: ['src/css/lib/boot-template.css', 'src/css/lib/jquery-ui.css', 'src/css/lib/jquery-ui.structure.css', 'src/css/lib/jquery-ui.theme.css', 'src/css/lib/leaflet.css', 'src/css/lib/leaflet.clusters.css', 'src/css/lib/leaflet.draw.css', 'src/css/lib/boot-forms.css', 'src/css/lib/boot-checkbox.css', 'src/css/lib/animate.css', 'src/css/main.css'],
+        src: ['src/css/lib/boot-template.css', 'src/css/lib/jquery-ui.css', 'src/css/lib/jquery-ui.structure.css', 'src/css/lib/jquery-ui.theme.css', 'src/css/lib/leaflet.css', 'src/css/lib/leaflet.clusters.css', 'src/css/lib/leaflet.draw.css', 'src/css/lib/boot-forms.css', 'src/css/lib/boot-checkbox.css', 'src/css/lib/animate.css', 'dist/css/main.css'],
         dest: 'dist/css/app.css'
       }
 
@@ -130,8 +130,8 @@ module.exports = function(grunt) {
         debounceDelay: 1000
       },
       css: {
-        files: ['src/css/*.css', 'src/css/lib/*.css'],
-        tasks: ['concat:css', 'cssmin']
+        files: ['src/css/custom/*.scss', 'src/css/lib/*.css'],
+        tasks: ['sass', 'concat:css', 'cssmin']
       },
       js: {
         files: ['src/js/**/*.js'],
@@ -161,6 +161,18 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'dist/', src: ['**'], dot:true}
         ]
       }
+    },
+
+    sass: {                              
+      dist: {                            
+        options: {                     
+          style: 'expanded',
+          trace: true
+        },
+        files: {                         
+          'dist/css/main.css': 'src/css/custom/main.scss',   
+        }
+      }
     }
 
 
@@ -172,6 +184,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-css');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-string-replace');
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
   //secondary build tasks
   grunt.loadNpmTasks('grunt-contrib-copy');
@@ -183,6 +196,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['watch']);
   grunt.registerTask('zip', ['compress']);
-  grunt.registerTask('build', ['clean', 'concat', 'uglify', 'cssmin', 'string-replace', 'copy']);
+  grunt.registerTask('build', ['clean', 'sass', 'concat', 'uglify', 'cssmin', 'string-replace', 'copy']);
 
 };

@@ -1,0 +1,32 @@
+// _view.scss
+
+.suggestion-comment{
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.comments{
+    display: block;
+    border-top: 3px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+    margin-top: 15px;
+    max-height: 200px;
+    height: auto;
+    overflow-y: auto;
+}
+
+.comments.expanded{
+    max-height: 350px;
+}
+
+.comments p{
+    display: block;
+    font-size: 1em;
+    margin: 0;
+    padding: 10px 15px;
+}
+
+.comments p:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.2);
+}

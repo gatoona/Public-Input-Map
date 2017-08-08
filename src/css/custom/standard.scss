@@ -1,0 +1,155 @@
+// _standard.scss
+
+br {
+    display: block !important;
+    margin-bottom: 2em !important;
+}
+
+hr {
+  border-top: 1px solid rgba(255, 255, 255, .3);
+}
+
+/*Font*/
+
+p {
+    font-size: 1.1em;
+    margin: 15px 0;
+    line-height: 1.3em;
+}
+
+blockquote {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.5em;
+    font-style: italic;
+}
+
+p.small,
+h1.small,
+h2.small,
+h3.small {
+    width: 100%;
+    max-width: 250px;
+}
+
+p.medium,
+h1.medium,
+h2.medium,
+h3.medium {
+    width: 100%;
+    max-width: 500px;
+}
+
+p.large,
+h1.large,
+h2.large,
+h3.large {
+    width: 100%;
+    max-width: 800px;
+}
+
+@media (max-width: $screen-sm-max) {
+    p.small,
+    p.medium,
+    p.large,
+    h1.small,
+    h1.medium,
+    h1.large,
+    h2.small,
+    h2.medium,
+    h2.large,
+    h3.small,
+    h3.medium,
+    h3.large {
+        max-width: none;
+    }
+}
+
+p.figure {
+    font-size: 0.8em;
+    line-height: 1em;
+}
+
+p.box {
+    background-color: #e8e5df;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 0.9em;
+}
+
+h1 {
+    font-size: 1.8em;
+    line-height: 1.3em;
+    margin: 10px 0 15px 0;
+    font-weight: 700;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.col h1:first-child,
+.col-xs-1 h1:first-child,
+.col-xs-2 h1:first-child,
+.col-xs-3 h1:first-child,
+.col-xs-4 h1:first-child,
+.col-xs-5 h1:first-child,
+.col-xs-6 h1:first-child,
+.col-xs-7 h1:first-child,
+.col-xs-8 h1:first-child,
+.col-xs-9 h1:first-child,
+.col-xs-10 h1:first-child,
+.col-xs-11 h1:first-child,
+.col-xs-12 h1:first-child {
+    margin: 15px 0;
+}
+
+@media (min-width: 1300px) {
+    h1 {
+        font-size: 2em;
+        line-height: 1.2em;
+    }
+}
+
+h3 {
+    font-weight: 500;
+    font-size: 1.2em;
+    margin: 15px 0;
+}
+
+a {
+    font-weight: 700;
+    font-size: 1em;
+    text-decoration: none;
+    color: #c2dc77;
+}
+
+a:hover {
+    color: #ded0a7;
+}
+
+a:hover,
+a:focus {
+    text-decoration: none;
+}
+
+a:focus {
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+input {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select:focus,
+    textarea:focus,
+    input:focus {
+        font-size: 16px !important;
+    }
+    select,
+    textarea,
+    input {
+        font-size: 16px !important;
+    }
+}

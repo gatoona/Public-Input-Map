@@ -1,0 +1,44 @@
+// _legend.scss
+
+#legend-section .category{
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 5px;
+  color: #333;
+  background-color: #FFF;
+}
+
+#legend-section .category h2{
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  line-height: 1em;
+  color: $primary-color;
+}
+
+.legend{
+  display: table;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.legend .legend-image{
+  display: table-cell;
+  vertical-align: middle;
+  width: auto;
+}
+
+.legend .legend-image img{
+  display: block;
+  min-height: 40px;
+}
+
+.legend .legend-text{
+  display: table-cell;
+  vertical-align: middle;
+  line-height: 1em;
+  padding-left: 10px;
+  width: 100%;
+  font-weight: 600;
+
+}

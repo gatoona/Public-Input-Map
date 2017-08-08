@@ -208,7 +208,7 @@
     spinnerHtml: null,
     showSpinner: true,
     showClose: true,
-    fadeDuration: 50,   // Number of milliseconds the fade animation takes.
+    fadeDuration: 0,   // Number of milliseconds the fade animation takes.
     fadeDelay: 1.0        // Point during the overlay's fade-in that the modal begins to fade in (.5 = 50%, 1.5 = 150%, etc.)
   };
 
