@@ -60,14 +60,16 @@
     top: 70%;
 }
 
-.content-arrow{
+//Arrow/Close button
+
+.content-arrow, .content-close{
     position: absolute;
     left: 0;
     top: 0;
     background-color: $primary-color;
     padding: 10px;
-    margin-top: -60px;
-    margin-left: 15px;
+    margin-top: -50px;
+    margin-left: 5px;
     border-radius: 50px 50px 0 0;
     -webkit-transition: all 0.1s ease-in-out;
     -moz-transition: all 0.1s ease-in-out;
@@ -75,17 +77,20 @@
     transition: all 0.1s ease-in-out;
 }
 
-.content-arrow:hover{
-    margin-top: -65px;
+.content-arrow:hover, .content-close:hover{
+    margin-top: -55px;
 }
 
-.content-arrow img{
+.content-arrow img, .content-close img{
     width: 100%;
-    max-width: 50px;
+    max-width: 40px;
     display: block;
-    -ms-transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
+}
+
+.content-arrow img {
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 #content-root.swipe .content-arrow img{
@@ -94,24 +99,6 @@
   transform: rotate(-90deg);
 } 
 
-.content-close{
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-color: $primary-color;
-    padding: 10px;
-    margin-top: -70px;
-    margin-left: 15px;
-    border-radius: 50px 50px 0 0;
-    z-index: 9999;
-    cursor: pointer;
-}
-
-.content-close img{
-    width: 100%;
-    max-width: 50px;
-    display: block;
-}
 
 .child-content{
   overflow-y: auto;
@@ -168,16 +155,14 @@
   #content-root.swipe{
       left: -380px;
       top: 0;
-
   }
 
   #content-root.noswipe{
       left: 0px;
       top: 0;
-
   }
 
-  .content-arrow{
+  .content-arrow, .content-close{
       position: absolute;
       right: 0px;
       left: auto;
@@ -188,9 +173,13 @@
       border-radius: 0 50px 50px 0;
   }
 
-  .content-arrow:hover{
+  .content-arrow:hover, .content-close:hover{
       margin-right: -65px;
       margin-top: 60px;
+  }
+
+  .content-arrow img, .content-close img{
+      max-width: 50px;
   }
 
   .content-arrow img{
@@ -205,17 +194,6 @@
     transform: rotate(0deg);
   } 
 
-
-  .content-close{
-      position: absolute;
-      left: auto;
-      right: 0px;
-      top: 0;
-      margin-top: 60px;
-      margin-right: -60px;
-      margin-left: auto;
-      border-radius: 0 50px 50px 0;
-  }
 
   .child-content{
     overflow-y: auto;
