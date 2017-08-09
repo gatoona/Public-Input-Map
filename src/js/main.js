@@ -1,6 +1,7 @@
 $body = $("body");
 
 var properties = {
+    defaultTitle: '',
     currentURL: '',
     previousURL: '',
     savedURL: '',
@@ -39,6 +40,7 @@ var properties = {
 //Map Initial Variables
 var map;
 var mapData = {
+    centerLocation: [26.729784, -80.102834],
     baseLayerI: '',
     baseLayerS: '',
     drawnItemsLayer: '',
@@ -69,6 +71,9 @@ $(document).on({
 
 //Load
 $(function() {
+
+    //Set Default Title
+    properties.defaultTitle = $(document).find("title").text();
 
     $.ajaxSetup({
         // Disable caching of AJAX responses
@@ -106,7 +111,7 @@ $(function() {
         map = L.map("map", {
             zoomControl: true,
             minZoom: 0
-        }).setView([ 26.729784, -80.102834 ], 15);
+        }).setView(mapData.centerLocation, 15);
 
         map.zoomControl.setPosition('bottomright');
         map.attributionControl.addAttribution("Alta Planning + Design | <a href='#/privacy-policy'>Privacy Policy</a>");
@@ -393,7 +398,7 @@ function loadPage(hash) {
                 var handler = window[handler];
                 
                 //Change Page Title
-                document.title = handler.properties.title;
+                document.title = handler.properties.title || properties.defaultTitle;
                 //Grab events
                 handler.events();
             }

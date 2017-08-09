@@ -1,7 +1,6 @@
 home_handler = {
 
     properties: {
-        title: 'Public Input Map Demo'
     },
 
     onLoad: function(){
