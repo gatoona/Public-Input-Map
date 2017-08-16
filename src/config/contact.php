@@ -35,7 +35,7 @@ ArrestDB::Serve('POST', '/(#any)', function ($table)
 			//Set the subject line
 			$mail->Subject = 'Public Input Map Comment';
 
-			$html = 'Hello,<br><br>Someone has used the contact form at '. $GLOBALS['baseURL'].'.<br><br><b>Email: </b>'.$data['"email"'].'<br><br><b>Message: </b>'.$data['"comment"'];
+			$html = 'Hello,<br><br>Someone has used the contact form at '. $GLOBALS['baseURL'].$_SERVER[REQUEST_URI].'.<br><br><b>Email: </b>'.$data['"email"'].'<br><br><b>Message: </b>'.$data['"comment"'];
 			$mail->msgHTML($html);
 
 			//send the message, check for errors
