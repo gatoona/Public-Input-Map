@@ -1,7 +1,7 @@
 nearby_handler = {
 
     properties: {
-        title: 'Nearby'
+        title: 'Nearby Routes'
     },
 
     onLoad: function(){
@@ -19,7 +19,7 @@ nearby_handler = {
             var category = mapData.featuresData[id].category;
 
             var comment = mapData.featuresData[id].comment;
-            var summary = properties.selectCategories[category]?properties.selectCategories[category].title:"";
+            var summary = add_feature_handler.properties.selectCategories[category]?add_feature_handler.properties.selectCategories[category].title:"";
             var name = mapData.featuresData[id].name;
 
             if (comment){

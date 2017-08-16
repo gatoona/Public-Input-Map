@@ -114,8 +114,8 @@ home_handler = {
     fixedComment: function(comment, category) {
         comment = comment.replace(/(<([^>]+)>)/gi, "");
 
-        if ($.trim(comment).length == 0 && properties.selectCategories[category]) {
-            comment = properties.selectCategories[category].title;
+        if ($.trim(comment).length == 0 && add_feature_handler.properties.selectCategories[category]) {
+            comment = add_feature_handler.properties.selectCategories[category].title;
         }
 
         if ($.trim(comment).length == 0){
@@ -419,7 +419,7 @@ home_handler = {
                     pointList.push(point);
                 });
 
-                var color = properties.selectCategories[value.category]?properties.selectCategories[value.category].color:'#000';
+                var color = add_feature_handler.properties.selectCategories[value.category]?add_feature_handler.properties.selectCategories[value.category].color:'#000';
 
                 mapData.features[value.id] = new L.Polyline(pointList, {
                     stroke: true,

@@ -1,8 +1,7 @@
 privacy_policy_handler = {
 
     properties: {
-        title: 'Privacy Policy',
-        featureID: ''
+        title: 'Privacy Policy'
     },
 
     onLoad: function(){

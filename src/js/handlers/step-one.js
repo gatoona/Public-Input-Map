@@ -1,7 +1,9 @@
 step_one_handler = {
 
     properties: {
-        title: 'Tell Us Where'
+        title: 'Tell Us Where',
+        routeTutorial: false,
+        markerTutorial: false
     },
 
     onLoad: function(){
@@ -105,8 +107,8 @@ step_one_handler = {
         $('.add-marker').click(function(event) {
         	self.disableDraw();
 
-            if (!properties.markerTutorial){
-                properties.markerTutorial = true;
+            if (!self.properties.markerTutorial){
+                self.properties.markerTutorial = true;
                 $("#exm1").modal({
                     clickClose: false
                 });
@@ -122,8 +124,8 @@ step_one_handler = {
         $('.add-route').click(function(event) {
             self.disableDraw();
 
-            if (!properties.routeTutorial){
-                properties.routeTutorial = true;
+            if (!self.properties.routeTutorial){
+                self.properties.routeTutorial = true;
                 $("#ex1").modal({
                     clickClose: false
                 });

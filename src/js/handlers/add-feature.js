@@ -4,7 +4,29 @@ add_feature_handler = {
         title: 'Tell Us Why',
         checkInBounds: true,
         key: 'AIzaSyBQOymhaTcHYuGt7Rh8F3M23oNcwKfQm-U',
-        wordLimit: 500
+        wordLimit: 500,
+        selectCategories: {
+            "walking": {
+                color: "#9bc553",
+                title: 'Walking Comment'
+            },
+            "biking": {
+                color: "#71239d",
+                title: 'Biking Comment'
+            },
+            "transit": {
+                color: "#ffcc4e",
+                title: 'Transit Comment'
+            },
+            "driving": {
+                color: "#d43f3a",
+                title: 'Driving Comment'
+            },
+            "parking": {
+                color: "#333333",
+                title: 'Parking Comment'
+            }
+        }
     },
 
     onLoad: function(){

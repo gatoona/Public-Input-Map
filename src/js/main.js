@@ -10,31 +10,7 @@ var properties = {
     resetOnLoad: true,
     popPages: ['contact', 'view', 'legend', 'nearby', 'privacy-policy'],
     loadHash: '',
-    loadHashID: '',
-    routeTutorial: false,
-    markerTutorial: false,
-    selectCategories: {
-        "walking": {
-            color: "#9bc553",
-            title: 'Walking Comment'
-        },
-        "biking": {
-            color: "#71239d",
-            title: 'Biking Comment'
-        },
-        "transit": {
-            color: "#ffcc4e",
-            title: 'Transit Comment'
-        },
-        "driving": {
-            color: "#d43f3a",
-            title: 'Driving Comment'
-        },
-        "parking": {
-            color: "#333333",
-            title: 'Parking Comment'
-        }
-    }
+    loadHashID: ''
 }
 
 //Map Initial Variables
@@ -118,7 +94,6 @@ $(function() {
         
         mapData.baseLayerI = L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/ciw83c2da000t2qqqp5tvx08g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {});
         mapData.baseLayerS = L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/cixqcs04q002y2rmr9oet7jdi/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {});
-
 
         map.addLayer(mapData.baseLayerI);
 

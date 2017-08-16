@@ -45,7 +45,7 @@ view_handler = {
     getData: function(){
         var self = this;
         var data = mapData.featuresData[self.properties.featureID];
-        var category = properties.selectCategories[data.category] ? properties.selectCategories[data.category].title : '';
+        var category = add_feature_handler.properties.selectCategories[data.category] ? add_feature_handler.properties.selectCategories[data.category].title : '';
 
         data.comment = data.comment || category;
         //Set Suggestion's initial comment

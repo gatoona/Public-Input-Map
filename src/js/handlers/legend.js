@@ -1,8 +1,7 @@
 legend_handler = {
 
     properties: {
-        title: 'Map Legend',
-        featureID: ''
+        title: 'Map Legend'
     },
 
     onLoad: function(){
