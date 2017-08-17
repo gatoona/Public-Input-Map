@@ -127,6 +127,16 @@
   padding: 5px;
 }
 
+
+.location-toggle.location-found {
+  animation: glowing 2s linear infinite;
+}
+
+@keyframes glowing {  
+  50% { border-color: #3f8cc9; }
+
+}
+
 .location-toggle:hover{
   border: 2px solid #ccc;
 }
@@ -146,6 +156,14 @@
 }
 
 .location-toggle.searching img.gps-loading{
+  display: block;
+}
+
+.location-toggle.location-found img.gps-loading{
+  display: none;
+}
+
+.location-toggle.location-found img.gps{
   display: block;
 }
 

@@ -292,7 +292,7 @@ $( ".menu-toggle" ).click(function() {
 });
 
 $( ".location-toggle" ).click(function() {
-    location_feature_handler.grabLocation();
+    location_feature_handler.startLocation();
 });
 
 function getUrlParameter(sParam) {

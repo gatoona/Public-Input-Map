@@ -1,6 +1,6 @@
 {
   "name": "public-input-map",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "production": "false",
   "description": "Alta - Public Input Map",
   "main": "index.js",
