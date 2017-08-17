@@ -29,6 +29,7 @@ var mapData = {
     featuresData: {},
     lineStringLayer: {},
     pointsLayer: {},
+    userLocationLayer: {},
     ls: {},
     geoJSON: {}
 };
@@ -111,10 +112,11 @@ $(function() {
             }
         })
 
+        mapData.userLocationLayer = L.featureGroup().addTo(map);
         mapData.lineStringLayer = L.featureGroup().addTo(map);
         mapData.pointsLayer = new L.MarkerClusterGroup({
             iconCreateFunction: function(cluster) {
-                return L.divIcon({
+                return L.pointIcon({
                     name: cluster.getChildCount(),
                     cluster: true,
                     iconUrl: "img/marker-cluster.png?v=2",
@@ -137,7 +139,7 @@ $(function() {
 
         //Set Icons
 
-        L.DivIcon = L.Icon.extend({
+        L.PointIcon = L.Icon.extend({
             options: {
                 iconUrl: "img/marker.png?v=2",
                 shadowUrl: "img/marker-shadow.png?v=2",
@@ -287,6 +289,10 @@ $( ".base-toggle" ).click(function() {
 
 $( ".menu-toggle" ).click(function() {
   $('.controls').toggleClass('toggle-open');
+});
+
+$( ".location-toggle" ).click(function() {
+    location_feature_handler.grabLocation();
 });
 
 function getUrlParameter(sParam) {

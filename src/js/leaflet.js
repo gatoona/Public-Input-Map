@@ -3833,6 +3833,10 @@ L.divIcon = function (options) {
 	return new L.DivIcon(options);
 };
 
+L.pointIcon = function (options) {
+    return new L.PointIcon(options);
+};
+
 
 /*
  * L.Popup is used for displaying popups on the map.

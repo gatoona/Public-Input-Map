@@ -2,8 +2,9 @@ $primary-font: 'Hind', sans-serif;
 $secondary-font: 'Quicksand', sans-serif;
 
 $primary-color: #941c29;
-$darker-primary: #6d1720;
+$darker-primary: darken($primary-color, 20%);
 $button-color: #ffc500;
+$button-hover-color: #fff;
 
 $screen-sm-min: 768px;
 $screen-sm-max: ($screen-sm-min - 1);

@@ -232,7 +232,7 @@ home_handler = {
     centerDraw: function(layer){
         var self = this;
 
-        if (layer instanceof L.Marker) {
+        if (layer instanceof L.Marker || layer instanceof L.Circle) {
             
             var zoomLevel = (map.getZoom() >= 15) ? map.getZoom() : 15;
             var targetPoint = map.project(layer.getLatLng(), zoomLevel);
@@ -400,7 +400,7 @@ home_handler = {
                 var geometry = JSON.parse(value.geometry);
 
                 mapData.features[value.id] = L.marker([ geometry[1], geometry[0] ], {
-                    icon: new L.DivIcon({iconUrl: "img/legend/" + value.category + ".png"})
+                    icon: new L.PointIcon({iconUrl: "img/legend/" + value.category + ".png"})
                 }).on('click', function(e) {
                     self.onMarkerClick(e.target);
                 });

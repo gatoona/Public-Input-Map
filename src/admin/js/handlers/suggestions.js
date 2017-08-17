@@ -12,7 +12,7 @@ suggestions_handler = {
         "defaultContent": "<button class='btn btn-xs'>EDIT</button>"
     },
     {
-        "data": "sid",
+        "data": "id",
         "render": function(data, type, full, meta) {
             if (data) {
                 var view = '<a target="_blank" href="../#/view/' + data + '">' + data + '</a>';
