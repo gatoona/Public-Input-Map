@@ -8,9 +8,16 @@ likes_handler = {
 
     columns: [
     {
-        "data": "id"
+        "data": "sid",
+        "render": function(data, type, full, meta) {
+            if (data) {
+                var view = '<a target="_blank" href="../#/view/' + data + '">' + data + '</a>';
+                return view;
+            } else {
+                return '';
+            }
+        }
     },
-    {"data": "object"},
     {"data": "type"},
     {
         "data": "created",

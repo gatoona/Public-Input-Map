@@ -1,5 +1,17 @@
 // _inputs.scss
 
+.form-control{
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+select.form-control{
+  background: url(../img/caret-down.png) no-repeat 95% 50%;
+  padding-right: 25px;
+  background-color: #FFF;
+}
+
 .form-input {
     display: block;
     width: 200px;

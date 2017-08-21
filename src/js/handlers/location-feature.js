@@ -27,7 +27,8 @@ location_feature_handler = {
             weight: 1,
             opacity: 0,
             fillOpacity: 0.2,
-            className: "user-location"
+            className: "user-location",
+            clickable: false
         });
 
         var myIcon = L.divIcon({
@@ -38,6 +39,7 @@ location_feature_handler = {
 
         var centerDot = L.marker(latlng, {
             icon: myIcon,
+            clickable: false
         });
 
         mapData.userLocationLayer.addLayer(centerDot);

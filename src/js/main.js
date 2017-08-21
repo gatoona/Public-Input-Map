@@ -31,7 +31,8 @@ var mapData = {
     pointsLayer: {},
     userLocationLayer: {},
     ls: {},
-    geoJSON: {}
+    geoJSON: {},
+    pvlk: {}
 };
 
 $(document).on({
@@ -121,7 +122,8 @@ $(function() {
                     cluster: true,
                     iconUrl: "img/marker-cluster.png?v=2",
                     iconSize: new L.Point(50, 50),
-                    iconAnchor: new L.Point(25, 25)
+                    iconAnchor: new L.Point(25, 25),
+                    shadowUrl: ""
                 });
             },
             showCoverageOnHover: false

@@ -91,7 +91,7 @@ home_handler = {
           type: "POST",
           url: mapData.likesURL,
           data: {
-            'object': id,
+            'sid': id,
             'type': 'feature'
           },
           success: function(json) {
@@ -99,7 +99,7 @@ home_handler = {
             self.addLS(id);
 
             //Update popup content
-            mapData.features[id]._popup.setContent('<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment, value.category) + '<div class="animated fadeInDown likes">' + self.fixedLikes(value.likes) + '</div>' + self.commentBtn(id));
+            mapData.features[id]._popup.setContent(self.generatePopUp(value));
             //update view content
             view_handler.getLikes();
 

@@ -20,7 +20,7 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 		//Grab users
 		$query = array
 		(
-			sprintf('SELECT %s, (SELECT COUNT(*) FROM "likes" WHERE "object" = suggestions.id) AS "likes" FROM "suggestions"', $GLOBALS['FieldsGET']),
+			sprintf('SELECT %s, (SELECT COUNT(*) FROM "likes" WHERE "sid" = suggestions.id) AS "likes" FROM "suggestions"', $GLOBALS['FieldsGET']),
 		);
 	}
 

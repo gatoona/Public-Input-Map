@@ -2,7 +2,7 @@ add_feature_handler = {
 
     properties: {
         title: 'Tell Us Why',
-        checkInBounds: true,
+        checkInBounds: false,
         key: 'AIzaSyBQOymhaTcHYuGt7Rh8F3M23oNcwKfQm-U',
         wordLimit: 500,
         selectCategories: {
@@ -63,7 +63,7 @@ add_feature_handler = {
 
         var self = this;
 
-        var inBounds = home_handler.checkInBounds(mapData.drawnItemsLayer.getLayers()[0], mapData.geoJSON.cityBounds.getLayers()[0]);
+        var inBounds = (self.properties.checkInBounds) ? home_handler.checkInBounds(mapData.drawnItemsLayer.getLayers()[0], mapData.geoJSON.cityBounds.getLayers()[0]) : true;
         if (inBounds == false){
             home_handler.onOutOfBounds();
         }
