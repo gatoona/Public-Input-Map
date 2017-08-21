@@ -5,8 +5,8 @@ location_feature_handler = {
         watchNavigation: '',
         locationOptions: {
             enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
+            timeout: 27000,
+            maximumAge: 30000
         }
     },
 
