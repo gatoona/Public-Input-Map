@@ -12,7 +12,8 @@ nearby_handler = {
     },
 
     updateNearbyRoutes: function(){
-        $('#nearby-routes').html('');
+        var nearbyDiv = $('#nearby-routes');
+        var nearbyLocations = '';
         $.each(mapData.nearbyRoutes, function(index, value) {
 
             var id = value.layer.options.id;
@@ -27,9 +28,11 @@ nearby_handler = {
                 summary = '"' + summary + '"';
             }
 
-            $('#nearby-routes').append('<div class="nearby-route" ><a feature="'+id+'" href="#/view/' + id + '">Route ID '+ id +':</a><br> ' + summary + ' - '+ name +'</div>');
+            nearbyLocations += '<div class="nearby-route" ><a feature="'+id+'" href="#/view/' + id + '">Route ID '+ id +':</a><br> ' + summary + ' - '+ name +'</div>';
 
         });
+
+        nearbyDiv.html(nearbyLocations);
 
         var onIn = function(e){
            var id = $(e.target).attr('feature');
