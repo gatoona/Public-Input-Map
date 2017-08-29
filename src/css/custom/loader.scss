@@ -84,3 +84,8 @@ body.loading .content-root, body.loading #map {
   -ms-border-radius: 8px;
   border-radius: 8px;
 }
+
+#map .spinner{
+  left: 50% !important;
+  top: 50% !important;
+}

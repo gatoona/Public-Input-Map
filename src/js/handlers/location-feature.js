@@ -7,7 +7,8 @@ location_feature_handler = {
             enableHighAccuracy: true,
             timeout: 27000,
             maximumAge: 30000
-        }
+        },
+        centerDraw: false
     },
 
     stopLocation: function(){
@@ -15,6 +16,8 @@ location_feature_handler = {
         mapData.userLocationLayer.clearLayers(); 
         $( ".location-toggle").removeClass('searching location-found');
         self.properties.navigation.clearWatch(self.properties.watchNavigation);
+        self.properties.centerDraw = false;
+        map.off('dragstart');
     },
 
     showLocation: function(position){
@@ -44,7 +47,9 @@ location_feature_handler = {
 
         mapData.userLocationLayer.addLayer(centerDot);
         mapData.userLocationLayer.addLayer(userLocation);
-        home_handler.centerDraw(userLocation);
+        if (location_feature_handler.properties.centerDraw){
+            home_handler.centerDraw(userLocation);
+        }
         $( ".location-toggle").addClass('location-found');
     },
 
@@ -82,7 +87,11 @@ location_feature_handler = {
 
             if (self.properties.navigation) {
                 self.properties.watchNavigation = self.properties.navigation.watchPosition(self.showLocation, self.errorLocation, self.properties.locationOptions);
-                
+                map.on('dragstart', function (e) {
+                    self.properties.centerDraw = false;
+                    map.off('dragstart');
+                });
+                self.properties.centerDraw = true;
             } else {
                 self.errorLocation();
             }
@@ -91,6 +100,7 @@ location_feature_handler = {
         else{
             self.stopLocation();
         }
+        
 
         
 

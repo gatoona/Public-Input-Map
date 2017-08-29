@@ -231,7 +231,7 @@ home_handler = {
 
     centerDraw: function(layer){
         var self = this;
-
+        invalidateMap();
         if (layer instanceof L.Marker || layer instanceof L.Circle) {
             
             var zoomLevel = (map.getZoom() >= 15) ? map.getZoom() : 15;
