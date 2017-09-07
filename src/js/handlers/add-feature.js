@@ -64,10 +64,10 @@ add_feature_handler = {
         var self = this;
 
         var inBounds = (self.properties.checkInBounds) ? home_handler.checkInBounds(mapData.drawnItemsLayer.getLayers()[0], mapData.geoJSON.cityBounds.getLayers()[0]) : true;
-        if (inBounds == false){
+        if (inBounds == false && self.properties.checkInBounds){
             home_handler.onOutOfBounds();
         }
-        else if (inBounds == true){
+        else if (inBounds == true && self.properties.checkInBounds){
             home_handler.onInBounds();
         }
 
