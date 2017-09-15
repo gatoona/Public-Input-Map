@@ -118,11 +118,11 @@ a {
     font-weight: 700;
     font-size: 1em;
     text-decoration: none;
-    color: #c2dc77;
+    color: $link-color;
 }
 
 a:hover {
-    color: #ded0a7;
+    color: $link-hover-color;
 }
 
 a:hover,

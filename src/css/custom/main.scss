@@ -5,6 +5,8 @@ $primary-color: #941c29;
 $darker-primary: darken($primary-color, 20%);
 $button-color: #ffc500;
 $button-hover-color: #fff;
+$link-color: #c2dc77;
+$link-hover-color: darken($link-color, 20%);
 
 $screen-sm-min: 768px;
 $screen-sm-max: ($screen-sm-min - 1);

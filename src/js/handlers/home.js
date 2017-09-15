@@ -7,6 +7,7 @@ home_handler = {
         var self = this;
 
         $('#content-root, #map').removeClass('swipe');
+        $('#content-root').addClass('large');
         mapData.drawnItemsLayer.clearLayers();
         step_one_handler.showContent();
 

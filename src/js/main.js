@@ -66,6 +66,7 @@ $(function() {
 
     function hashGrab() {
         var hash = window.location.hash.substring(1).split('/')[1];
+        $('#content-root').removeClass('large');
         loadPage(hash);
         // _gaq.push(['_trackPageview', hash]);
     }
@@ -366,6 +367,15 @@ function loadPage(hash) {
                 setTimeout(resizeMap, 150);
                 return false;
             });
+
+            $('.controls a').each(function() {
+                var that = $(this);
+                var control = that.children('.control');
+                console.log(that.attr('href'));
+
+                control[that.attr('href') === "#/" + hash ? 'addClass' : 'removeClass']('active');
+            });
+            
             resizeMap();
         };
 

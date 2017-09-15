@@ -85,6 +85,15 @@ ul.nopad li {
   padding: 25px 20px 10px 20px;
 }
 
+.controls .control:hover{
+  padding: 25px 20px 10px 20px;
+  background-color: $link-hover-color;
+}
+
+.controls .control.active{
+  background-color: $link-hover-color;
+}
+
 .controls .menu-toggle{
   display: none;
 }
@@ -142,7 +151,7 @@ ul.nopad li {
 
   .controls .control:hover{
     padding: 10px 20px;
-    color: $button-color;
+    color: #000;
     padding-left: 25px;
   }
 
