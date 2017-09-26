@@ -61,6 +61,10 @@
   box-shadow: none;
 }
 
+#content-root.large .header-container {
+    padding-top: 0;
+}
+
 #content-root.swipe{
     top: 100%;
 }
@@ -282,6 +286,10 @@
 
   #content-root.large .content-root{
     background-color: transparent;
+  }
+
+  #content-root.large .header-container {
+      padding-top: 25px;
   }
 
   .content-root{
