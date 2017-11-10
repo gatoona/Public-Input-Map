@@ -11,15 +11,6 @@ require '../../config/config.php';
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 echo '<kml xmlns="http://www.opengis.net/kml/2.2">';
 echo '<Document>';
-echo '<Style id="yellowLineGreenPoly">';
-echo '<LineStyle>';
-echo '<color>7f00ffff</color>';
-echo '<width>1</width>';
-echo '</LineStyle>';
-echo '<PolyStyle>';
-echo '<color>7f00ff00</color>';
-echo '</PolyStyle>';
-echo '</Style>';
 
 
 ArrestDB::Serve('GET', '/(#any)/', function ($table)
@@ -51,14 +42,14 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 		echo '<value>'.$dt->format('Y-m-d H:i:s').'</value>';
 		echo '</Data>';
 		echo '<Data name="username">';
-		echo '<value>'.htmlentities($value['name']).'</value>';
+		echo '<value>'.htmlspecialchars($value['name'], ENT_QUOTES).'</value>';
 		echo '</Data>';
 		echo '<Data name="likes">';
 		echo '<value>'.$value['likes'].'</value>';
 		echo '</Data>';
 		echo '</ExtendedData>';
 
-		echo '<description>' . htmlentities($value['comment']) . '</description>';
+		echo '<description>' . htmlspecialchars($value['comment'], ENT_QUOTES) . '</description>';
 
 		if ($value['type'] == 'Point')
 		{
