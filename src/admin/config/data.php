@@ -18,7 +18,7 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 		//Grab users
 		$query = array
 		(
-			sprintf('SELECT *, (SELECT COUNT(*) FROM "likes" WHERE "sid" = suggestions.id) AS "likes" FROM "suggestions" ORDER BY "id" DESC'),
+			sprintf('SELECT *, (SELECT COUNT(*) FROM "likes" WHERE "sid" = suggestions.id and "type" = "dislike" ) AS "dislike", (SELECT COUNT(*) FROM "likes" WHERE "sid" = suggestions.id and "type" = "like" ) AS "like" FROM "suggestions"'),
 		);
 	}
 

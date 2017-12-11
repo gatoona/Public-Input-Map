@@ -1,7 +1,8 @@
 <?php
 
+$time = time();
 header('Content-Type: application/vnd.google-earth.kml+xml kml');
-header('Content-Disposition: attachment; filename="test.kml"');
+header('Content-Disposition: attachment; filename="data_export-' . $time . '.kml"');
 
 $dsn = 'sqlite://../../db/data.sqlite';
 require '../../config/config.php';
@@ -45,7 +46,10 @@ ArrestDB::Serve('GET', '/(#any)/', function ($table)
 		echo '<value>'.htmlspecialchars($value['name'], ENT_QUOTES).'</value>';
 		echo '</Data>';
 		echo '<Data name="likes">';
-		echo '<value>'.$value['likes'].'</value>';
+		echo '<value>'.$value['like'].'</value>';
+		echo '</Data>';
+		echo '<Data name="dislikes">';
+		echo '<value>'.$value['dislike'].'</value>';
 		echo '</Data>';
 		echo '</ExtendedData>';
 

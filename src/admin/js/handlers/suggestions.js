@@ -34,7 +34,8 @@ suggestions_handler = {
             }
         }
     }, 
-    {"data": "likes"},
+    {"data": "like"},
+    {"data": "dislike"},
     {"data": "category"},
     {"data": "type"},
     {"data": "geometry"},
@@ -73,6 +74,11 @@ suggestions_handler = {
                     text: 'KML',
                     action: function() {
                         window.open("config/kml.php/suggestions");
+                    }
+                }, {
+                    text: 'GEOJSON',
+                    action: function() {
+                        window.open("config/geojson.php/suggestions");
                     }
                 }]
                 },

@@ -83,7 +83,7 @@ home_handler = {
         return true;
     },
 
-    addLike: function(id){
+    addLike: function(id, type){
 
         var self = this;
         var value = mapData.featuresData[id];
@@ -93,10 +93,10 @@ home_handler = {
           url: mapData.likesURL,
           data: {
             'sid': id,
-            'type': 'feature'
+            'type': type
           },
           success: function(json) {
-            value.likes = parseInt(value.likes) + 1;
+            value[type] = parseInt(value[type]) + 1;
             self.addLS(id);
 
             //Update popup content
@@ -126,15 +126,25 @@ home_handler = {
         return '<br><div class="comment"><p>"' + comment + '"</p></div>';
     },
 
-    fixedLikes: function(likes) {
+    fixedLikes: function(feature) {
+        console.log(feature);
+        var likes = feature.like || 0;
+        var dislikes = feature.dislike || 0;
+
         if (likes == 1) {
-            return "1 person likes this.";
-        } else if (likes > 1) {
-            return likes + " people like this.";
+            likes = "1 Like";
+        } else if (likes > 1 || likes == 0) {
+            likes = likes + " Likes";
         }
-        else  if (likes == 0){
-          return "No one has liked this."
+
+        if (dislikes == 1) {
+            dislikes = "1 Dislike";
+        } else if (dislikes > 1 || dislikes == 0) {
+            dislikes = dislikes + " Dislikes";
         }
+
+        return likes + ' - ' + dislikes;
+
     },
 
     likeBtn: function(marker) {
@@ -142,12 +152,12 @@ home_handler = {
           return '';
         }
         else {
-          return '<button class="inline-block like-btn" marker="'+marker+'" >Like this</button> '
+          return '<button class="inline-block like-btn" type="like" marker="'+marker+'" >Like</button> <button class="inline-block like-btn" type="dislike" marker="'+marker+'" >Dislike</button> '
         }
     },
 
     commentBtn: function(marker) {
-        return '<a class="inline-block btn-novel" href="#/view/'+marker+'" >Comment</a>';
+        return '<br><a class="inline-block btn-novel" href="#/view/'+marker+'" >View/Add Comment</a>';
     },
 
     grabDraw: function(){
@@ -387,7 +397,7 @@ home_handler = {
 
     generatePopUp: function(value){
         var self = this;
-        return '<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment, value.category) + '<div class="likes">' + self.fixedLikes(value.likes) + '</div>' + self.likeBtn(value.id) + self.commentBtn(value.id);
+        return '<b>By: </b><span class="name">' + value.name + "</span>" + self.fixedComment(value.comment, value.category) + '<div class="likes">' + self.fixedLikes(value) + '</div>' + self.likeBtn(value.id) + self.commentBtn(value.id);
     },
 
     setData: function(){
@@ -481,8 +491,10 @@ home_handler = {
         self.onLoad();
 
         $(document).on("click", ".like-btn", function(event){
-            var id = $(this).attr('marker');
-            self.addLike(id);
+            var that = $(this);
+            var id = that.attr('marker');
+            var type = that.attr('type');
+            self.addLike(id, type);
         });
 
         map.on("popupopen", function() {

@@ -77,10 +77,10 @@ view_handler = {
         var id = self.properties.featureID;
 
         if (id){
-            var likesNum = mapData.featuresData[id].likes;
-            $('.view-like').html(home_handler.fixedLikes(likesNum) + self.likeBtn(id)).removeClass('hidden');
+            $('.view-like').html(home_handler.fixedLikes(mapData.featuresData[id]) + self.likeBtn(id)).removeClass('hidden');
             $('.add-like').click(function(event) {
-                home_handler.addLike(id);
+                var type = $(this).attr('type');
+                home_handler.addLike(id, type);
                 event.preventDefault();
             });
         }
@@ -91,7 +91,7 @@ view_handler = {
           return '';
         }
         else {
-          return ' / <a class="add-like" href="#">Like This</a>'
+          return '<br><a class="add-like" type="like" href="#">Like</a> | <a class="add-like" type="dislike" href="#">Dislike</a>'
         }
     },
 
