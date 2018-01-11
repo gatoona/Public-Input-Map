@@ -15,6 +15,7 @@ The following applications were used for local testing.
 | ------ | ------ |
 | [MAMP](https://www.mamp.info/en/) | Used for local server and phpMyAdmin setup |
 | [NodeJS](https://nodejs.org/en/) | For package mangement/install |
+| [Ruby](https://rubyinstaller.org/) | For Compiling Code |
 | [MailCatcher](https://mailcatcher.me/) | For local mail testing |
 
 # Windows Installation
