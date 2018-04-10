@@ -30,7 +30,9 @@
     "grunt-string-replace": "^1.3.1"
   },
   "dependencies": {
-    "grunt-sync": "^0.6.2"
+    "grunt-sass": "^2.1.0",
+    "grunt-sync": "^0.6.2",
+    "node-sass": "^4.7.2"
   },
   "bugs": {
     "url": "https://github.com/AltaPlanning/public-input-map/issues"
