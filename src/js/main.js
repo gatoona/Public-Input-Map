@@ -31,7 +31,10 @@ var mapData = {
     pointsLayer: {},
     userLocationLayer: {},
     ls: {},
+    geoJSONLayer: '',
+    geoJSONLayers: {},
     geoJSON: {},
+    geoJSONData: {},
     pvlk: {}
 };
 
@@ -101,19 +104,9 @@ $(function() {
         map.addLayer(mapData.baseLayerI);
 
         //Set Main Layers
+        mapData.geoJSONLayer = L.featureGroup().addTo(map);
         mapData.selectLayer = L.featureGroup().addTo(map);
-        mapData.geoJSON.cityBounds = new L.GeoJSON.AJAX(["data/bounds.geojson?ver=wpb"],{
-            clickable: false,
-            style: {
-                color: '#c2dc77',
-                weight: 2,
-                fillColor: "#1f2552",
-                opacity: 1,
-                fillOpacity: 0,
-                className: "city-bounds"
-            }
-        })
-
+        geojson_loader_handler.loadData('bounds');
         mapData.userLocationLayer = L.featureGroup().addTo(map);
         mapData.lineStringLayer = L.featureGroup().addTo(map);
         mapData.pointsLayer = new L.MarkerClusterGroup({
@@ -131,17 +124,8 @@ $(function() {
         }).addTo(map);
         mapData.drawnItemsLayer = L.featureGroup().addTo(map);
 
-        mapData.geoJSON.cityBounds.on('data:loaded', function() {
-          mapData.geoJSON.cityBounds.addTo(map);
-          if (!properties.loadHashID){
-            setTimeout(function(){
-                map.fitBounds(mapData.geoJSON.cityBounds.getBounds());
-            }, 500);
-          }
-        }.bind(this));
 
         //Set Icons
-
         L.PointIcon = L.Icon.extend({
             options: {
                 iconUrl: "img/marker.png?v=2",
