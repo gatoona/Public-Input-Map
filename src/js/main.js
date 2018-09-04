@@ -98,8 +98,8 @@ $(function() {
         map.zoomControl.setPosition('bottomright');
         map.attributionControl.addAttribution("Alta Planning + Design | <a href='#/privacy-policy'>Privacy Policy</a>");
         
-        mapData.baseLayerI = L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/ciw83c2da000t2qqqp5tvx08g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {});
-        mapData.baseLayerS = L.tileLayer('https://api.mapbox.com/styles/v1/altaplanning/cixqcs04q002y2rmr9oet7jdi/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx0YXBsYW5uaW5nIiwiYSI6InhqNzQwRW8ifQ.mlA6eN3JguZL_UkEV9WlMA', {});
+        mapData.baseLayerI = L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {});
+        mapData.baseLayerS = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {});
 
         map.addLayer(mapData.baseLayerI);
 
@@ -325,7 +325,8 @@ function getCookie(cname) {
 function loadPage(hash) {
 
     $('#content-root, #map').removeClass('noswipe');
-    
+    $('#map-block').removeClass('hidden');
+
     if ($.inArray(properties.currentURL, properties.popPages) == -1){
         properties.previousURL = properties.currentURL;
     }
@@ -359,6 +360,11 @@ function loadPage(hash) {
 
                 control[that.attr('href') === "#/" + hash ? 'addClass' : 'removeClass']('active');
             });
+
+            var isLarge = $('#content-root').hasClass('large');
+            if (!isLarge){
+                $('#map-block').addClass('hidden');
+            }
             
             resizeMap();
         };

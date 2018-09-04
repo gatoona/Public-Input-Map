@@ -152,7 +152,7 @@ home_handler = {
           return '';
         }
         else {
-          return '<button class="inline-block like-btn" type="like" marker="'+marker+'" >Like</button> <button class="inline-block like-btn" type="dislike" marker="'+marker+'" >Dislike</button> '
+          return '<a class="inline-block like-btn btn-novel" type="like" marker="'+marker+'" >Like</a> <a class="inline-block like-btn btn-novel" type="dislike" marker="'+marker+'" >Dislike</a> '
         }
     },
 
