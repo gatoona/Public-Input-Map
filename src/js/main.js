@@ -356,9 +356,18 @@ function loadPage(hash) {
             $('.controls a').each(function() {
                 var that = $(this);
                 var control = that.children('.control');
-                console.log(that.attr('href'));
 
                 control[that.attr('href') === "#/" + hash ? 'addClass' : 'removeClass']('active');
+
+                if(that.attr('subs')){
+                    var subs = that.attr('subs').split(',') || [];
+                    console.log(subs);
+                    $.each(subs, function(index, value) {
+                        if (hash == value){
+                            control.addClass('active');
+                        }
+                    });
+                }
             });
 
             var isLarge = $('#content-root').hasClass('large');
