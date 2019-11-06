@@ -1,6 +1,6 @@
 # Public Input Map Application Ver. 1.21.0
 
-This map application was developed for and features the following:
+This map application was developed for map data collection and features the following:
 
   - SQLite and MySQL support to store and retrieve data.
   - Ability for users to draw and submit points and routes.
