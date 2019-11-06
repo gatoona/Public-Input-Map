@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+  const sass = require('node-sass');
+  
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
@@ -163,18 +165,18 @@ module.exports = function(grunt) {
       }
     },
 
-    sass: {                              
-      dist: {                            
-        options: {                     
-          style: 'expanded',
-          trace: true
-        },
-        files: {                         
-          'dist/css/main.css': 'src/css/custom/main.scss',   
-        }
-      }
-    }
 
+    sass: {
+        options: {
+            implementation: sass,
+            sourceMap: true
+        },
+        dist: {
+            files: {
+                'dist/css/main.css': 'src/css/custom/main.scss',
+            }
+        }
+    }
 
   });
 
