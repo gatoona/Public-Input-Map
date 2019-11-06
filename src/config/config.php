@@ -3,6 +3,7 @@ error_reporting(0);
 
 //Set Database URL
 if (!$dsn){
+	// $dsn = 'mysql://username:password@server:3306/database/';
 	$dsn = 'sqlite://../db/data.sqlite';
 }
 
